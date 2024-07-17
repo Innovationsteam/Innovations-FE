@@ -1,13 +1,35 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
+import { RouterProvider } from "react-router-dom";
 import "./index.css";
-import { BrowserRouter } from "react-router-dom";
+import { router } from "./router.tsx";
+import { MutationCache, QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import toast, { Toaster } from "react-hot-toast";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
+const queryClient = new QueryClient({
+	defaultOptions: {
+		queries: {
+			refetchOnWindowFocus: false,
+		},
+	},
+	mutationCache: new MutationCache({
+		onError: (error) => {
+			if (error instanceof AxiosError) {
+				if (error.response) error?.response.data.error.map((error: any) => error?.message).forEach((message: string) => toast.error(message));
+				else toast.error(error.message);
+			}
+		},
+	}),
+});
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
 	<React.StrictMode>
-		<BrowserRouter>
-			<App />
-		</BrowserRouter>
+		<QueryClientProvider client={queryClient}>
+			<Toaster />
+			<RouterProvider router={router} />
+			<ReactQueryDevtools />
+		</QueryClientProvider>
 	</React.StrictMode>
 );

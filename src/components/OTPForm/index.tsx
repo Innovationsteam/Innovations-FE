@@ -30,11 +30,11 @@ const OTPForm = () => {
 
 	return (
 		<form className="mt-16">
-			<div className="xs:gap-x-10 flex justify-center gap-x-4">
+			<div className="flex justify-center gap-x-4 xs:gap-x-10">
 				{otp.map((num, index) => (
 					<input
 						key={`input-${index}`}
-						className="size-14 rounded-lg border border-[#CBD5E0] pl-[26px] text-xl sm:size-16"
+						className="size-14 rounded-lg border border-[#CBD5E0] pl-[26px] text-xl transition-colors duration-200 ease-in focus:border-black sm:size-16"
 						type="text"
 						maxLength={1}
 						value={num}

@@ -9,10 +9,13 @@ export default {
 			...colors,
 			white: "#ffffff",
 			black: "#242424",
+			highlight: "#CBFFB299",
 		},
 		extend: {
 			fontFamily: {
 				roboto: ["Roboto Slab", "serif"],
+				manrope: ["Manrope", "sans-serif"],
+				playwrite: ["Playwrite PT", "cursive"],
 			},
 			screens: {
 				xs: "475px",

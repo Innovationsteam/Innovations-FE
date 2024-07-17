@@ -7,12 +7,12 @@ const Loader = () => {
 
 	useEffect(() => {
 		const id = setTimeout(() => {
-			navigate("/login");
+			navigate("/home");
 		}, 3000);
 		return () => {
 			clearTimeout(id);
 		};
-	}, []);
+	}, [navigate]);
 
 	return (
 		<section className="flex h-screen w-full items-center justify-center bg-black">

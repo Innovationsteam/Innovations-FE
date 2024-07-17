@@ -1,13 +1,27 @@
-import PageContainer from "../components/PageContainer";
+import { CreateArticle } from "../components/Buttons";
 import Container from "../components/Container";
+import ExploreTopics from "../components/Dashboard/ExploreTopics";
+import PostList from "../components/Dashboard/PostList";
+import Profile from "../components/Dashboard/Profile";
+import StoryList from "../components/Dashboard/StoryList";
+import TrendingArticles from "../components/Dashboard/TrendingArticles";
 
 const Home = () => {
 	return (
-		<PageContainer>
-			<Container>
-				<h1>Hello</h1>
-			</Container>
-		</PageContainer>
+		<Container className="relative grid-cols-[auto_300px] gap-x-10 pt-5 lg:grid">
+			<div>
+				<StoryList />
+				<PostList />
+			</div>
+			<section className="hidden px-5 lg:block">
+				<Profile />
+				<CreateArticle />
+				<div className="sticky top-0 pt-5">
+					<ExploreTopics />
+					<TrendingArticles />
+				</div>
+			</section>
+		</Container>
 	);
 };
 
