@@ -36,19 +36,8 @@ const UploadStory = () => {
 	return (
 		<form
 			onSubmit={handleSubmit}
-			className="flex w-full max-w-[693px] flex-col gap-y-4 bg-white p-6 md:rounded-xl md:shadow-lg"
+			className="flex w-full flex-col gap-y-4"
 		>
-			<div className="flex items-center">
-				<div>
-					<h1 className="font-roboto text-lg font-medium tracking-[-0.2px] text-[#0B0B0B]">Media Upload</h1>
-					<p className="font-roboto text-sm text-[#6D6D6D]">Add your images here.</p>
-				</div>
-				<img
-					className="ml-auto h-6 w-6 object-cover"
-					src="/assets/icons/delete.svg"
-					alt=""
-				/>
-			</div>
 			<div
 				ref={uploadContainerRef}
 				onClick={onUploadContainerClick}

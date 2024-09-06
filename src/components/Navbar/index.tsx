@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import Container from "../Container";
 import SearchBar from "../Dashboard/SearchBar";
+import { Link } from "react-router-dom";
 
 const NavBar = () => {
 	const [scrolled, setScrolled] = useState(false);
@@ -32,7 +33,12 @@ const NavBar = () => {
 			})}
 		>
 			<Container className="flex items-center py-7 lg:py-5">
-				<span className="font-roboto text-2xl font-semibold leading-6 text-[#141414]">INNOVATION</span>
+				<Link
+					to="/home"
+					className="font-roboto text-xl font-semibold uppercase leading-6 text-[#141414]"
+				>
+					<span className="text-[#04BF87]">Christian</span>Writes
+				</Link>
 				<div className="ml-auto flex items-center gap-x-3">
 					<SearchBar />
 					<img
@@ -40,11 +46,13 @@ const NavBar = () => {
 						src="/assets/icons/bell.svg"
 						alt=""
 					/>
-					<img
-						className="size-8 rounded-full object-cover"
-						src="/assets/images/profile.png"
-						alt=""
-					/>
+					<Link to="/profile">
+						<img
+							className="size-8 rounded-full object-cover"
+							src="/assets/images/profile.png"
+							alt=""
+						/>
+					</Link>
 				</div>
 			</Container>
 		</motion.nav>

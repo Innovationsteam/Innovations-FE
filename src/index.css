@@ -1,10 +1,39 @@
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Playwrite+PT:wght@100..400&display=swap");
+@import url("https://fonts.cdnfonts.com/css/sf-pro-display");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+	:root {
+		--shadow: 0px 12px 33px 0px rgba(0, 0, 0, 0.06), 0px 3.618px 9.949px 0px rgba(0, 0, 0, 0.04);
+
+		--black: "#141414";
+
+		--highlight: "#B9E8A3";
+
+		--text: "#242424";
+
+		--xs: "475px";
+	}
+}
+
+.tiptap {
+	:first-child {
+		margin-top: 0;
+	}
+}
+
+.tiptap .is-empty::before {
+	@apply text-slate-300;
+	@apply content-[attr(data-placeholder)];
+	@apply float-left;
+	@apply pointer-events-none;
+	@apply h-0;
+}
 
 body {
 	font-family: "Manrope", sans-serif;

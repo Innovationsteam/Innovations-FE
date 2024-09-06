@@ -2,7 +2,7 @@ import DropDown from "../Buttons/DropDown";
 
 const ReadingListItem = () => {
 	return (
-		<div className="w-full max-w-[400px] shrink-0 justify-self-center">
+		<div className="mx-2 w-full max-w-[400px] shrink-0">
 			<div className="relative flex h-[190px] w-full justify-start gap-x-2 overflow-hidden rounded-lg">
 				<div className="overflow-hidden rounded-lg">
 					<img

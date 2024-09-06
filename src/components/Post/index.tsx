@@ -2,28 +2,28 @@ import { Link } from "react-router-dom";
 
 export const Post = () => {
 	return (
-		<Link to="/article">
-			<li className="mx-auto h-fit w-full rounded-2xl p-4">
-				<div className="flex items-center gap-x-3">
-					<img
-						className="size-10 object-cover"
-						src="/assets/images/profile3.png"
-						alt="user profile picture"
-					/>
-					<div className="flex flex-col items-start font-roboto text-[#5B7083]">
-						<span className="text-base text-[#2A2A2A] lg:mr-2">Jessica Blue</span>
-						<p className="flex items-center gap-x-[6px] text-sm">
-							<span>Jan 19, 2023</span>
-							<span>·</span>
-							<span>8 min</span>
-						</p>
-					</div>
-					<img
-						className="ml-auto"
-						src="/assets/icons/ellipsis.svg"
-						alt=""
-					/>
+		<li className="mx-auto h-fit w-full rounded-xl border border-[#E6E6E6] p-4">
+			<div className="flex items-center gap-x-3">
+				<img
+					className="size-10 object-cover lg:size-[35px]"
+					src="/assets/images/profile3.png"
+					alt="user profile picture"
+				/>
+				<div className="flex flex-col items-start gap-x-5 font-roboto text-[#5B7083] xl:flex-row xl:items-center">
+					<span className="text-base text-[#2A2A2A] lg:mr-2">Jessica Blue</span>
+					<p className="flex items-center gap-x-[6px] text-sm">
+						<span>Jan 19, 2023</span>
+						<span>·</span>
+						<span>8 min</span>
+					</p>
 				</div>
+				<img
+					className="ml-auto"
+					src="/assets/icons/ellipsis.svg"
+					alt=""
+				/>
+			</div>
+			<Link to="/article">
 				<div className="my-5 max-h-[202px] overflow-hidden rounded-lg">
 					<img
 						className="h-full w-full max-w-full object-cover"
@@ -67,7 +67,7 @@ export const Post = () => {
 						/>
 					</button>
 				</div>
-			</li>
-		</Link>
+			</Link>
+		</li>
 	);
 };

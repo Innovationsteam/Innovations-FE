@@ -4,8 +4,8 @@ const list = Array.from({ length: 5 });
 
 const PostList = () => {
 	return (
-		<section className="w-full pt-7">
-			<ul className="mt-10 grid h-full gap-y-14">
+		<section>
+			<ul className="mt-10 grid h-full gap-y-4">
 				{list.map((_, i) => (
 					<Post key={i} />
 				))}

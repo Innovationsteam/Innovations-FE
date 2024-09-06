@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export const SignUpWithGoogle = () => {
 	return (
 		<button
@@ -32,29 +34,17 @@ export const SignUpWithFaceBook = () => {
 
 export const CreateArticle = () => {
 	return (
-		<button className="flex w-full max-w-[239px] justify-center gap-x-[10px] rounded-lg bg-[#01543B] py-5 font-roboto">
+		<Link
+			to="/article/new"
+			className="flex w-full max-w-[239px] justify-center gap-x-[10px] rounded-lg bg-[#01543B] py-5 font-roboto"
+		>
 			<img
 				className="size-6 object-cover"
 				src="/assets/icons/pencil.svg"
 				alt=""
 			/>
 			<span className="font-medium text-white">Write Article</span>
-		</button>
-	);
-};
-
-export const PostStory = () => {
-	return (
-		<div className="flex-shrink-0 text-center">
-			<div className="flex size-16 items-center justify-center rounded-full bg-[#141414CC]">
-				<img
-					className="size-10 object-cover"
-					src="/assets/icons/plus-circle.svg"
-					alt=""
-				/>
-			</div>
-			<span className="font-roboto text-xs text-[#2A2A2ACC] sm:text-sm md:text-base">Post Story</span>
-		</div>
+		</Link>
 	);
 };
 
@@ -65,6 +55,17 @@ export const FollowUser = ({ className }: { className?: string }) => {
 			className={`rounded-lg bg-[#1C4532] px-4 py-2 font-roboto text-sm font-medium text-white md:px-6 md:text-base ${className}`}
 		>
 			Follow
+		</button>
+	);
+};
+
+export const EditProfile = ({ className }: { className?: string }) => {
+	return (
+		<button
+			type="button"
+			className={`rounded-lg bg-[#1C4532] px-3 py-2 font-roboto text-sm font-medium text-white md:px-6 md:text-base ${className}`}
+		>
+			Edit Profile
 		</button>
 	);
 };

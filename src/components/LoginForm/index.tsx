@@ -93,6 +93,7 @@ const LoginForm = () => {
 			</div>
 			<button
 				type="submit"
+				disabled={isPending}
 				className="mt-6 flex h-[47px] w-full items-center justify-center rounded-lg bg-black py-1 text-center text-lg font-semibold text-white"
 			>
 				{isPending ? (

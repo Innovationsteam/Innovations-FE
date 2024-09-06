@@ -1,11 +1,19 @@
 import { motion } from "framer-motion";
 import { pageTransition } from "../../utils/framer-default-animations";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 interface PageContainerProps {
 	className?: string;
 	children: JSX.Element | JSX.Element[];
 }
 const PageContainer = ({ className, children }: PageContainerProps) => {
+	const { pathname } = useLocation();
+
+	useEffect(() => {
+		window.scrollTo({ top: 0, behavior: "smooth" });
+	}, [pathname]);
+
 	return (
 		<motion.main
 			data-scroll-containe

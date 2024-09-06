@@ -5,9 +5,9 @@ import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "../store/auth";
 import { SignUpFormData } from "../components/SignUpForm";
 import { ResetPasswordData } from "../pages/ResetPassword";
+import { useAuthStore } from "../store/auth";
 
 interface ResponseData<T> {
 	data: T;

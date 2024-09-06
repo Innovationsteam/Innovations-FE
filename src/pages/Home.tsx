@@ -9,7 +9,7 @@ import TrendingArticles from "../components/Dashboard/TrendingArticles";
 const Home = () => {
 	return (
 		<Container className="relative grid-cols-[auto_300px] gap-x-10 pt-5 lg:grid">
-			<div>
+			<div className="mx-auto max-w-[700px] pb-10">
 				<StoryList />
 				<PostList />
 			</div>

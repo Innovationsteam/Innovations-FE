@@ -1,16 +1,8 @@
 import type { Config } from "tailwindcss";
-import colors from "tailwindcss/colors";
-import defaultTheme from "tailwindcss/defaultTheme";
 
-export default {
+const config = {
 	content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
 	theme: {
-		colors: {
-			...colors,
-			white: "#ffffff",
-			black: "#242424",
-			highlight: "#CBFFB299",
-		},
 		extend: {
 			fontFamily: {
 				roboto: ["Roboto Slab", "serif"],
@@ -18,10 +10,18 @@ export default {
 				playwrite: ["Playwrite PT", "cursive"],
 			},
 			screens: {
-				xs: "475px",
-				...defaultTheme.screens,
+				xs: "var(--xs)",
+			},
+			colors: {
+				black: "var(--black)",
+				highlight: "var(--highlight)",
+			},
+			textColor: {
+				DEFAULT: "var(--text)",
 			},
 		},
 	},
-	plugins: [],
+	plugins: [require("@tailwindcss/typography")],
 } satisfies Config;
+
+export default config;
