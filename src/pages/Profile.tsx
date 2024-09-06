@@ -28,7 +28,7 @@ const Profile = ({ allowEdit }: { allowEdit?: boolean }) => {
 						src="/assets/images/writer.png"
 						alt=""
 					/>
-					<div className="mt-6 flex items-center">
+					<div className="mt-6 flex items-center text-black">
 						<div>
 							<h1 className="font-roboto text-[16px] text-xl font-semibold md:text-3xl">Joshua Hill</h1>
 							<h2 className="font-roboto text-sm md:text-xl">Content Creator</h2>

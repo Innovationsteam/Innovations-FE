@@ -13,7 +13,7 @@ const config = {
 				xs: "var(--xs)",
 			},
 			colors: {
-				black: "var(--black)",
+				black: "#141414",
 				highlight: "var(--highlight)",
 			},
 			textColor: {

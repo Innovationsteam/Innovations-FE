@@ -31,7 +31,7 @@ export const Post = () => {
 						alt=""
 					/>
 				</div>
-				<div className="mb-6 font-roboto">
+				<div className="mb-6 font-roboto text-black">
 					<h3 className="mb-1 text-lg font-medium leading-8">How to grow in faith as a Christian</h3>
 					<p className="overfow-ellipsis max-h-[125px] overflow-hidden break-words text-sm leading-6 text-[#14141499]">I’ve been studying UX design at The Hague University for 3 years now. You might think that I have it all figured out I’ve been studying UX design at The Hague University for 3 years now. You might think that I have it all figured out,...</p>
 				</div>
