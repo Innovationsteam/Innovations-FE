@@ -1,17 +1,22 @@
-import { useCommentModal } from "../../../store/modal";
+import { ModalType, useActiveModal, useModalActions } from "@store/modal";
 import AddCommentForm from "../../AddCommentForm";
 import Comment from "../../Comment";
 import ModalContainer from "../ModalContainer";
 
 const CommentsModal = () => {
-	const { toggleModal } = useCommentModal();
+	const { closeModal } = useModalActions();
+	const isOpen = useActiveModal([ModalType.Comments]);
+
 	return (
-		<ModalContainer>
+		<ModalContainer
+			isOpen={isOpen}
+			className="pt-8"
+		>
 			<header className="flex items-center">
 				<h1 className="font-roboto text-xl font-medium">Response (21)</h1>
 				<button
 					className="ml-auto rotate-90 transition-transform duration-200 ease-in-out hover:rotate-90"
-					onClick={() => toggleModal(false)}
+					onClick={closeModal}
 				>
 					<img
 						className="size-8 object-cover"

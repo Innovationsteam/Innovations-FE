@@ -18,6 +18,7 @@ import Stories from "./pages/Stories";
 import VerifyOTP from "./pages/VerifyOTP";
 import Settings from "./components/Profile/Settings";
 import CreateArticle from "./pages/CreateArticle";
+import Analytics from "./components/Profile/Analytics";
 // import Analytics from "./components/Profile/Analytics";
 
 export const router = createBrowserRouter([
@@ -64,7 +65,7 @@ export const router = createBrowserRouter([
 					{ path: "reading-list", element: <ReadingList /> },
 					{ path: "followers", element: <FollowersList /> },
 					{ path: "following", element: <FollowersList /> },
-					// { path: "analytics", element: <Analytics /> },
+					{ path: "analytics", element: <Analytics /> },
 					{ path: "settings", element: <Settings /> },
 				],
 			},

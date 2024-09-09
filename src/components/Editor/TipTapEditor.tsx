@@ -4,12 +4,19 @@ import Underline from "@tiptap/extension-underline";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import CustomMenu from "./CustomMenu";
+import { cn } from "@/utils/helper";
 
 const CustomDocument = Document.extend({
 	content: "heading block*",
 });
 
-const TipTapEditor = () => {
+interface Props {
+	titlePlaceholder: string;
+	textPlaceholder: string;
+	className?: string;
+}
+
+const TipTapEditor = ({ titlePlaceholder, textPlaceholder, className }: Props) => {
 	const editor = useEditor({
 		extensions: [
 			CustomDocument,
@@ -22,17 +29,17 @@ const TipTapEditor = () => {
 				showOnlyCurrent: true,
 				placeholder: ({ node }) => {
 					if (node.type.name === "heading") {
-						return "What’s the title?";
+						return titlePlaceholder;
 					}
 
-					return "Type your article here or click the plus icon for more options";
+					return textPlaceholder;
 				},
 			}),
 		],
-		content: `<h1></h1>     <p>Stufffff</p>`,
+		content: ``,
 		editorProps: {
 			attributes: {
-				class: "font-roboto placeholder:text-[#14141466] text-black focus:outline-none prose max-w-none [&_ol]:list-decimal [&_ul]:list-disc prose-h1:text-[40px] prose-p:text-2xl",
+				class: cn("font-roboto placeholder:text-[#14141466] text-black focus:outline-none prose max-w-none [&_ol]:list-decimal [&_ul]:list-disc prose-h1:text-[40px] prose-p:text-2xl", className),
 				spellcheck: "true",
 			},
 		},

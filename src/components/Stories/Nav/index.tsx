@@ -1,4 +1,4 @@
-import { AnimationPlaybackControls, animate, motion, useMotionValue, useTransform } from "framer-motion";
+import { AnimationPlaybackControls, animate } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Container from "../../Container";
@@ -7,14 +7,11 @@ interface Props {
 	totalStories: number;
 	currentStory: number;
 	handleStory: (storyId: number) => void;
-	// handleAnimationComplete: (storyId: number) => void;
 }
 
 const StoriesNav = ({ totalStories, currentStory, handleStory }: Props) => {
 	const [isPlaying, setIsPlaying] = useState(true);
 	const controlsRef = useRef<AnimationPlaybackControls>(null!);
-	const progress = useMotionValue(0);
-	const width = useTransform(progress, [0, 100], ["0%", "100%"]);
 
 	const togglePlayPause = () => {
 		if (isPlaying) controlsRef.current.pause();
@@ -23,15 +20,48 @@ const StoriesNav = ({ totalStories, currentStory, handleStory }: Props) => {
 	};
 
 	useEffect(() => {
-		const controls = animate(progress, [0, 100], {
-			ease: "linear",
-			duration: 3,
+		// Stop any ongoing animations before starting a new one
+		if (controlsRef.current) {
+			controlsRef.current.stop();
+		}
+
+		// Animate the selected story navigation item
+		const controls = animate(
+			`#story-nav-${currentStory}`,
+			{
+				width: ["0%", "100%"],
+			},
+			{
+				ease: "linear",
+				duration: 3,
+			}
+		);
+
+		controls.then(() => {
+			handleStory(currentStory + 1);
 		});
 
+		// Store the animation controls for later use
 		controlsRef.current = controls;
 
+		// Set the width of all other story navigation items immediately
+		for (let i = 0; i < totalStories; i++) {
+			if (i !== currentStory) {
+				const navItem = document.getElementById(`story-nav-${i}`);
+				if (navItem) {
+					navItem.style.width = i < currentStory ? "100%" : "0%";
+				}
+			}
+		}
+
 		return () => controlsRef.current.stop();
-	}, [currentStory, progress]);
+	}, [currentStory, handleStory, totalStories]);
+
+	const handleClick = (i: number) => {
+		console.log(i);
+		handleStory(i);
+		if (!isPlaying) setIsPlaying(true);
+	};
 
 	return (
 		<Container>
@@ -39,24 +69,14 @@ const StoriesNav = ({ totalStories, currentStory, handleStory }: Props) => {
 				{Array.from({ length: totalStories }, (_, i) => i).map((_, i) => (
 					<button
 						key={i}
-						onClick={() => handleStory(i)}
+						onClick={() => handleClick(i)}
 						className="w-full py-3"
 					>
 						<div className="h-1 w-full cursor-pointer overflow-hidden rounded-[50px] bg-[#ffffff80]">
-							<motion.div
-								// initial={{ width: "0%" }}
-								style={{ width: width }}
-								// animate={{
-								// 	width: currentStory >= i ? "100%" : "0%",
-								// }}
-								// transition={{
-								// 	duration: 3,
-								// 	ease: "linear",
-								// 	delay: currentStory === i ? 0.5 : 0,
-								// }}
-								// onAnimationComplete={() => handleAnimationComplete(i)}
-								className="h-full rounded-[50px] bg-white"
-							></motion.div>
+							<div
+								id={`story-nav-${i}`}
+								className="story-nav-item h-full rounded-[50px] bg-white"
+							></div>
 						</div>
 					</button>
 				))}

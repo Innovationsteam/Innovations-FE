@@ -1,3 +1,4 @@
+import { ModalType, useModalActions } from "src/store/modal";
 import { FollowUser } from "../components/Buttons";
 import AddComment from "../components/Buttons/AddComment";
 import DropDown from "../components/Buttons/DropDown";
@@ -8,6 +9,8 @@ import { Post } from "../components/Post";
 
 const Article = () => {
 	const labels = ["Technology", "Programming", "Life", "JavaScript", "TypeScript"];
+
+	const { openModal } = useModalActions();
 
 	return (
 		<div>
@@ -87,7 +90,12 @@ const Article = () => {
 								/>
 							</button>
 							<DropDown>
-								<p className="pb-2 font-roboto text-sm text-[#141414CC]">Add a personal note</p>
+								<button
+									onClick={() => openModal(ModalType.PersonalNote)}
+									className="pb-2 font-roboto text-sm text-[#141414CC] transition-colors hover:text-black"
+								>
+									Add a personal note
+								</button>
 								<p className="font-roboto text-sm text-[#BF2828]">Report Article</p>
 							</DropDown>
 						</div>

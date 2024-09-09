@@ -2,27 +2,26 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import PageContainer from "../components/PageContainer";
 import StoriesNav from "../components/Stories/Nav";
+import { useNavigate } from "react-router-dom";
 
 const data = ["/assets/images/story-bg.jpg", "/assets/images/story3.jpg", "/assets/images/story-bg.jpg", "/assets/images/story3.jpg"];
 
 const Stories = () => {
 	const [currentStory, setCurrentStory] = useState(0);
 	const [direction, setDirection] = useState("right");
-
-	// const handleAnimationComplete = (storyId: number) => {
-	// 	if (storyId === currentStory) {
-	// 		setCurrentStory(currentStory + 1);
-	// 	}
-	// };
-
-	console.log(direction);
+	const navigate = useNavigate();
 
 	const handleStory = (storyId: number) => {
-		let direction = "left";
-		if (storyId > currentStory) direction = "right";
-
-		setDirection(direction);
-		setCurrentStory(storyId);
+		if (storyId >= data.length) {
+			navigate("/home");
+		} else {
+			let newDirection = "right";
+			if (storyId < currentStory) {
+				newDirection = "left";
+			}
+			setCurrentStory(storyId);
+			setDirection(newDirection);
+		}
 	};
 
 	return (
@@ -32,7 +31,6 @@ const Stories = () => {
 					totalStories={data.length}
 					currentStory={currentStory}
 					handleStory={handleStory}
-					// handleAnimationComplete={handleAnimationComplete}
 				/>
 				<AnimatePresence
 					mode="wait"
@@ -40,9 +38,9 @@ const Stories = () => {
 				>
 					<motion.div
 						key={currentStory}
-						initial={{ x: direction == "right" ? 1500 : -1500 }}
-						animate={{ x: 0 }}
-						exit={{ x: direction == "right" ? -1500 : 1500 }}
+						initial={{ x: direction === "right" ? "100%" : "-100%" }}
+						animate={{ x: "0%" }}
+						exit={{ x: direction === "right" ? "-100%" : "100%" }}
 						transition={{ duration: 0.3, ease: "linear" }}
 						className="mx-auto mt-6 flex max-w-full justify-center overflow-hidden rounded-lg lg:w-[90%]"
 					>

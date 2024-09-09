@@ -46,7 +46,7 @@ const NavBar = () => {
 						src="/assets/icons/bell.svg"
 						alt=""
 					/>
-					<Link to="/profile">
+					<Link to="/user/profile">
 						<img
 							className="size-8 rounded-full object-cover"
 							src="/assets/images/profile.png"

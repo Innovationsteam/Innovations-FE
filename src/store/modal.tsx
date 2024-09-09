@@ -1,17 +1,30 @@
 import { create } from "zustand";
 
+export enum ModalType {
+	None,
+	Comments,
+	PersonalNote,
+}
+
 interface ModalStoreType {
-	isCommentOpen: boolean;
-	toggleComment: (isOpen: boolean) => void;
+	activeModal: ModalType;
+	actions: {
+		openModal: (modal: ModalType) => void;
+		closeModal: () => void;
+	};
 }
 
 const useModalStore = create<ModalStoreType>((set) => ({
-	isCommentOpen: false,
-	toggleComment: (isOpen) => set(() => ({ isCommentOpen: isOpen })),
+	activeModal: ModalType.None,
+	actions: {
+		openModal: (modal) => set({ activeModal: modal }),
+		closeModal: () => set({ activeModal: ModalType.None }),
+	},
 }));
 
-export const useCommentModal = () => {
-	const isOpen = useModalStore((s) => s.isCommentOpen);
-	const toggleModal = useModalStore((s) => s.toggleComment);
-	return { isOpen, toggleModal };
+export const useActiveModal = (modals: ModalType[]) => {
+	const activeModal = useModalStore((s) => s.activeModal);
+	return modals.includes(activeModal);
 };
+
+export const useModalActions = () => useModalStore((s) => s.actions);

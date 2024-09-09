@@ -1,12 +1,13 @@
+import PersonalNotesModal from "@/components/Modal/PersonalNotesModal";
+import { ModalType, useActiveModal } from "@/store/modal";
 import classNames from "classnames";
 import { Outlet } from "react-router-dom";
-import CommentsModal from "../components/Modal/CommentsModal";
-import NavBar from "../components/Navbar";
-import PageContainer from "../components/PageContainer";
-import { useCommentModal } from "../store/modal";
+import CommentsModal from "@components/Modal/CommentsModal";
+import NavBar from "@components/Navbar";
+import PageContainer from "@components/PageContainer";
 
 const MainLayout = () => {
-	const { isOpen } = useCommentModal();
+	const isOpen = useActiveModal([ModalType.Comments, ModalType.PersonalNote]);
 
 	return (
 		<PageContainer
@@ -17,6 +18,7 @@ const MainLayout = () => {
 			<NavBar />
 			<Outlet />
 			<CommentsModal />
+			<PersonalNotesModal />
 		</PageContainer>
 	);
 };

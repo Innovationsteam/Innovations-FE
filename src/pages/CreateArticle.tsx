@@ -32,7 +32,10 @@ const CreateArticle = () => {
 				/>
 			</div>
 			<section className="min-h-[100vh] py-10">
-				<TipTapEditor />
+				<TipTapEditor
+					titlePlaceholder={"What’s the title?"}
+					textPlaceholder={"Type your article here or click the plus icon for more options"}
+				/>
 			</section>
 		</Container>
 	);

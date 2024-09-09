@@ -3,9 +3,9 @@ import { motion } from "framer-motion";
 import { ReactNode, useState } from "react";
 import { Tooltip } from "react-tooltip";
 
-const PLACES = ["top", "top-start", "top-end", "right", "right-start", "right-end", "bottom", "bottom-start", "bottom-end", "left", "left-start", "left-end"] as const;
+const Positions = ["top", "top-start", "top-end", "right", "right-start", "right-end", "bottom", "bottom-start", "bottom-end", "left", "left-start", "left-end"] as const;
 
-type position = (typeof PLACES)[number];
+type position = (typeof Positions)[number];
 
 const DropDown = ({ children, position = "bottom" }: { children: ReactNode[]; position?: position }) => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -36,6 +36,8 @@ const DropDown = ({ children, position = "bottom" }: { children: ReactNode[]; po
 				</motion.svg>
 			</button>
 			<Tooltip
+				clickable
+				// anchorSelect="#dropDown"
 				id="dropDown"
 				className="!z-50 !rounded-lg !bg-white !bg-opacity-100 !px-3 text-start font-roboto shadow-[0px_1px_20px_#9797976e]"
 				place={position}

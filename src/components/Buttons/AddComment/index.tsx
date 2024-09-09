@@ -1,12 +1,12 @@
 import { motion } from "framer-motion";
-import { useCommentModal } from "../../../store/modal";
+import { ModalType, useModalActions } from "@store/modal";
 
 const AddComment = () => {
-	const { toggleModal } = useCommentModal();
+	const { openModal } = useModalActions();
 	return (
 		<button
 			className="group flex items-center gap-x-1"
-			onClick={() => toggleModal(true)}
+			onClick={() => openModal(ModalType.Comments)}
 		>
 			<motion.svg
 				width="24"

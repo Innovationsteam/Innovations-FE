@@ -3,7 +3,10 @@ import { Link } from "react-router-dom";
 export const Post = () => {
 	return (
 		<li className="mx-auto h-fit w-full rounded-xl border border-[#E6E6E6] p-4">
-			<div className="flex items-center gap-x-3">
+			<Link
+				to="/profile"
+				className="flex items-center gap-x-3"
+			>
 				<img
 					className="size-10 object-cover lg:size-[35px]"
 					src="/assets/images/profile3.png"
@@ -22,7 +25,7 @@ export const Post = () => {
 					src="/assets/icons/ellipsis.svg"
 					alt=""
 				/>
-			</div>
+			</Link>
 			<Link to="/article">
 				<div className="my-5 max-h-[202px] overflow-hidden rounded-lg">
 					<img
