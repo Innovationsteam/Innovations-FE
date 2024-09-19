@@ -2,14 +2,14 @@ import { ModalType, useModalActions } from "@/store/modal";
 import { extractH1Content } from "@/utils/helper";
 import { ChangeEvent, useRef, useState } from "react";
 import toast from "react-hot-toast";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Container from "../components/Container";
 import TipTapEditor from "../components/Editor/TipTapEditor";
 
 const CreateArticle = () => {
 	const { openModal } = useModalActions();
 	const [article, setArticle] = useState(``);
-	// const navigate = useNavigate();
+	const navigate = useNavigate();
 
 	const uploadContainerRef = useRef(null);
 	const fileInputRef = useRef<HTMLInputElement>(null!);
@@ -42,6 +42,7 @@ const CreateArticle = () => {
 			<header className="mt-6 flex flex-col items-center gap-y-5 sm:flex-row lg:mt-10">
 				<button
 					type="button"
+					onClick={() => navigate("/home")}
 					className="mr-auto flex items-center gap-x-2"
 				>
 					<img
@@ -78,7 +79,7 @@ const CreateArticle = () => {
 					alt=""
 				/>
 				<img
-					className="absolute inset-0"
+					className="absolute inset-0 object-cover"
 					src={selectedFile ? URL.createObjectURL(selectedFile) : "/assets/images/post-placeholder.png"}
 					alt=""
 				/>
