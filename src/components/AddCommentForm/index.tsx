@@ -32,7 +32,7 @@ const AddCommentForm = () => {
 				<div className="flex gap-x-2">
 					<button
 						onClick={() => editor?.chain().focus().toggleBold().run()}
-						className={classNames("font-playwrite size-[35px] rounded-lg text-sm font-bold text-[#6B6B6B] hover:bg-[#f2f2f2]", {
+						className={classNames("size-[35px] rounded-lg font-playwrite text-sm font-bold text-[#6B6B6B] hover:bg-[#f2f2f2]", {
 							"bg-[#e8f3e8] text-[#1a8917] hover:bg-[#e8f3e8]": editor?.isActive("bold"),
 						})}
 					>
@@ -40,7 +40,7 @@ const AddCommentForm = () => {
 					</button>
 					<button
 						onClick={() => editor?.chain().focus().toggleItalic().run()}
-						className={classNames("font-playwrite size-[35px] rounded-lg text-sm font-bold text-[#6B6B6B] hover:bg-[#f2f2f2]", {
+						className={classNames("size-[35px] rounded-lg font-playwrite text-sm font-bold text-[#6B6B6B] hover:bg-[#f2f2f2]", {
 							"bg-[#e8f3e8] text-[#1a8917] hover:bg-[#e8f3e8]": editor?.isActive("italic"),
 						})}
 					>

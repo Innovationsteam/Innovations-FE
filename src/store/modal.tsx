@@ -4,27 +4,31 @@ export enum ModalType {
 	None,
 	Comments,
 	PersonalNote,
+	TermsAndConditions,
+	Preview,
 }
 
 interface ModalStoreType {
-	activeModal: ModalType;
+	activeModal: { modal: ModalType; data: any };
 	actions: {
-		openModal: (modal: ModalType) => void;
+		openModal: (modal: ModalType, data?: any) => void;
 		closeModal: () => void;
 	};
 }
 
 const useModalStore = create<ModalStoreType>((set) => ({
-	activeModal: ModalType.None,
+	activeModal: { modal: ModalType.None, data: null },
 	actions: {
-		openModal: (modal) => set({ activeModal: modal }),
-		closeModal: () => set({ activeModal: ModalType.None }),
+		openModal: (modal, data) => set({ activeModal: { modal, data } }),
+		closeModal: () => set({ activeModal: { modal: ModalType.None, data: null } }),
 	},
 }));
 
-export const useActiveModal = (modals: ModalType[]) => {
+export const useModal = () => useModalStore((s) => s.activeModal);
+
+export const useActiveModal = (modal: ModalType) => {
 	const activeModal = useModalStore((s) => s.activeModal);
-	return modals.includes(activeModal);
+	return activeModal.modal === modal;
 };
 
 export const useModalActions = () => useModalStore((s) => s.actions);

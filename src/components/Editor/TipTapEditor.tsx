@@ -14,9 +14,10 @@ interface Props {
 	titlePlaceholder: string;
 	textPlaceholder: string;
 	className?: string;
+	setContent: (content: string) => void;
 }
 
-const TipTapEditor = ({ titlePlaceholder, textPlaceholder, className }: Props) => {
+const TipTapEditor = ({ titlePlaceholder, textPlaceholder, className, setContent }: Props) => {
 	const editor = useEditor({
 		extensions: [
 			CustomDocument,
@@ -37,9 +38,10 @@ const TipTapEditor = ({ titlePlaceholder, textPlaceholder, className }: Props) =
 			}),
 		],
 		content: ``,
+		onUpdate: ({ editor }) => setContent(editor.getHTML()),
 		editorProps: {
 			attributes: {
-				class: cn("font-roboto placeholder:text-[#14141466] text-black focus:outline-none prose max-w-none [&_ol]:list-decimal [&_ul]:list-disc prose-h1:text-[40px] prose-p:text-2xl", className),
+				class: cn("font-roboto placeholder:text-[#14141466] text-black focus:outline-none prose max-w-none [&_ol]:list-decimal [&_ul]:list-disc prose-h1:text-[30px] prose-p:text-xl", className),
 				spellcheck: "true",
 			},
 		},

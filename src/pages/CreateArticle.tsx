@@ -1,40 +1,101 @@
+import { ModalType, useModalActions } from "@/store/modal";
+import { extractH1Content } from "@/utils/helper";
+import { ChangeEvent, useRef, useState } from "react";
+import toast from "react-hot-toast";
+// import { useNavigate } from "react-router-dom";
 import Container from "../components/Container";
 import TipTapEditor from "../components/Editor/TipTapEditor";
 
 const CreateArticle = () => {
+	const { openModal } = useModalActions();
+	const [article, setArticle] = useState(``);
+	// const navigate = useNavigate();
+
+	const uploadContainerRef = useRef(null);
+	const fileInputRef = useRef<HTMLInputElement>(null!);
+	const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+	const onFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+		const file = e.currentTarget.files![0];
+		if (file) {
+			const isValid = file.type.startsWith("image/");
+			isValid ? setSelectedFile(file) : toast.error("Only images are allowed");
+		} else toast.error("Select an Image");
+	};
+
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const onUploadContainerClick = (e: any) => {
+		e.stopPropagation();
+		if (e.target == uploadContainerRef.current) fileInputRef.current.click();
+	};
+
+	const previewArticle = () => {
+		if (article) {
+			if (selectedFile) {
+				openModal(ModalType.Preview, { article, url: URL.createObjectURL(selectedFile) });
+			} else toast.error("Please Select an Image");
+		} else toast.error("Article can't be empty");
+	};
+
 	return (
 		<Container className="!max-w-6xl">
-			<header className="mt-10 flex justify-end gap-x-2">
+			<header className="mt-6 flex flex-col items-center gap-y-5 sm:flex-row lg:mt-10">
 				<button
 					type="button"
-					className="rounded-lg px-4 py-2 font-roboto text-lg text-[#14141499] focus:bg-[#D9D9D952] focus:text-black"
+					className="mr-auto flex items-center gap-x-2"
 				>
-					Save as Draft
+					<img
+						className="size-4 object-cover"
+						src="/assets/icons/chevron-left.svg"
+						alt=""
+					/>
+					<span className="text-nowrap font-roboto text-sm text-[#525252] sm:text-base">Back to Dashboard</span>
 				</button>
-				<button
-					type="button"
-					className="rounded-lg px-4 py-2 font-roboto text-lg text-[#14141499] focus:bg-[#D9D9D952] focus:text-black"
-				>
-					Preview
-				</button>
-				<button
-					type="button"
-					className="rounded-lg px-4 py-2 font-roboto text-lg text-[#14141499] focus:bg-[#D9D9D952] focus:text-black"
-				>
-					Publish
-				</button>
+				<div className="flex w-full items-center justify-start gap-x-3 sm:justify-end">
+					<button
+						type="button"
+						className="rounded-lg px-3 py-2 font-roboto text-sm text-[#14141499] transition-colors duration-100 hover:bg-[#D9D9D952] hover:text-black sm:text-base"
+					>
+						Save as Draft
+					</button>
+					<button
+						type="button"
+						onClick={previewArticle}
+						className="rounded-lg bg-[#D9D9D952] px-3 py-2 font-roboto text-sm text-black sm:text-base"
+					>
+						Publish
+					</button>
+				</div>
 			</header>
-			<div className="relative my-6 h-[238px] md:h-[400px]">
+			<div
+				ref={uploadContainerRef}
+				onClick={onUploadContainerClick}
+				className="relative my-6 flex h-[min(35vw,350px)] min-h-[140px] items-center justify-center overflow-hidden rounded"
+			>
 				<img
-					className="h-full w-full object-cover"
-					src="/assets/images/post-img.png"
+					className="relative z-30 object-cover md:size-[40px]"
+					src="/assets/icons/camera.svg"
 					alt=""
 				/>
+				<img
+					className="absolute inset-0"
+					src={selectedFile ? URL.createObjectURL(selectedFile) : "/assets/images/post-placeholder.png"}
+					alt=""
+				/>
+				<input
+					ref={fileInputRef}
+					type="file"
+					accept="image/*"
+					multiple
+					onChange={onFileChange}
+					style={{ display: "none" }}
+				/>
 			</div>
-			<section className="min-h-[100vh] py-10">
+			<section className="min-h-[100vh]">
 				<TipTapEditor
 					titlePlaceholder={"What’s the title?"}
 					textPlaceholder={"Type your article here or click the plus icon for more options"}
+					setContent={(content) => setArticle(extractH1Content(content))}
 				/>
 			</section>
 		</Container>

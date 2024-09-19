@@ -1,40 +1,41 @@
+import useSize from "@/hooks/useSize";
 import { ModalType, useActiveModal, useModalActions } from "@store/modal";
-import TipTapEditor from "../Editor/TipTapEditor";
+import { motion } from "framer-motion";
+import Container from "../Container";
+import PersonalNoteForm from "../PersonalNoteForm";
 import ModalContainer from "./ModalContainer";
 
 const PersonalNotesModal = () => {
-	const isOpen = useActiveModal([ModalType.PersonalNote]);
+	const isOpen = useActiveModal(ModalType.PersonalNote);
 	const { closeModal } = useModalActions();
+	const [width] = useSize();
 
 	return (
-		<ModalContainer
-			className="relative px-10 pt-10"
-			isOpen={isOpen}
-		>
-			<div className="flex items-center">
-				<span className="text-xl font-semibold">Personal Note</span>
-				<button
-					className="ml-auto rotate-90 transition-transform duration-200 ease-in-out hover:rotate-90"
-					onClick={closeModal}
-				>
-					<img
-						className="size-8 object-cover"
-						src="/assets/icons/close.svg"
-						alt=""
-					/>
-				</button>
-			</div>
-			<TipTapEditor
-				className="mt-6 min-h-[66svh]"
-				titlePlaceholder={"Title"}
-				textPlaceholder={"Type your note here or click the plus icon for more options"}
-			/>
-			<button
-				type="button"
-				className="relative bottom-0 mx-auto mt-5 w-full max-w-[200px] rounded-lg bg-[#1C4532] py-3 font-roboto text-base font-medium text-white disabled:bg-[#979797] md:px-6"
+		<ModalContainer isOpen={isOpen}>
+			<motion.div
+				initial={width >= 1024 ? { x: "100%" } : { y: "100%" }}
+				animate={width >= 1024 ? { x: "0%" } : { y: "0%" }}
+				transition={{ duration: 0.3, ease: "easeOut", delay: 0.2 }}
+				onClick={(e) => e.stopPropagation()}
+				className="absolute bottom-0 h-[90vh] w-full overflow-y-auto rounded-t-3xl bg-white lg:right-0 lg:h-screen lg:max-w-[480px] lg:rounded-none lg:rounded-tl-3xl"
 			>
-				Save
-			</button>
+				<Container className="relative h-full px-10 pb-5 pt-10">
+					<div className="flex items-center">
+						<span className="text-xl font-semibold">Personal Note</span>
+						<button
+							className="ml-auto rotate-90 transition-transform duration-200 ease-in-out hover:rotate-90"
+							onClick={closeModal}
+						>
+							<img
+								className="size-8 object-cover"
+								src="/assets/icons/close.svg"
+								alt=""
+							/>
+						</button>
+					</div>
+					<PersonalNoteForm />
+				</Container>
+			</motion.div>
 		</ModalContainer>
 	);
 };

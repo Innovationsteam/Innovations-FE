@@ -5,20 +5,24 @@ import { Outlet } from "react-router-dom";
 import CommentsModal from "@components/Modal/CommentsModal";
 import NavBar from "@components/Navbar";
 import PageContainer from "@components/PageContainer";
+import TermsAndConditionsModal from "@/components/Modal/TermsAndConditionsModal";
+import PreviewArticleModal from "@/components/Modal/PreviewArticleModal";
 
 const MainLayout = () => {
-	const isOpen = useActiveModal([ModalType.Comments, ModalType.PersonalNote]);
+	const isOpen = useActiveModal(ModalType.None);
 
 	return (
 		<PageContainer
 			className={classNames("relative", {
-				"h-screen overflow-hidden": isOpen,
+				"h-screen overflow-hidden": !isOpen,
 			})}
 		>
 			<NavBar />
 			<Outlet />
 			<CommentsModal />
 			<PersonalNotesModal />
+			<TermsAndConditionsModal />
+			<PreviewArticleModal />
 		</PageContainer>
 	);
 };
