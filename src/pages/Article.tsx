@@ -22,7 +22,7 @@ const Article = () => {
 							<span>·</span>
 							<span>Jan 19, 2023</span>
 							<span>·</span>
-							<span>8 min</span>
+							
 						</p>
 						<h1 className="my-1 font-roboto text-3xl text-[32px] font-bold capitalize text-[#141414] md:text-[42px] md:leading-[52px]">How to grow in faith as a Christian</h1>
 						<h2 className="font-roboto text-sm md:text-base lg:text-lg">101 ways on how to build your faith</h2>

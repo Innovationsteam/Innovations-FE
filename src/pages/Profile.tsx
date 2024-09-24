@@ -1,12 +1,12 @@
 import { Outlet } from "react-router-dom";
 import { EditProfile, FollowUser } from "../components/Buttons";
-import DropDown from "../components/Buttons/DropDown";
+// import DropDown from "../components/Buttons/DropDown";
 import Container from "../components/Container";
 import { MiniNav, MiniNavMobile } from "../components/MiniNav";
 
 const tabs = ["home", "about", "blogs", "reading-list", "followers", "following"];
 
-const adminTabs = [...tabs, "saved", "analytics", "settings"];
+const adminTabs = [...tabs, "saved", "analytics", "drafts", "notes", "settings"];
 
 const Profile = ({ allowEdit }: { allowEdit?: boolean }) => {
 	return (
@@ -37,12 +37,12 @@ const Profile = ({ allowEdit }: { allowEdit?: boolean }) => {
 								<p className="text-xs text-[#14141499] md:text-base">136 followers</p>
 							</div>
 						</div>
-						<div className="ml-auto flex items-center gap-x-3">
-							<DropDown position="top">
+						<div className="ml-auto flex items-center gap-x-2">
+							{/* <DropDown position="top">
 								<button className="b-2 block font-roboto text-sm text-[#141414]">Profile</button>
 								<button className="b-2 block py-2 font-roboto text-sm text-[#141414]">Settings</button>
 								<button className="b-2 block font-roboto text-sm text-[#141414]">Logout</button>
-							</DropDown>
+							</DropDown> */}
 							{allowEdit ? <EditProfile /> : <FollowUser />}
 						</div>
 					</div>

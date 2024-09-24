@@ -19,6 +19,8 @@ import VerifyOTP from "./pages/VerifyOTP";
 import Settings from "./components/Profile/Settings";
 import CreateArticle from "./pages/CreateArticle";
 import Analytics from "./components/Profile/Analytics";
+import Notes from "./components/Profile/Notes";
+import Drafts from "./components/Profile/Drafts";
 // import Analytics from "./components/Profile/Analytics";
 
 export const router = createBrowserRouter([
@@ -67,6 +69,8 @@ export const router = createBrowserRouter([
 					{ path: "following", element: <FollowersList /> },
 					{ path: "analytics", element: <Analytics /> },
 					{ path: "settings", element: <Settings /> },
+					{path:"notes",element:<Notes/>},
+					{path:"drafts",element:<Drafts/>}
 				],
 			},
 		],

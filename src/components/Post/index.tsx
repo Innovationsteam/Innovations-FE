@@ -14,10 +14,10 @@ export const Post = () => {
 				/>
 				<div className="flex flex-col items-start gap-x-5 font-roboto text-[#5B7083] xl:flex-row xl:items-center">
 					<span className="text-base text-[#2A2A2A] lg:mr-2">Jessica Blue</span>
-					<p className="flex items-center gap-x-[6px] text-sm">
+					<p className="flex items-center gap-x-[2px] text-sm">
 						<span>Jan 19, 2023</span>
 						<span>·</span>
-						<span>8 min</span>
+	
 					</p>
 				</div>
 				<img

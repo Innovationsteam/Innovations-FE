@@ -39,6 +39,7 @@ const NavBar = () => {
 					<span className="text-[#04BF87]">Christian</span>Writes
 				</Link>
 				<div className="ml-auto flex items-center gap-x-3">
+			
 					<img
 						className="ml-auto size-6"
 						src="/assets/icons/search.svg"
@@ -49,6 +50,7 @@ const NavBar = () => {
 						src="/assets/icons/bell.svg"
 						alt=""
 					/>
+
 					<Link to="/user/profile">
 						<img
 							className="size-8 rounded-full object-cover"
