@@ -6,23 +6,36 @@ import { Like } from "../components/Buttons/Like";
 import Tag from "../components/Buttons/Tag";
 import Container from "../components/Container";
 import { Post } from "../components/Post";
+import { useNavigate } from "react-router-dom";
 
 const Article = () => {
 	const labels = ["Technology", "Programming", "Life", "JavaScript", "TypeScript"];
 
 	const { openModal } = useModalActions();
+	const navigate = useNavigate();
 
 	return (
 		<div>
 			<section className="py-10">
 				<Container className="max-w-[992px]">
+					<button
+						type="button"
+						onClick={() => navigate("/home")}
+						className="mr-auto flex items-center gap-x-2"
+					>
+						<img
+							className="size-4 object-cover"
+							src="/assets/icons/chevron-left.svg"
+							alt=""
+						/>
+						<span className="text-nowrap font-roboto text-sm text-[#525252] sm:text-base">Back to Dashboard</span>
+					</button>
 					<header className="mt-4 text-center text-[#141414CC]">
 						<p className="mx-auto flex items-center justify-center gap-x-[6px] font-roboto text-sm md:text-base lg:text-lg">
 							<span>Joshua Fill</span>
 							<span>·</span>
 							<span>Jan 19, 2023</span>
 							<span>·</span>
-							
 						</p>
 						<h1 className="my-1 font-roboto text-3xl text-[32px] font-bold capitalize text-[#141414] md:text-[42px] md:leading-[52px]">How to grow in faith as a Christian</h1>
 						<h2 className="font-roboto text-sm md:text-base lg:text-lg">101 ways on how to build your faith</h2>

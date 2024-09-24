@@ -1,11 +1,12 @@
 import classNames from "classnames";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Container from "../Container";
 
 const NavBar = () => {
 	const [scrolled, setScrolled] = useState(false);
+	const navigate = useNavigate()
 
 	useEffect(() => {
 		const onScroll = () => {
@@ -39,16 +40,25 @@ const NavBar = () => {
 					<span className="text-[#04BF87]">Christian</span>Writes
 				</Link>
 				<div className="ml-auto flex items-center gap-x-3">
-			
+					<button
+						className=""
+						onClick={() => navigate("/article/new")}
+					>
+						<img
+							className="ml-auto size-6"
+							src="/assets/icons/pencil-icon.svg"
+							alt="Write icon"
+						/>
+					</button>
 					<img
-						className="ml-auto size-6"
+						className="ml-auto size-6 object-cover"
 						src="/assets/icons/search.svg"
 						alt="search icon"
 					/>
 					<img
 						className="size-6 object-cover"
 						src="/assets/icons/bell.svg"
-						alt=""
+						alt="notification"
 					/>
 
 					<Link to="/user/profile">
