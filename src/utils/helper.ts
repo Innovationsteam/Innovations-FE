@@ -21,3 +21,9 @@ export function extractH1Content(html: string): string {
 	const h1Match = html.match(/<h1>(.*?)<\/h1>/);
 	return h1Match ? h1Match[1] : "";
 }
+
+  export function extractPContent(html: string): any {
+	const paragraphRegex = /<[^>]+>.*?<\/[^>]+>/g;
+	const paragraphs = html.match(paragraphRegex);
+	return paragraphs || [];
+  }

@@ -1,21 +1,50 @@
 import { ModalType, useModal, useModalActions } from "@/store/modal";
 import Container from "../Container";
 import ModalContainer from "./ModalContainer";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { axiosInstance } from "../../service/apiClient"
+import toast from "react-hot-toast";
 
 const PreviewArticleModal = () => {
 	const { closeModal } = useModalActions();
+	const token = sessionStorage.getItem("myToken");
 
 	const { modal, data } = useModal();
 
 	const isOpen = useMemo(() => modal === ModalType.Preview, [modal]);
 
 	const navigate = useNavigate();
+	const [Hash, setHash] = useState("")
+	const addHashtag = (event: any) => {
+		const hashtags = event.target.value.split(' ').map((item: string) => item.startsWith('#') ? item : `#${item}`).filter(Boolean);
+		setHash(hashtags.join(','));
+	};
 
-	const goTo = () => {
-		closeModal();
-		navigate("/article");
+	const handlePublish = async () => {
+		try {
+			const response = await axiosInstance.post("api/posts/", {
+				title: data?.article,
+				content: data?.articlebody.join(''),
+				category: Hash,
+				image: data?.url,
+				hashtags: Hash,
+				status: "published"
+			}, {
+				headers: {
+					Authorization: `Bearer ${token}`,
+					"Content-Type": "application/json",
+				},
+			})
+			toast.success("Post Sent 🎉");
+			console.log("response-------", response)
+			closeModal();
+			navigate("/article");
+		}
+		catch (err) {
+			toast.error("Failed to upload");
+			console.error("Error:", err);
+		}
 	};
 
 	if (!data) return null;
@@ -45,15 +74,16 @@ const PreviewArticleModal = () => {
 						</div>
 						<h1 className="font-roboto text-2xl font-semibold text-black">{data.article}</h1>
 						<div className="mt-6 flex flex-col">
-							<h3 className="mb-2 font-bold text-[#141414]">Add Hastags</h3>
+							<h3 className="mb-2 font-bold text-[#141414]">Add Hashtags</h3>
 							<textarea
 								id="hashtags"
 								placeholder="Include hashtags in your article to help readers understand its topic at a glance."
 								className="mb-4 h-[90px] w-full rounded-lg border border-[#CBD5E0] bg-[#CBD5E01C] px-2 py-3 text-xs text-black placeholder:text-[#2A2A2AB2] sm:text-sm"
+								onChange={addHashtag}
 							></textarea>
 							<button
 								type="button"
-								onClick={goTo}
+								onClick={handlePublish}
 								className="ml-auto w-full max-w-[100px] rounded-lg bg-[#04BF87] py-2 font-raleway text-sm font-semibold text-white md:py-[10px] md:text-base"
 							>
 								Publish

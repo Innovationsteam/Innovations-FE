@@ -28,7 +28,7 @@ type LoginResponse = ResponseData<{
 
 const loginUser = async (payload: LoginFormData): Promise<LoginResponse> => {
 	try {
-		const res = await axiosInstance.post("/auth/login", payload);
+		const res = await axiosInstance.post("/api/auth/login", payload);
 		return res.data;
 	} catch (error) {
 		throw error as AxiosError;
@@ -44,6 +44,7 @@ export const useLoginUser = (nextPage: string) => {
 		onSuccess: ({ data }: LoginResponse) => {
 			toast.success("Login Successful");
 			setUser(data!.username);
+			sessionStorage.setItem("myToken",data?.access_token)
 			setCookie("token", data?.access_token, {
 				expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
 			});

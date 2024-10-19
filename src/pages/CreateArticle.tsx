@@ -1,5 +1,5 @@
 import { ModalType, useModalActions } from "@/store/modal";
-import { extractH1Content } from "@/utils/helper";
+import { extractH1Content,extractPContent } from "@/utils/helper";
 import { ChangeEvent, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +9,7 @@ import TipTapEditor from "../components/Editor/TipTapEditor";
 const CreateArticle = () => {
 	const { openModal } = useModalActions();
 	const [article, setArticle] = useState(``);
+	const [articlebody, setArticlebody]= useState("")
 	const navigate = useNavigate();
 
 	const uploadContainerRef = useRef(null);
@@ -30,9 +31,10 @@ const CreateArticle = () => {
 	};
 
 	const previewArticle = () => {
+		console.log("article-----------", article, articlebody)
 		if (article) {
 			if (selectedFile) {
-				openModal(ModalType.Preview, { article, url: URL.createObjectURL(selectedFile) });
+				openModal(ModalType.Preview, { article, url: URL.createObjectURL(selectedFile),articlebody});
 			} else toast.error("Please Select an Image");
 		} else toast.error("Article can't be empty");
 	};
@@ -96,7 +98,10 @@ const CreateArticle = () => {
 				<TipTapEditor
 					titlePlaceholder={"What’s the title?"}
 					textPlaceholder={"Type your article here or click the plus icon for more options"}
-					setContent={(content) => setArticle(extractH1Content(content))}
+					setContent={(content) => {
+						setArticle(extractH1Content(content))
+						setArticlebody(extractPContent(content))
+					}}
 				/>
 			</section>
 		</Container>
