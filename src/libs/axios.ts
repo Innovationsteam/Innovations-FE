@@ -1,5 +1,7 @@
 import axios from "axios";
 
-export const axiosInstance = axios.create({
+const client = axios.create({
 	baseURL: "https://writers-platform.onrender.com/api",
 });
+
+export default client;
