@@ -1,39 +1,9 @@
-import { AxiosError } from "axios";
-import { axiosInstance } from "../service/apiClient";
-import { LoginFormData } from "../components/LoginForm";
 import { useMutation } from "@tanstack/react-query";
-import toast from "react-hot-toast";
 import { useCookies } from "react-cookie";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { SignUpFormData } from "../components/SignUpForm";
-import { ResetPasswordData } from "../pages/ResetPassword";
 import { useAuthStore } from "../store/auth";
-
-interface ResponseData<T> {
-	data: T;
-	success: boolean;
-	message: string;
-}
-
-type SignUpResponse = ResponseData<{
-	username: string;
-	email: string;
-	name: string;
-}>;
-
-type LoginResponse = ResponseData<{
-	access_token: string;
-	username: string;
-}>;
-
-const loginUser = async (payload: LoginFormData): Promise<LoginResponse> => {
-	try {
-		const res = await axiosInstance.post("/api/auth/login", payload);
-		return res.data;
-	} catch (error) {
-		throw error as AxiosError;
-	}
-};
+import { loginUser, signUpUser, sendToken } from "@/actions/auth.actions";
 
 export const useLoginUser = (nextPage: string) => {
 	const setUser = useAuthStore((s) => s.setUser);
@@ -41,7 +11,7 @@ export const useLoginUser = (nextPage: string) => {
 	const navigate = useNavigate();
 	return useMutation({
 		mutationFn: loginUser,
-		onSuccess: ({ data }: LoginResponse) => {
+		onSuccess: ({ data }) => {
 			toast.success("Login Successful");
 			setUser(data!.username);
 			sessionStorage.setItem("myToken",data?.access_token)
@@ -53,15 +23,6 @@ export const useLoginUser = (nextPage: string) => {
 	});
 };
 
-const signUpUser = async (payload: SignUpFormData): Promise<SignUpResponse> => {
-	try {
-		const res = await axiosInstance.post("/auth/register", payload);
-		return res.data;
-	} catch (error) {
-		throw error as AxiosError;
-	}
-};
-
 export const useSignUpUser = () => {
 	const navigate = useNavigate();
 	return useMutation({
@@ -71,15 +32,6 @@ export const useSignUpUser = () => {
 			navigate("/login");
 		},
 	});
-};
-
-const sendToken = async (payload: ResetPasswordData) => {
-	try {
-		const res = await axiosInstance.post("/auth/send-reset-token", payload);
-		return res.data;
-	} catch (error) {
-		throw error as AxiosError;
-	}
 };
 
 export const useSendToken = () => {

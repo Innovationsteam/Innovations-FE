@@ -3,8 +3,8 @@ import Container from "../Container";
 import ModalContainer from "./ModalContainer";
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { axiosInstance } from "../../service/apiClient"
 import toast from "react-hot-toast";
+import client from "@/libs/axios";
 
 const PreviewArticleModal = () => {
 	const { closeModal } = useModalActions();
@@ -15,33 +15,40 @@ const PreviewArticleModal = () => {
 	const isOpen = useMemo(() => modal === ModalType.Preview, [modal]);
 
 	const navigate = useNavigate();
-	const [Hash, setHash] = useState("")
+	const [Hash, setHash] = useState("");
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const addHashtag = (event: any) => {
-		const hashtags = event.target.value.split(' ').map((item: string) => item.startsWith('#') ? item : `#${item}`).filter(Boolean);
-		setHash(hashtags.join(','));
+		const hashtags = event.target.value
+			.split(" ")
+			.map((item: string) => (item.startsWith("#") ? item : `#${item}`))
+			.filter(Boolean);
+		setHash(hashtags.join(","));
 	};
 
 	const handlePublish = async () => {
 		try {
-			const response = await axiosInstance.post("api/posts/", {
-				title: data?.article,
-				content: data?.articlebody.join(''),
-				category: Hash,
-				image: data?.url,
-				hashtags: Hash,
-				status: "published"
-			}, {
-				headers: {
-					Authorization: `Bearer ${token}`,
-					"Content-Type": "application/json",
+			const response = await client.post(
+				"api/posts/",
+				{
+					title: data?.article,
+					content: data?.articlebody.join(""),
+					category: Hash,
+					image: data?.url,
+					hashtags: Hash,
+					status: "published",
 				},
-			})
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+						"Content-Type": "application/json",
+					},
+				}
+			);
 			toast.success("Post Sent 🎉");
-			console.log("response-------", response)
+			console.log("response-------", response);
 			closeModal();
 			navigate("/article");
-		}
-		catch (err) {
+		} catch (err) {
 			toast.error("Failed to upload");
 			console.error("Error:", err);
 		}
