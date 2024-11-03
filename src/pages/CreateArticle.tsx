@@ -10,7 +10,6 @@ const CreateArticle = () => {
 	const { openModal } = useModalActions();
 	const [article, setArticle] = useState(``);
 	const [articlebody, setArticlebody]= useState("")
-	const [file, setFile] = useState(null)
 	const navigate = useNavigate();
 	const [image, setImage] = useState<string | null>(null)
 	const uploadContainerRef = useRef(null);

@@ -1,11 +1,10 @@
 import { ModalType, useModal, useModalActions } from "@/store/modal";
 import Container from "../Container";
 import ModalContainer from "./ModalContainer";
-import { useEffect, useMemo, useState } from "react";
+import {  useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { axiosInstance } from "../../service/apiClient"
 import toast from "react-hot-toast";
-import { Spinner } from "react-activity";
 import ClipLoader from "react-spinners/ClipLoader";
 
 const PreviewArticleModal = () => {
@@ -95,7 +94,7 @@ const PreviewArticleModal = () => {
 								{loading ? <ClipLoader
 									loading={loading}
 									size={28}
-									
+
 									color="#fff"
 								/> : "publish"}
 							</button>

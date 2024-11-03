@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
-import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { useState } from 'react';
 import { FaRegHeart, FaRegComment } from "react-icons/fa";
 import { BsShare } from 'react-icons/bs';
 import Skeleton from 'react-loading-skeleton';
