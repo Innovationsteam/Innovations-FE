@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const client = axios.create({
-	baseURL: "https://writers-platform.onrender.com/api",
+	baseURL: "https://christianwritesbe.onrender.com",
+	// withCredentials:true,
 });
 
 export default client;

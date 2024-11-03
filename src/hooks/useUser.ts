@@ -13,8 +13,9 @@ export const useLoginUser = (nextPage: string) => {
 		mutationFn: loginUser,
 		onSuccess: ({ data }) => {
 			toast.success("Login Successful");
-			setUser(data.username);
-			setCookie("token", data.access_token, {
+			setUser(data!.username);
+			sessionStorage.setItem("myToken",data?.access_token)
+			setCookie("token", data?.access_token, {
 				expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
 			});
 			navigate(nextPage);
