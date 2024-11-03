@@ -22,8 +22,9 @@ export function extractH1Content(html: string): string {
 	return h1Match ? h1Match[1] : "";
 }
 
-  export function extractPContent(html: string): any {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function extractPContent(html: string): any {
 	const paragraphRegex = /<[^>]+>.*?<\/[^>]+>/g;
 	const paragraphs = html.match(paragraphRegex);
 	return paragraphs || [];
-  }
+}

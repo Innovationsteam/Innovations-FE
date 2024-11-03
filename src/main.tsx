@@ -17,7 +17,7 @@ const queryClient = new QueryClient({
 	mutationCache: new MutationCache({
 		onError: (error) => {
 			if (error instanceof AxiosError) {
-				if (error.response) error?.response.data.error.map((error: any) => error?.message).forEach((message: string) => toast.error(message));
+				if (error.response) error?.response.data.error.map((error: AxiosError) => error?.message).forEach((message: string) => toast.error(message));
 				else toast.error(error.message);
 			}
 		},

@@ -3,7 +3,7 @@ import Container from "../Container";
 import ModalContainer from "./ModalContainer";
 import {  useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { axiosInstance } from "../../service/apiClient"
+import client from "@/libs/axios";
 import toast from "react-hot-toast";
 import ClipLoader from "react-spinners/ClipLoader";
 
@@ -33,7 +33,7 @@ const PreviewArticleModal = () => {
 		console.log("Data meant", formData)
 		setLoading(true)
 		try {
-			const response = await axiosInstance.post("api/posts/", formData, {
+			const response = await client.post("api/posts/", formData, {
 				headers: {
 					Accept: "/*",
 					"Content-Type": "multipart/form-data",

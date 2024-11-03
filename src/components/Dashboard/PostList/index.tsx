@@ -1,6 +1,6 @@
 import { Post } from "../../Post";
 import { useEffect, useState, useCallback } from "react";
-import { axiosInstance } from "../../../service/apiClient";
+import client from "@/libs/axios";
 import PostSkeleton from './postskeleton';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
@@ -38,7 +38,7 @@ const PostList = () => {
     const getPost = useCallback(async (page: number, limit: number) => {
         try {
             setLoading(true);
-            const response = await axiosInstance.get(`/api/posts/?page=${page}&limit=${limit}`, {
+            const response = await client.get(`/api/posts/?page=${page}&limit=${limit}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     "Content-Type": "application/json",
