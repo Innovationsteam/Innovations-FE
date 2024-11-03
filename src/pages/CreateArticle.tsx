@@ -10,22 +10,35 @@ const CreateArticle = () => {
 	const { openModal } = useModalActions();
 	const [article, setArticle] = useState(``);
 	const [articlebody, setArticlebody]= useState("")
+	const [file, setFile] = useState(null)
 	const navigate = useNavigate();
-
+	const [image, setImage] = useState<string | null>(null)
 	const uploadContainerRef = useRef(null);
 	const fileInputRef = useRef<HTMLInputElement>(null!);
 	const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
 	const onFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-		const file = e.currentTarget.files![0];
-		if (file) {
-			const isValid = file.type.startsWith("image/");
-			isValid ? setSelectedFile(file) : toast.error("Only images are allowed");
-		} else toast.error("Select an Image");
-	};
+        const file = e.currentTarget.files![0];
+        if (file) {
+            const isValid = file.type.startsWith("image/");
+            if (isValid) {
+                setSelectedFile(file);
+                const reader = new FileReader();
+                reader.onload = () => {
+                    setImage(reader.result as string); 
+                };
+                reader.readAsDataURL(file);
+            } else {
+                toast.error("Only images are allowed");
+            }
+        } else {
+            toast.error("Select an Image");
+        }
+    };
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const onUploadContainerClick = (e: any) => {
+		console.log(e.target.files)
 		e.stopPropagation();
 		if (e.target == uploadContainerRef.current) fileInputRef.current.click();
 	};
@@ -34,7 +47,7 @@ const CreateArticle = () => {
 		console.log("article-----------", article, articlebody)
 		if (article) {
 			if (selectedFile) {
-				openModal(ModalType.Preview, { article, url: URL.createObjectURL(selectedFile),articlebody});
+				openModal(ModalType.Preview, { article, url: selectedFile, backdrop: image,articlebody});
 			} else toast.error("Please Select an Image");
 		} else toast.error("Article can't be empty");
 	};

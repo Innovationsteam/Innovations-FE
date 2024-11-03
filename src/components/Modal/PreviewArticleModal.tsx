@@ -1,10 +1,12 @@
 import { ModalType, useModal, useModalActions } from "@/store/modal";
 import Container from "../Container";
 import ModalContainer from "./ModalContainer";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { axiosInstance } from "../../service/apiClient"
 import toast from "react-hot-toast";
+import { Spinner } from "react-activity";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const PreviewArticleModal = () => {
 	const { closeModal } = useModalActions();
@@ -16,24 +18,27 @@ const PreviewArticleModal = () => {
 
 	const navigate = useNavigate();
 	const [Hash, setHash] = useState("")
+	const [loading, setLoading] = useState(false)
 	const addHashtag = (event: any) => {
 		const hashtags = event.target.value.split(' ').map((item: string) => item.startsWith('#') ? item : `#${item}`).filter(Boolean);
 		setHash(hashtags.join(','));
 	};
-
 	const handlePublish = async () => {
+		const formData = new FormData()
+		formData.append("title", data?.article);
+		formData.append("content", data?.articlebody.join(''));
+		formData.append("category", Hash);
+		formData.append("image", data?.url);
+		formData.append("hashtags", Hash);
+		formData.append("status", "published");
+		console.log("Data meant", formData)
+		setLoading(true)
 		try {
-			const response = await axiosInstance.post("api/posts/", {
-				title: data?.article,
-				content: data?.articlebody.join(''),
-				category: Hash,
-				image: data?.url,
-				hashtags: Hash,
-				status: "published"
-			}, {
+			const response = await axiosInstance.post("api/posts/", formData, {
 				headers: {
+					Accept: "/*",
+					"Content-Type": "multipart/form-data",
 					Authorization: `Bearer ${token}`,
-					"Content-Type": "application/json",
 				},
 			})
 			toast.success("Post Sent 🎉");
@@ -45,6 +50,7 @@ const PreviewArticleModal = () => {
 			toast.error("Failed to upload");
 			console.error("Error:", err);
 		}
+		setLoading(false)
 	};
 
 	if (!data) return null;
@@ -68,7 +74,7 @@ const PreviewArticleModal = () => {
 						<div className="relative my-6 flex h-[min(20vw,200px)] min-h-[140px] items-center justify-center overflow-hidden rounded">
 							<img
 								className="h-full w-full object-cover"
-								src={data?.url}
+								src={data?.backdrop}
 								alt=""
 							/>
 						</div>
@@ -86,7 +92,12 @@ const PreviewArticleModal = () => {
 								onClick={handlePublish}
 								className="ml-auto w-full max-w-[100px] rounded-lg bg-[#04BF87] py-2 font-raleway text-sm font-semibold text-white md:py-[10px] md:text-base"
 							>
-								Publish
+								{loading ? <ClipLoader
+									loading={loading}
+									size={28}
+									
+									color="#fff"
+								/> : "publish"}
 							</button>
 						</div>
 					</section>
