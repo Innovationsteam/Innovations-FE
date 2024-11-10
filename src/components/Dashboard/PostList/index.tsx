@@ -22,6 +22,7 @@ const PostList = () => {
         content: string;
         likes: number;
         views: number;
+        category:string
         socialMediaShares: number;
     }
 
@@ -89,6 +90,7 @@ const PostList = () => {
                                 content={item.content}
                                 likes={item.likes}
                                 views={item.views}
+                                hashtags= {item.category}
                                 socialMediaShares={item.socialMediaShares}
                             />
                         ))

@@ -93,7 +93,7 @@ const PreviewArticleModal = () => {
 							>
 								{loading ? <ClipLoader
 									loading={loading}
-									size={28}
+									size={25}
 
 									color="#fff"
 								/> : "publish"}
