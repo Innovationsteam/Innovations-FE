@@ -56,6 +56,7 @@ const TrendingArticles = () => {
 						image={post.image}
 						content={post.content}
 						// author={post.author.name}
+						id={post.id}
 						title={post.title}
 					/>
 				))

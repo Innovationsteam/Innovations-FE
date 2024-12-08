@@ -8,14 +8,14 @@ import { useQuery } from "@tanstack/react-query";
 const PostList = () => {
     const token = sessionStorage.getItem("myToken");
     const [posts, setPosts] = useState<PostItem[]>([]);
-    const [hasMore, setHasMore] = useState(true); 
-    const [page, setPage] = useState(1); 
+    const [hasMore, setHasMore] = useState(true);
+    const [page, setPage] = useState(1);
 
     interface PostItem {
         author: {
             name: string;
         };
-        id:string;
+        id: string;
         publishedDate: string;
         image: string;
         title: string;
@@ -74,7 +74,7 @@ const PostList = () => {
     }
 
     if (isError) {
-        return <p>Error loading posts.</p>;
+        return <p className="text-center text-lg text-gray-600 mt-5">Error loading posts.</p>;
     }
 
     return (
@@ -83,7 +83,8 @@ const PostList = () => {
             next={loadMorePosts}
             hasMore={hasMore}
             loader={<PostSkeleton />}
-            endMessage={<p>No more posts to load.</p>}
+            endMessage={<p className="text-center text-lg text-gray-600 mt-5">
+                You're all caught up!!       </p>}
         >
             <ul className="mt-10 grid h-full gap-y-4">
                 {posts.length > 0 ? (

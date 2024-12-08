@@ -1,5 +1,5 @@
 import { ModalType, useModalActions } from "src/store/modal";
-import { FollowUser  } from "../components/Buttons";
+import { FollowUser } from "../components/Buttons";
 import AddComment from "../components/Buttons/AddComment";
 import DropDown from "../components/Buttons/DropDown";
 import { Like } from "../components/Buttons/Like";
@@ -10,12 +10,13 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState, useCallback } from "react";
 import client from "@/libs/axios";
 import ArticleSkeleton from "./ArticleSkeleton";
+import errorImg from "../../public/assets/images/Error.jpg"
 const Article = () => {
     const token = sessionStorage.getItem("myToken");
     const { openModal } = useModalActions();
     const navigate = useNavigate();
     const location = useLocation();
-    const id = location.state || ""; 
+    const id = location.state || "";
     interface PostItem {
         author: {
             name: string;
@@ -31,8 +32,8 @@ const Article = () => {
         socialMediaShares: number;
     }
 
-    const [post, setPost] = useState<PostItem | null>(null); 
-	 
+    const [post, setPost] = useState<PostItem | null>(null);
+    const [error, setError] = useState(false)
     const getPost = useCallback(async () => {
         try {
             const response = await client.get(`/api/posts/${id}`, {
@@ -41,7 +42,7 @@ const Article = () => {
                     "Content-Type": "application/json",
                 },
             });
-			const single = response.data.data
+            const single = response.data.data
             const postData = {
                 author: { name: single.author.name || '' },
                 id: single.id,
@@ -58,6 +59,7 @@ const Article = () => {
             setPost(postData);
         } catch (error) {
             console.error("Error fetching post:", error);
+            setError(true)
         }
     }, [id, token]);
 
@@ -65,10 +67,35 @@ const Article = () => {
         getPost();
     }, [getPost]);
 
-    if (!post) {
-        return <ArticleSkeleton/>; 
+    if (error) {
+        return (
+            <section className="py-10">
+                <Container className="max-w-[992px]">
+                    <button
+                        type="button"
+                        onClick={() => navigate("/home")}
+                        className="mr-auto flex items-center gap-x-2"
+                    >
+                        <img
+                            className="size-4 object-cover"
+                            src="/assets/icons/chevron-left.svg"
+                            alt=""
+                        />
+                        <span className="text-nowrap font-roboto text-sm text-[#525252] sm:text-base">Back to Dashboard</span>
+                    </button>
+                    <div className="flex justify-center items-center h-[50vh]">
+                        <img src={errorImg} alt="Error" className="w-1/2 h-auto object-contain" />
+                    </div>
+                    <p className="text-center text-3xl text-gray-600 mt-5">
+                        Error loading post        </p>
+                </Container>
+            </section>
+        )
     }
+    if (!post) {
+        return <ArticleSkeleton />;
 
+    }
     const labels = post.category.split(/[\s,#]+/).map((tag: string) => tag.replace('#', ''));
 
     return (
@@ -95,7 +122,7 @@ const Article = () => {
                             <span>·</span>
                         </p>
                         <h1 className="my-1 font-roboto text-3xl text-[32px] font-bold capitalize text-[#141414] md:text-[42px] md:leading-[52px]">{post.title}</h1>
-                        <h2 className ="font-roboto text-sm md:text-base lg:text-lg">101 ways on how to build your faith</h2>
+                        <h2 className="font-roboto text-sm md:text-base lg:text-lg">101 ways on how to build your faith</h2>
                     </header>
                     <div className="relative my-10 h-[238px] md:h-[400px]">
                         <img
@@ -152,7 +179,7 @@ const Article = () => {
                                 src="/assets/images/avatar.svg"
                                 alt=""
                             />
-                            <FollowUser  className="ml-auto" />
+                            <FollowUser className="ml-auto" />
                         </div>
                         <span className="mb-2 font-roboto text-2xl font-medium text-[#141414CC]">Written by {post.author.name}</span>
                         <div className="mb-2 flex gap-x-4">
