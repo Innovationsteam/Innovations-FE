@@ -41,9 +41,10 @@ const PreviewArticleModal = () => {
 				},
 			})
 			toast.success("Post Sent 🎉");
-			console.log("response-------", response)
 			closeModal();
-			navigate("/article");
+			navigate("/article", { 
+				state: response.data.id
+			});
 		}
 		catch (err) {
 			toast.error("Failed to upload");
@@ -93,7 +94,7 @@ const PreviewArticleModal = () => {
 							>
 								{loading ? <ClipLoader
 									loading={loading}
-									size={28}
+									size={25}
 
 									color="#fff"
 								/> : "publish"}

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const PostSkeleton = () => {
   return (
     <li className="mx-auto h-fit w-full rounded-xl border border-[#E6E6E6] p-4 mb-4">
-      <Link to="/profile" className="flex items-center gap-x-3">
+      <Link to="/home" className="flex items-center gap-x-3">
         <Skeleton circle={true} height={35} width={35} />
         <div className="flex flex-col items-start gap-x-5 font-roboto text-[#5B7083] xl:flex-row xl:items-center">
           <Skeleton height={20} width={100} />
@@ -16,7 +16,7 @@ const PostSkeleton = () => {
         </div>
         <Skeleton height={20} width={20} />
       </Link>
-      <Link to="/article">
+      <Link to="/home">
         <div className="my-5 max-h-[202px] overflow-hidden rounded-lg">
           <Skeleton height={202} width={`100%`} />
         </div>
