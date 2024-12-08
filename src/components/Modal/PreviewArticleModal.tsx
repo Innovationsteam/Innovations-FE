@@ -41,9 +41,10 @@ const PreviewArticleModal = () => {
 				},
 			})
 			toast.success("Post Sent 🎉");
-			console.log("response-------", response)
 			closeModal();
-			navigate("/article");
+			navigate("/article", { 
+				state: response.data.id
+			});
 		}
 		catch (err) {
 			toast.error("Failed to upload");

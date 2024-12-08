@@ -28,9 +28,7 @@ export const Post = (props: any) => {
 	}
 	const toArticle = () => {
 		navigate("/article", { 
-			state: {props: props,
-				text: convertToOriginalFormat(props.content)
-			} 
+			state: props.id
 		})
 	}
 	return (
