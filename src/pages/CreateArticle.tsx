@@ -1,5 +1,5 @@
 import { ModalType, useModalActions } from "@/store/modal";
-import { extractH1Content,extractPContent } from "@/utils/helper";
+import { extractH1Content, extractPContent } from "@/utils/helper";
 import { ChangeEvent, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -9,45 +9,45 @@ import TipTapEditor from "../components/Editor/TipTapEditor";
 const CreateArticle = () => {
 	const { openModal } = useModalActions();
 	const [article, setArticle] = useState(``);
-	const [articlebody, setArticlebody]= useState("")
-	const [file, setFile] = useState(null)
+	const [articlebody, setArticlebody] = useState("");
+	// const [file, setFile] = useState(null)
 	const navigate = useNavigate();
-	const [image, setImage] = useState<string | null>(null)
+	const [image, setImage] = useState<string | null>(null);
 	const uploadContainerRef = useRef(null);
 	const fileInputRef = useRef<HTMLInputElement>(null!);
 	const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
 	const onFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const file = e.currentTarget.files![0];
-        if (file) {
-            const isValid = file.type.startsWith("image/");
-            if (isValid) {
-                setSelectedFile(file);
-                const reader = new FileReader();
-                reader.onload = () => {
-                    setImage(reader.result as string); 
-                };
-                reader.readAsDataURL(file);
-            } else {
-                toast.error("Only images are allowed");
-            }
-        } else {
-            toast.error("Select an Image");
-        }
-    };
+		const file = e.currentTarget.files![0];
+		if (file) {
+			const isValid = file.type.startsWith("image/");
+			if (isValid) {
+				setSelectedFile(file);
+				const reader = new FileReader();
+				reader.onload = () => {
+					setImage(reader.result as string);
+				};
+				reader.readAsDataURL(file);
+			} else {
+				toast.error("Only images are allowed");
+			}
+		} else {
+			toast.error("Select an Image");
+		}
+	};
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const onUploadContainerClick = (e: any) => {
-		console.log(e.target.files)
+		console.log(e.target.files);
 		e.stopPropagation();
 		if (e.target == uploadContainerRef.current) fileInputRef.current.click();
 	};
 
 	const previewArticle = () => {
-		console.log("article-----------", article, articlebody)
+		console.log("article-----------", article, articlebody);
 		if (article) {
 			if (selectedFile) {
-				openModal(ModalType.Preview, { article, url: selectedFile, backdrop: image,articlebody});
+				openModal(ModalType.Preview, { article, url: selectedFile, backdrop: image, articlebody });
 			} else toast.error("Please Select an Image");
 		} else toast.error("Article can't be empty");
 	};
@@ -112,8 +112,8 @@ const CreateArticle = () => {
 					titlePlaceholder={"What’s the title?"}
 					textPlaceholder={"Type your article here or click the plus icon for more options"}
 					setContent={(content) => {
-						setArticle(extractH1Content(content))
-						setArticlebody(extractPContent(content))
+						setArticle(extractH1Content(content));
+						setArticlebody(extractPContent(content));
 					}}
 				/>
 			</section>
