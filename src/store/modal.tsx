@@ -7,6 +7,7 @@ export enum ModalType {
 	PersonalNote,
 	TermsAndConditions,
 	Preview,
+	EDIT_PROFILE,
 }
 
 interface ModalStoreType {

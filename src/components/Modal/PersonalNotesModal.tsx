@@ -7,7 +7,7 @@ import ModalContainer from "./ModalContainer";
 
 const PersonalNotesModal = () => {
 	const isOpen = useActiveModal(ModalType.PersonalNote);
-	const { closeModal } = useModalActions();
+	const { closeModal } = useModalActions()
 	const [width] = useSize();
 
 	return (
