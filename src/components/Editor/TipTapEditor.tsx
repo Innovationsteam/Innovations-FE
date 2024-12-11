@@ -72,10 +72,10 @@ interface Props {
 	textPlaceholder: string;
 	className?: string;
 	setContent: (content: string) => void;
-	initialContent?: string; // New prop for initial content
+	initialContent?: string;
 }
 
-const TipTapEditor = ({ titlePlaceholder, textPlaceholder, className, setContent, initialContent = '' }: Props) => { // Default to empty string if not provided
+const TipTapEditor = ({ titlePlaceholder, textPlaceholder, className, setContent, initialContent = '' }: Props) => { 
 	const editor = useEditor({
 		extensions: [
 			CustomDocument,
