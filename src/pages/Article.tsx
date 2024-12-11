@@ -8,29 +8,30 @@ import Container from "../components/Container";
 import { Post } from "../components/Post";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState, useCallback } from "react";
-import client from "@/libs/axios";
+import { client, token } from "@/libs/axios";
 import ArticleSkeleton from "./ArticleSkeleton";
-import errorImg from "../../public/assets/images/Error.jpg"
+import { convertToOriginalFormat, PostItem } from "@/hooks/originalFormat";
 const Article = () => {
-    const token = sessionStorage.getItem("myToken");
+    const styles = {
+        charmRegular: {
+            fontFamily: "Charm",
+            fontStyle: "normal",
+            fontSize: "100px",
+            color: "black"
+        },
+        charmBold: {
+            fontFamily: "Charm",
+            fontWeight: 700,
+            fontStyle: "normal",
+            fontSize: "100px",
+            color: "black"
+        },
+    };
     const { openModal } = useModalActions();
     const navigate = useNavigate();
     const location = useLocation();
     const id = location.state || "";
-    interface PostItem {
-        author: {
-            name: string;
-        };
-        id: string;
-        publishedDate: string;
-        image: string;
-        title: string;
-        content: string;
-        likes: number;
-        views: number;
-        category: string;
-        socialMediaShares: number;
-    }
+
 
     const [post, setPost] = useState<PostItem | null>(null);
     const [error, setError] = useState(false)
@@ -83,11 +84,13 @@ const Article = () => {
                         />
                         <span className="text-nowrap font-roboto text-sm text-[#525252] sm:text-base">Back to Dashboard</span>
                     </button>
-                    <div className="flex justify-center items-center h-[50vh]">
-                        <img src={errorImg} alt="Error" className="w-1/2 h-auto object-contain" />
+                    <div className="flex justify-center flex-col items-center h-[50vh]">
+
+                        <p className="text-center text-3xl text-gray-600 py-4 mt-5" style={{ ...styles.charmBold }}>
+                            404        </p><br />
+                        <p className="text-center text-3xl text-gray-600 py-4 mt-5" style={{ ...styles.charmRegular }}>
+                            Error loading post        </p>
                     </div>
-                    <p className="text-center text-3xl text-gray-600 mt-5">
-                        Error loading post        </p>
                 </Container>
             </section>
         )
@@ -97,7 +100,7 @@ const Article = () => {
 
     }
     const labels = post.category.split(/[\s,#]+/).map((tag: string) => tag.replace('#', ''));
-
+    labels.splice(0, 1)
     return (
         <div>
             <section className="py-10">
@@ -122,7 +125,6 @@ const Article = () => {
                             <span>·</span>
                         </p>
                         <h1 className="my-1 font-roboto text-3xl text-[32px] font-bold capitalize text-[#141414] md:text-[42px] md:leading-[52px]">{post.title}</h1>
-                        <h2 className="font-roboto text-sm md:text-base lg:text-lg">101 ways on how to build your faith</h2>
                     </header>
                     <div className="relative my-10 h-[238px] md:h-[400px]">
                         <img
@@ -131,7 +133,7 @@ const Article = () => {
                             alt=""
                         />
                     </div>
-                    <p className="font-roboto text-base leading-7 text-[#141414B2] md:text-lg md:leading-8" dangerouslySetInnerHTML={{ __html: post.content }} />
+                    <p className="font-roboto text-base leading-7 text-[#141414B2] md:text-lg md:leading-8" dangerouslySetInnerHTML={{ __html: convertToOriginalFormat(post.content) }} />
                     <div className="my-4 flex flex-wrap justify-center gap-2">
                         {labels.map((text: string) => (
                             <Tag key={text} text={text} />

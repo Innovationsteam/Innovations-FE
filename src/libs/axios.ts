@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const client = axios.create({
+export const client = axios.create({
 	baseURL: "https://christianwritesbe.onrender.com",
 	// withCredentials:true,
 });
 
-export default client;
+export const token = sessionStorage.getItem("myToken");

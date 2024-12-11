@@ -1,4 +1,5 @@
 import {  useNavigate } from "react-router-dom";
+import {convertToOriginalFormat} from "@/hooks/originalFormat";
 
 interface MiniPostProps {
 	image: string;
@@ -7,31 +8,7 @@ interface MiniPostProps {
 	id:string
 	title:string
 }
-function convertToOriginalFormat(htmlString: string) {
-	const tempDiv = document.createElement('div');
-	tempDiv.innerHTML = htmlString;
-	
-	const h1 = tempDiv.querySelector('h1');
-	if (h1) {
-		h1.remove();
-	}
-	
-	const firstParagraph = tempDiv.querySelector('p');
-	
-	if (firstParagraph) {
-		let htmlContent = firstParagraph.innerHTML;
-		
-		htmlContent = htmlContent.replace(/<\/(h1|p|div|ol|li)>/g, ' </$1>');
-		htmlContent = htmlContent.replace(/<(h1|p|div|ol|li)>/g, '<$1> ');
 
-		htmlContent = htmlContent.replace(/<\/(strong|em|u|span|b|i)>/g, ' </$1>');
-		htmlContent = htmlContent.replace(/<(strong|em|u|span|b|i)>/g, '<$1> ');
-
-		return htmlContent.trim(); 
-	}
-	
-	return '';
-}
 export const MiniPost = ({  content, title,id }: MiniPostProps) => {
 	const navigate = useNavigate()
 	const toArticle=()=>{

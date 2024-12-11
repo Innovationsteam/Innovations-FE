@@ -1,15 +1,14 @@
 import { ModalType, useModal, useModalActions } from "@/store/modal";
 import Container from "../Container";
 import ModalContainer from "./ModalContainer";
-import {  useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import client from "@/libs/axios";
+import { client, token } from "@/libs/axios";
 import toast from "react-hot-toast";
 import ClipLoader from "react-spinners/ClipLoader";
 
 const PreviewArticleModal = () => {
 	const { closeModal } = useModalActions();
-	const token = sessionStorage.getItem("myToken");
 
 	const { modal, data } = useModal();
 
@@ -41,9 +40,10 @@ const PreviewArticleModal = () => {
 				},
 			})
 			toast.success("Post Sent 🎉");
+			console.log("Response--------", response)
 			closeModal();
-			navigate("/article", { 
-				state: response.data.id
+			navigate("/article", {
+				state: response.data.data.id
 			});
 		}
 		catch (err) {

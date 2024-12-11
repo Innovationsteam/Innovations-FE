@@ -1,30 +1,16 @@
 import { Post } from "../../Post";
 import { useEffect, useState, useCallback } from "react";
-import client from "@/libs/axios";
+import {client, token} from "@/libs/axios";
 import PostSkeleton from './postskeleton';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useQuery } from "@tanstack/react-query";
-
+import { PostItem, formatDate } from "@/hooks/originalFormat";
 const PostList = () => {
-    const token = sessionStorage.getItem("myToken");
     const [posts, setPosts] = useState<PostItem[]>([]);
     const [hasMore, setHasMore] = useState(true);
     const [page, setPage] = useState(1);
 
-    interface PostItem {
-        author: {
-            name: string;
-        };
-        id: string;
-        publishedDate: string;
-        image: string;
-        title: string;
-        content: string;
-        likes: number;
-        views: number;
-        category: string;
-        socialMediaShares: number;
-    }
+
 
     const getPost = useCallback(async (page: number) => {
         const response = await client.get(`/api/posts/?page=${page}&limit=${5}`, {
@@ -59,20 +45,9 @@ const PostList = () => {
         }
     };
 
-    function formatDate(timestamp: string): string {
-        const date = new Date(timestamp);
-        const options: Intl.DateTimeFormatOptions = {
-            year: "numeric",
-            month: "long",
-            day: "numeric"
-        };
-        return date.toLocaleDateString("en-US", options);
-    }
-
     if (isLoading) {
 
     }
-
     if (isError) {
         return <p className="text-center text-lg text-gray-600 mt-5">Error loading posts.</p>;
     }

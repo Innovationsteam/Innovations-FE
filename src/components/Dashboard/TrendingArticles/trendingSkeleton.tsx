@@ -1,10 +1,9 @@
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css'; 
-import { Link } from "react-router-dom";
 
 const TrendingSkeleton = () => {
 	return (
-		<Link to="/article" className="block">
+		<div className="block">
 			<li className="font-roboto">
 				<div className="mb-1 flex items-center gap-x-2">
 					<Skeleton circle={true} height={48} width={48} /> 
@@ -19,7 +18,7 @@ const TrendingSkeleton = () => {
 					<Skeleton count={3} height={16} /> 
 				</div>
 			</li>
-		</Link>
+		</div>
 	);
 };
 
