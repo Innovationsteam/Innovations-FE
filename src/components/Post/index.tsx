@@ -1,38 +1,21 @@
-import { Link, useNavigate } from "react-router-dom";
+import { IPost } from "@/types/post.types";
+import { cn, convertToOriginalFormat } from "@/utils/helper";
 import { useState } from "react";
-import { FaRegHeart, FaRegComment } from "react-icons/fa";
 import { BsShare } from "react-icons/bs";
+import { FaRegComment, FaRegHeart } from "react-icons/fa";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { Link } from "react-router-dom";
 
-export const Post = (props: any) => {
-	const navigate = useNavigate();
+interface PostProps extends IPost {
+	className?: string;
+}
 
+export const Post = ({ id, author, publishedDate, content, image, likes, socialMediaShares, title, views, className }: PostProps) => {
 	const [isImageLoaded, setIsImageLoaded] = useState(false);
 
-	function convertToOriginalFormat(htmlString: string) {
-		const tempDiv = document.createElement("div");
-		tempDiv.innerHTML = htmlString;
-
-		const h1 = tempDiv.querySelector("h1");
-		if (h1) {
-			h1.remove();
-		}
-		let htmlContent = tempDiv.innerHTML;
-		htmlContent = htmlContent.replace(/<\/(h1|p|div|ol|li)>/g, " </$1>");
-		htmlContent = htmlContent.replace(/<(h1|p|div|ol|li)>/g, "<$1> ");
-
-		htmlContent = htmlContent.replace(/<\/(strong|em|u|span|b|i)>/g, " </$1>");
-		htmlContent = htmlContent.replace(/<(strong|em|u|span|b|i)>/g, "<$1> ");
-		return htmlContent.trim();
-	}
-	const toArticle = () => {
-		navigate("/article", {
-			state: { props: props, text: convertToOriginalFormat(props.content) },
-		});
-	};
 	return (
-		<li className="mx-auto h-fit w-full !list-none rounded-xl border border-[#E6E6E6] p-4">
+		<li className={cn("mx-auto h-fit w-full !list-none rounded-xl border border-[#E6E6E6] p-4", className)}>
 			<Link
 				to="/profile"
 				className="flex items-center gap-x-3"
@@ -43,9 +26,9 @@ export const Post = (props: any) => {
 					alt="user profile picture"
 				/>
 				<div className="flex flex-col items-start gap-x-5 font-roboto text-[#5B7083] xl:flex-row xl:items-center">
-					<span className="text-base text-[#2A2A2A] lg:mr-2">{props?.author}</span>
+					<span className="text-base text-[#2A2A2A] lg:mr-2">{author.username}</span>
 					<p className="flex items-center gap-x-[2px] text-sm">
-						<span>{props?.date}</span>
+						<span>{publishedDate}</span>
 						<span>·</span>
 					</p>
 				</div>
@@ -55,7 +38,7 @@ export const Post = (props: any) => {
 					alt=""
 				/>
 			</Link>
-			<div onClick={toArticle}>
+			<Link to={`/article/${id}`}>
 				<div className="my-5 max-h-[202px] overflow-hidden rounded-lg">
 					<div className="relative">
 						{!isImageLoaded && (
@@ -66,30 +49,30 @@ export const Post = (props: any) => {
 						)}
 						<img
 							className={`h-full w-full max-w-full object-cover ${isImageLoaded ? "block" : "hidden"}`}
-							src={props.img}
+							src={image}
 							alt=""
 							onLoad={() => setIsImageLoaded(true)}
 						/>
 					</div>
 				</div>
 				<div className="mb-6 font-roboto text-black">
-					<h3 className="mb-1 text-lg font-medium leading-8">{props?.title}</h3>
+					<h3 className="mb-1 text-lg font-medium leading-8">{title}</h3>
 					<p
 						className="max-h-[125px] overflow-hidden overflow-ellipsis break-words text-sm leading-6 text-[#14141499]"
-						dangerouslySetInnerHTML={{ __html: convertToOriginalFormat(props?.content) }}
+						dangerouslySetInnerHTML={{ __html: convertToOriginalFormat(content) }}
 					/>
 				</div>
 				<div className="flex justify-between">
 					<button>
 						<FaRegHeart />
-						<span className="text-xs sm:text-sm">{props?.views}</span>
+						<span className="text-xs sm:text-sm">{views}</span>
 					</button>
 					<button>
 						<FaRegComment />
 					</button>
 					<button>
 						<BsShare />
-						<span className="text-xs sm:text-sm">{props?.socialMediaShares}</span>
+						<span className="text-xs sm:text-sm">{socialMediaShares}</span>
 					</button>
 					<button>
 						<img
@@ -97,10 +80,10 @@ export const Post = (props: any) => {
 							src="/assets/icons/bookmark.svg"
 							alt=""
 						/>
-						<span className="text-xs sm:text-sm">{props?.likes}</span>
+						<span className="text-xs sm:text-sm">{likes}</span>
 					</button>
 				</div>
-			</div>
+			</Link>
 		</li>
 	);
 };

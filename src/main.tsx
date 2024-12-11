@@ -7,6 +7,13 @@ import { MutationCache, QueryClient, QueryClientProvider } from "@tanstack/react
 import { AxiosError } from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+// import { IResponse } from "./types/auth.types.ts";
+
+// declare module "@tanstack/react-query" {
+// 	interface Register {
+// 		defaultError: AxiosError<IResponse>;
+// 	}
+// }
 
 const queryClient = new QueryClient({
 	defaultOptions: {

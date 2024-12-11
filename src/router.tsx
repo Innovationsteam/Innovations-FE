@@ -37,7 +37,7 @@ export const router = createBrowserRouter([
 				element: <Home />,
 			},
 			{
-				path: "article",
+				path: "article/:postId",
 				element: <Article />,
 			},
 			{
@@ -69,8 +69,8 @@ export const router = createBrowserRouter([
 					{ path: "following", element: <FollowersList /> },
 					{ path: "analytics", element: <Analytics /> },
 					{ path: "settings", element: <Settings /> },
-					{path:"notes",element:<Notes/>},
-					{path:"drafts",element:<Drafts/>}
+					{ path: "notes", element: <Notes /> },
+					{ path: "drafts", element: <Drafts /> },
 				],
 			},
 		],
