@@ -1,40 +1,84 @@
 import { ModalType, useModalActions } from "@/store/modal";
-import { extractH1Content,extractPContent } from "@/utils/helper";
+import { extractH1Content, extractPContent } from "@/utils/helper";
 import { ChangeEvent, useRef, useState } from "react";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { client, token } from "@/libs/axios";
+import { useNavigate, useLocation } from "react-router-dom";
 import Container from "../components/Container";
 import TipTapEditor from "../components/Editor/TipTapEditor";
-
+import { useEffect } from "react";
 const CreateArticle = () => {
 	const { openModal } = useModalActions();
 	const [article, setArticle] = useState(``);
-	const [articlebody, setArticlebody]= useState("")
-	const [file, setFile] = useState(null)
+	const [articlebody, setArticlebody] = useState([])
+	const [file, setFile] = useState("")
 	const navigate = useNavigate();
 	const [image, setImage] = useState<string | null>(null)
 	const uploadContainerRef = useRef(null);
 	const fileInputRef = useRef<HTMLInputElement>(null!);
 	const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
+	//////////////////////
+	const location = useLocation()
+	const { title, body, imageUrl } = location.state || {}
+	useEffect(()=>{
+		if (location.state) {
+		if (title) {
+			setArticle(title)
+		}
+		if (body) {
+			setArticlebody(extractPContent(body))
+		}
+		if (imageUrl) {
+			setFile(imageUrl)
+		}
+	}
+	},[location.state])
+	
+	const saveAsDraft = async (title:string,content:string[],img:string | File | null) => {
+		const formData = new FormData()
+		formData.append("title", title);
+		formData.append("content", content.join(''));
+		formData.append("category", "#");
+		formData.append("image", img || "#");
+		formData.append("hashtags", "");
+		console.log("Data meant", formData)
+		try {
+			const response = await client.post("api/posts/", formData, {
+				headers: {
+					Accept: "/*",
+					"Content-Type": "multipart/form-data",
+					Authorization: `Bearer ${token}`,
+				},
+			})
+			console.log("Response--------", response)
+			toast.success("Draft Saved 🎉");
+			navigate("/home")
+		}
+		catch(err){
+			toast.error("Failed to upload");
+			console.log("Error---------------", err);
+		}
+	};
+	//////////////////////
 	const onFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const file = e.currentTarget.files![0];
-        if (file) {
-            const isValid = file.type.startsWith("image/");
-            if (isValid) {
-                setSelectedFile(file);
-                const reader = new FileReader();
-                reader.onload = () => {
-                    setImage(reader.result as string); 
-                };
-                reader.readAsDataURL(file);
-            } else {
-                toast.error("Only images are allowed");
-            }
-        } else {
-            toast.error("Select an Image");
-        }
-    };
+		const file = e.currentTarget.files![0];
+		if (file) {
+			const isValid = file.type.startsWith("image/");
+			if (isValid) {
+				setSelectedFile(file);
+				const reader = new FileReader();
+				reader.onload = () => {
+					setImage(reader.result as string);
+				};
+				reader.readAsDataURL(file);
+			} else {
+				toast.error("Only images are allowed");
+			}
+		} else {
+			toast.error("Select an Image");
+		}
+	};
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const onUploadContainerClick = (e: any) => {
@@ -47,7 +91,7 @@ const CreateArticle = () => {
 		console.log("article-----------", article, articlebody)
 		if (article) {
 			if (selectedFile) {
-				openModal(ModalType.Preview, { article, url: selectedFile, backdrop: image,articlebody});
+				openModal(ModalType.Preview, { article, url: selectedFile, backdrop: image, articlebody });
 			} else toast.error("Please Select an Image");
 		} else toast.error("Article can't be empty");
 	};
@@ -71,6 +115,7 @@ const CreateArticle = () => {
 					<button
 						type="button"
 						className="rounded-lg px-3 py-2 font-roboto text-sm text-[#14141499] transition-colors duration-100 hover:bg-[#D9D9D952] hover:text-black sm:text-base"
+						onClick={()=>{saveAsDraft(article, articlebody, selectedFile ? selectedFile : file)}}
 					>
 						Save as Draft
 					</button>
@@ -93,11 +138,23 @@ const CreateArticle = () => {
 					src="/assets/icons/camera.svg"
 					alt=""
 				/>
-				<img
+				{
+					imageUrl ?
+						<img
+							className="absolute inset-0 object-cover"
+							src={selectedFile ? URL.createObjectURL(selectedFile) :	imageUrl}
+							alt=""
+						/> : <img
+							className="absolute inset-0 object-cover"
+							src={selectedFile ? URL.createObjectURL(selectedFile) : "/assets/images/post-placeholder.png"}
+							alt=""
+						/>
+				}
+				{/* <img
 					className="absolute inset-0 object-cover"
 					src={selectedFile ? URL.createObjectURL(selectedFile) : "/assets/images/post-placeholder.png"}
 					alt=""
-				/>
+				/> */}
 				<input
 					ref={fileInputRef}
 					type="file"
@@ -115,7 +172,8 @@ const CreateArticle = () => {
 						setArticle(extractH1Content(content))
 						setArticlebody(extractPContent(content))
 					}}
-				/>
+					initialContent={`${body ? body : ""}`} 
+					/>
 			</section>
 		</Container>
 	);

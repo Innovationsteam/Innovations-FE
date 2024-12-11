@@ -1,7 +1,7 @@
 import { LoginFormData } from "@/components/LoginForm";
 import { SignUpFormData } from "@/components/SignUpForm";
 import { ResetPasswordData } from "@/pages/ResetPassword";
-import client from "@/libs/axios";
+import {client} from "@/libs/axios";
 import { LoginResponse, SignUpResponse } from "@/types/auth.types";
 import { AxiosError } from "axios";
 
