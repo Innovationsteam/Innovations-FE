@@ -20,21 +20,21 @@ const Profile = ({ allowEdit }: { allowEdit?: boolean }) => {
 	}
 	const getData = async (): Promise<userData> => {
 		const User1: userData = { name: "", followersCount: 0, followingCount: 0 }
-		const name = await client.get(`/api/users/me`, {
+		const name = await client.get(`/users/me`, {
 			headers: {
 				Authorization: `Bearer ${token}`,
 				"Content-Type": "application/json",
 			},
 		});
 		User1.name = name.data.data.name || ""
-		const followers = await client.get(`/api/users/followers/count`, {
+		const followers = await client.get(`/users/followers/count`, {
 			headers: {
 				Authorization: `Bearer ${token}`,
 				"Content-Type": "application/json",
 			},
 		});
 		User1.followersCount = followers.data.data.count || 0
-		const following = await client.get(`/api/users/following/count`, {
+		const following = await client.get(`/users/following/count`, {
 			headers: {
 				Authorization: `Bearer ${token}`,
 				"Content-Type": "application/json",

@@ -5,7 +5,7 @@ import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 const About = () => {
 	const getAbout = async () => {
-		const response = await client.get(`/api/users/me`, {
+		const response = await client.get(`/users/me`, {
 			headers: {
 				Authorization: `Bearer ${token}`,
 				"Content-Type": "application/json",

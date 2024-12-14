@@ -132,3 +132,7 @@ textarea {
 	background-size: cover;
 	background-repeat: no-repeat;
 }
+
+li::marker {
+	display: none !important;
+}

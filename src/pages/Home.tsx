@@ -3,16 +3,15 @@ import Container from "../components/Container";
 import ExploreTopics from "../components/Dashboard/ExploreTopics";
 import PostList from "../components/Dashboard/PostList";
 import Profile from "../components/Dashboard/Profile";
-import StoryList from "../components/Dashboard/StoryList";
 import TrendingArticles from "../components/Dashboard/TrendingArticles";
 
 const Home = () => {
 	return (
-		<Container className="relative grid-cols-[auto_300px] gap-x-10 pt-5 lg:grid">
-			<div className="mx-auto max-w-[700px] pb-10">
-				<StoryList />
-				<PostList />
-			</div>
+		<Container className="relative grid-cols-[auto_300px] gap-x-10 lg:grid">
+			{/* <div className="mx-auto max-w-[700px] pb-10"> */}
+			{/* <StoryList /> */}
+			<PostList />
+			{/* </div> */}
 			<section className="hidden px-5 lg:block">
 				<Profile />
 				<CreateArticle />

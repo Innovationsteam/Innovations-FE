@@ -7,7 +7,7 @@ import { AxiosError } from "axios";
 
 export const loginUser = async (payload: LoginFormData): Promise<LoginResponse> => {
 	try {
-		const res = await client.post("/api/auth/login", payload);
+		const res = await client.post("/auth/login", payload);
 		return res.data;
 	} catch (error) {
 		throw error as AxiosError;
@@ -16,7 +16,7 @@ export const loginUser = async (payload: LoginFormData): Promise<LoginResponse> 
 
 export const signUpUser = async (payload: SignUpFormData): Promise<SignUpResponse> => {
 	try {
-		const res = await client.post("/api/auth/register", payload);
+		const res = await client.post("/auth/register", payload);
 		return res.data;
 	} catch (error) {
 		throw error as AxiosError;
@@ -25,7 +25,7 @@ export const signUpUser = async (payload: SignUpFormData): Promise<SignUpRespons
 
 export const sendToken = async (payload: ResetPasswordData) => {
 	try {
-		const res = await client.post("/api/auth/send-reset-token", payload);
+		const res = await client.post("/auth/send-reset-token", payload);
 		return res.data;
 	} catch (error) {
 		throw error as AxiosError;

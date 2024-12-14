@@ -1,6 +1,6 @@
 import SectionContainer from "../../layouts/SectionContainer";
 import { useQuery } from "@tanstack/react-query";
-import { PostItem, convertToOriginalFormat } from "@/hooks/originalFormat";
+import { PostItem, convertToOriginalFormat } from "@/utils/originalFormat";
 import { client, token } from "@/libs/axios";
 import DraftSkeleton from "./DraftsSkeleton";
 import { useNavigate } from "react-router-dom";
@@ -13,7 +13,7 @@ type draftSet = {
 }
 const DraftsList = () => {
 	const getDrafts = async () => {
-		const response = await client.get(`/api/posts/me/?status=draft`, {
+		const response = await client.get(`/posts/me/?status=draft`, {
 			headers: {
 				Authorization: `Bearer ${token}`,
 				"Content-Type": "application/json",

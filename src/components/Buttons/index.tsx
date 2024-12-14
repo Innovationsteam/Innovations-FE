@@ -1,3 +1,4 @@
+import { ModalType, useModalActions } from "@/store/modal";
 import { Link } from "react-router-dom";
 
 export const SignUpWithGoogle = () => {
@@ -60,10 +61,12 @@ export const FollowUser = ({ className }: { className?: string }) => {
 };
 
 export const EditProfile = ({ className }: { className?: string }) => {
+	const { openModal } = useModalActions();
 	return (
 		<button
 			type="button"
 			className={`rounded-lg bg-[#1C4532] px-3 py-2 font-roboto text-sm font-medium text-white md:px-6 md:text-base ${className}`}
+			onClick={() => openModal(ModalType.EDIT_PROFILE)}
 		>
 			Edit Profile
 		</button>

@@ -7,6 +7,7 @@ import NavBar from "@components/Navbar";
 import PageContainer from "@components/PageContainer";
 import TermsAndConditionsModal from "@/components/Modal/TermsAndConditionsModal";
 import PreviewArticleModal from "@/components/Modal/PreviewArticleModal";
+import EditProfileModal from "@/components/Modal/EditProfileModal";
 
 const MainLayout = () => {
 	const isOpen = useActiveModal(ModalType.None);
@@ -23,6 +24,7 @@ const MainLayout = () => {
 			<PersonalNotesModal />
 			<TermsAndConditionsModal />
 			<PreviewArticleModal />
+			<EditProfileModal />
 		</PageContainer>
 	);
 };
