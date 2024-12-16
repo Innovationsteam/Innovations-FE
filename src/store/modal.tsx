@@ -8,6 +8,8 @@ export enum ModalType {
 	TermsAndConditions,
 	Preview,
 	EDIT_PROFILE,
+	CREATE_READING_LIST,
+	ADD_TO_READING_LIST,
 }
 
 interface ModalStoreType {
@@ -21,12 +23,13 @@ interface ModalStoreType {
 const useModalStore = create<ModalStoreType>((set) => ({
 	activeModal: { modal: ModalType.None, data: null },
 	actions: {
-		openModal: (modal, data) => set({ activeModal: { modal, data } }),
+		openModal: (modal, data = null) => set({ activeModal: { modal, data } }),
 		closeModal: () => set({ activeModal: { modal: ModalType.None, data: null } }),
 	},
 }));
 
 export const useModal = () => useModalStore((s) => s.activeModal);
+export const useModalData = () => useModalStore((s) => s.activeModal).data;
 
 export const useActiveModal = (modal: ModalType) => {
 	const activeModal = useModalStore((s) => s.activeModal);

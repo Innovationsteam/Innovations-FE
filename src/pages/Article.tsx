@@ -78,7 +78,7 @@ const Article = () => {
 									alt=""
 								/>
 							</button>
-							<button>
+							<button onClick={() => openModal(ModalType.ADD_TO_READING_LIST, postId)}>
 								<img
 									className="inline-block size-6"
 									src="/assets/icons/bookmark.svg"
