@@ -13,7 +13,6 @@ export const IsLiked = (likes: LikedItem[]): boolean => {
     const userName = sessionStorage.getItem("userData");
 
     if (!userName) {
-        console.log("no username")
         return false; 
     }
 
