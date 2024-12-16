@@ -14,7 +14,7 @@ export const useLoginUser = (nextPage: string) => {
 		onSuccess: ({ data }) => {
 			toast.success("Login Successful");
 			setUser(data!.username);
-			sessionStorage.setItem("myToken",data?.access_token)
+			sessionStorage.setItem("userData",data?.username)
 			setCookie("token", data?.access_token, {
 				expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
 			});

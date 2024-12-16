@@ -5,6 +5,7 @@ import { useSignUpUser } from "../../hooks/useUser";
 
 const schema = z.object({
 	username: z.string().min(4, { message: "Minimum of 4 characters" }).max(20, { message: "Maximum of 20 characters" }),
+	name: z.string().min(4, { message: "Minimum of 4 characters" }).max(20, { message: "Maximum of 20 characters" }),
 	email: z.string().email({ message: "Field must be a valid email" }),
 	password: z.string().min(4, { message: "Minimum of 4 characters" }),
 });
@@ -39,6 +40,22 @@ const SignUpForm = () => {
 				<input
 					required
 					{...register("username")}
+					type="text"
+					className="mt-2 h-10 w-full rounded-lg border border-[#CBD5E0] px-3 text-sm text-black transition-colors duration-200 ease-in focus:border-black"
+					placeholder="Enter your Email"
+				/>
+				{errors.username && <p className="font-poppins mt-1 text-left text-sm text-red-500">{errors.username.message}</p>}
+			</div>
+			<div className="text-left">
+				<label
+					htmlFor="email"
+					className="block tracking-[-0.15px] text-[#718096]"
+				>
+					Name
+				</label>
+				<input
+					required
+					{...register("name")}
 					type="text"
 					className="mt-2 h-10 w-full rounded-lg border border-[#CBD5E0] px-3 text-sm text-black transition-colors duration-200 ease-in focus:border-black"
 					placeholder="Enter your Email"

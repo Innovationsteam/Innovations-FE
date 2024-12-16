@@ -1,12 +1,11 @@
 import { motion } from "framer-motion";
 import { ModalType, useModalActions } from "@store/modal";
-
-const AddComment = () => {
+const AddComment = (ids: { id: string }) => {
 	const { openModal } = useModalActions();
 	return (
 		<button
 			className="group flex items-center gap-x-1"
-			onClick={() => openModal(ModalType.Comments)}
+			onClick={() => openModal(ModalType.Comments,{postID: ids})}
 		>
 			<motion.svg
 				width="24"

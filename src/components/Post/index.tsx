@@ -1,17 +1,17 @@
-import { IPost } from "@/types/post.types";
+// import { IPost } from "@/types/post.types";
+import { PostItem } from "@/utils/article.helper";
 import { cn, convertToOriginalFormat, formatDate } from "@/utils/helper";
 import { useState } from "react";
 import { BsShare } from "react-icons/bs";
-import { FaRegComment, FaRegHeart } from "react-icons/fa";
+import { FaRegComment, FaRegHeart, FaRegEye } from "react-icons/fa";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { Link } from "react-router-dom";
-
-interface PostProps extends IPost {
+interface PostProps extends PostItem {
 	className?: string;
 }
 
-export const Post = ({ id, author, publishedDate, content, image, likes, socialMediaShares, title, views, className }: PostProps) => {
+export const Post = ({ id, author, publishedDate, content, image, likes, socialMediaShares, commentsCount, title, views, className, slug }: PostProps) => {
 	const [isImageLoaded, setIsImageLoaded] = useState(false);
 
 	return (
@@ -26,7 +26,7 @@ export const Post = ({ id, author, publishedDate, content, image, likes, socialM
 					alt="user profile picture"
 				/>
 				<div className="flex flex-col items-start gap-x-5 font-roboto text-[#5B7083] xl:flex-row xl:items-center">
-					<span className="text-base text-[#2A2A2A] lg:mr-2">{author.username}</span>
+					<span className="text-base text-[#2A2A2A] lg:mr-2">{author?.username}</span>
 					<p className="flex items-center gap-x-[2px] text-sm">
 						<span>{formatDate(publishedDate)}</span>
 						<span>·</span>
@@ -38,7 +38,7 @@ export const Post = ({ id, author, publishedDate, content, image, likes, socialM
 					alt=""
 				/>
 			</Link>
-			<Link to={`/article/${id}`}>
+			<Link to={`/article/${author?.username}/${slug}`} state={{ postId: id }}>
 				<div className="my-5 max-h-[202px] overflow-hidden rounded-lg">
 					<div className="relative">
 						{!isImageLoaded && (
@@ -56,31 +56,32 @@ export const Post = ({ id, author, publishedDate, content, image, likes, socialM
 					</div>
 				</div>
 				<div className="mb-6 font-roboto text-black">
-					<h3 className="mb-1 text-lg font-medium leading-8">{title}</h3>
+					<h3 className="mb-1 text-lg font-medium leading-8 line-clamp-1">{title}</h3>
 					<p
-						className="max-h-[125px] overflow-hidden overflow-ellipsis break-words text-sm leading-6 text-[#14141499]"
+						className={`overflow-ellipsis line-clamp-3 max-h-[125px] overflow-hidden break-words text-sm leading-6 text-[#14141499]`}
 						dangerouslySetInnerHTML={{ __html: convertToOriginalFormat(content) }}
 					/>
 				</div>
+				
 				<div className="flex justify-between">
 					<button>
-						<FaRegHeart />
-						<span className="text-xs sm:text-sm">{views}</span>
+						<span className="text-xs sm:text-sm flex items-center">
+							<FaRegHeart className="mr-2" style={{ fontSize: '1.1rem' }} />{likes}</span>
+
 					</button>
 					<button>
-						<FaRegComment />
+						<span className="text-xs sm:text-sm flex items-center">
+							<FaRegComment className="mr-2" style={{ fontSize: '1.1rem' }} />{commentsCount}</span>
 					</button>
 					<button>
-						<BsShare />
-						<span className="text-xs sm:text-sm">{socialMediaShares}</span>
+						<span className="text-xs sm:text-sm flex items-center">
+							<FaRegEye className="mr-2" style={{ fontSize: '1.1rem' }} />{views}</span>
+
 					</button>
 					<button>
-						<img
-							className="inline-block size-5 lg:size-5"
-							src="/assets/icons/bookmark.svg"
-							alt=""
-						/>
-						<span className="text-xs sm:text-sm">{likes}</span>
+						<span className="text-xs sm:text-sm flex items-center">
+							<BsShare className="mr-2" style={{ fontSize: '1.1rem' }} />{socialMediaShares}</span>
+
 					</button>
 				</div>
 			</Link>

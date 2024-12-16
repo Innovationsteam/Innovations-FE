@@ -10,14 +10,10 @@ import 'react-loading-skeleton/dist/skeleton.css';
 const tabs = ["home", "about", "blogs", "reading-list", "followers", "following"];
 
 const adminTabs = [...tabs, "saved", "analytics", "drafts", "notes", "settings"];
-
+import { userData } from "@/types/user.types";
 const Profile = ({ allowEdit }: { allowEdit?: boolean }) => {
 
-	type userData = {
-		name: string;
-		followersCount: number;
-		followingCount: number;
-	}
+
 	const getData = async (): Promise<userData> => {
 		const User1: userData = { name: "", followersCount: 0, followingCount: 0 }
 		const name = await client.get(`/users/me`, {
@@ -71,7 +67,7 @@ const Profile = ({ allowEdit }: { allowEdit?: boolean }) => {
 						<div>
 							{data ?
 								<>	<h1 className="font-roboto text-[16px] text-xl font-semibold md:text-3xl">{data?.name}</h1>
-									<h2 className="font-roboto text-sm md:text-xl">Content Creator</h2>
+									{/* <h2 className="font-roboto text-sm md:text-xl">Content Creator</h2> */}
 									<div className="mt-1 flex items-center gap-x-2">
 										<p className="text-xs text-[#14141499] md:text-base">{data?.followersCount} followers</p>
 										<p className="text-xs text-[#14141499] md:text-base">{data?.followingCount} followers</p>

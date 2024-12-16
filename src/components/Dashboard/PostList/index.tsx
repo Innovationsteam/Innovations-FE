@@ -4,7 +4,6 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import PostSkeleton from "./postskeleton";
 
 const PostList = () => {
-	// const token = sessionStorage.getItem("myToken");
 	const { data: posts, fetchNextPage, hasNextPage } = useAllPosts();
 
 	return (

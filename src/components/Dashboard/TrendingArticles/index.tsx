@@ -3,7 +3,6 @@ import { MiniPost } from "../../Post/MiniPost";
 import TrendingSkeleton from "./trendingSkeleton.tsx";
 
 const TrendingArticles = () => {
-	// const token = sessionStorage.getItem("myToken");
 	const { data: trendingPosts, isPending } = useTrendingPosts();
 
 	if (isPending) return Array.from({ length: 2 }).map((_, i) => <TrendingSkeleton key={i} />);

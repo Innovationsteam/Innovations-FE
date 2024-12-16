@@ -1,8 +1,8 @@
 import PostSkeleton from "@/components/Dashboard/PostList/postskeleton";
 import { usePost } from "@/hooks/usePost";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import { ModalType, useModalActions } from "src/store/modal";
-import { FollowUser } from "../components/Buttons";
+import { FollowUser, UnFollowUser } from "../components/Buttons";
 import AddComment from "../components/Buttons/AddComment";
 import DropDown from "../components/Buttons/DropDown";
 import { Like } from "../components/Buttons/Like";
@@ -10,15 +10,37 @@ import Tag from "../components/Buttons/Tag";
 import Container from "../components/Container";
 import ArticleSkeleton from "./ArticleSkeleton";
 import { convertToOriginalFormat } from "@/utils/helper";
+import { IsLiked } from "@/miscellaneous/likes";
+import { IsaFollower } from "@/miscellaneous/Follow";
+import { useState, useEffect } from "react";
+import { useWriter } from "@/hooks/usewriter";
+import Skeleton from "react-loading-skeleton";
+import { Post } from "@/components/Post";
 const Article = () => {
-	const { postId } = useParams();
+	interface LocationState {
+		postId?: string; 
+	}
+    const { postId: paramPostId } = useParams<{ postId: string }>();
+    const location = useLocation();
+    const statePostId = (location.state as LocationState)?.postId;
+    const postId = statePostId || paramPostId;
 	const { data: post, isPending } = usePost(postId);
 	const { openModal } = useModalActions();
+	const labels = post?.category.split(/[\s,#]+/).map((tag: string) => tag.replace('#', ''));
+	labels?.splice(0, 1)
+	const { data: writer, isFetching } = useWriter(post?.author.username);
 
-	const labels = post?.category.split(/[\s,#]+/).map((tag: string) => tag.replace("#", ""));
+	const [following, setFollowing] = useState<boolean | null>(null);
+	useEffect(() => {
+		const checkFollowing = async () => {
+			const isFollowing = await IsaFollower(post?.author.username)
+			setFollowing(isFollowing);
+		};
+
+		checkFollowing();
+	}, [post?.author.username]);
 
 	if (isPending) return <ArticleSkeleton />;
-
 	if (!post) return <p className="text-center text-lg font-semibold">Post not found</p>;
 
 	return (
@@ -67,8 +89,8 @@ const Article = () => {
 					</div>
 					<div className="mt-5 flex items-center justify-between">
 						<div className="flex items-center gap-x-5">
-							<Like likes={post.likes} />
-							<AddComment />
+							<Like likes={post.postLikes.length} id={post.id} hasLiked={IsLiked(post.postLikes)} />
+							<AddComment id={post.id} />
 						</div>
 						<div className="relative flex items-center gap-x-3">
 							<button>
@@ -87,7 +109,7 @@ const Article = () => {
 							</button>
 							<DropDown>
 								<button
-									onClick={() => openModal(ModalType.PersonalNote)}
+									onClick={() => openModal(ModalType.PersonalNote, { postID: postId })}
 									className="pb-2 font-roboto text-sm text-[#141414CC] transition-colors hover:text-black"
 								>
 									Add a personal note
@@ -107,19 +129,31 @@ const Article = () => {
 								src="/assets/images/avatar.svg"
 								alt=""
 							/>
-							<FollowUser className="ml-auto" />
+							{
+								following ?
+									<UnFollowUser className="ml-auto" username={post.author.username} />
+									:
+									<FollowUser className="ml-auto" username={post.author.username} />
+							}
+
+
 						</div>
-						<span className="mb-2 font-roboto text-2xl font-medium text-[#141414CC]">Written by {post.author.name}</span>
+						<span className="mb-2 font-roboto text-2xl font-medium text-[#141414CC]">Written by {writer?.name} {isFetching? <Skeleton height={40} width={80}/>:<></>}</span>
 						<div className="mb-2 flex gap-x-4">
-							<p className="font-roboto text-sm text-[#141414CC]">136 followers</p>
-							<p className="font-roboto text-sm text-[#141414CC]">136 following</p>
+							<p className="font-roboto text-sm text-[#141414CC]">{isFetching? <Skeleton height={20} width={70}/>:<>{writer?.followersCount} followers</>}</p>
+							<p className="font-roboto text-sm text-[#141414CC]">{isFetching? <Skeleton height={20} width={70}/>:<> {writer?.followingCount} following</>} </p>
 						</div>
-						<p className="font-roboto text-[#141414CC]">Gen Z Design Student - Exploring the connections between UX and multiculturalism.</p>
+						{/* <p className="font-roboto text-[#141414CC]">Gen Z Design Student - Exploring the connections between UX and multiculturalism.</p> */}
 					</div>
 					<ul className="grid gap-6 md:grid-cols-2">
-						{Array.from({ length: 6 }).map((_, i) => (
-							<PostSkeleton key={i} />
+						{writer?.blogs?.map((items) => (
+							<Post {...items} />
 						))}
+						{isFetching ?
+							Array.from({ length: 2 }).map((_, i) => (
+								<PostSkeleton key={i} />
+							)) :
+							<></>}
 					</ul>
 				</Container>
 			</section>

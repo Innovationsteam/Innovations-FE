@@ -4,12 +4,15 @@ import Placeholder from "@tiptap/extension-placeholder";
 import Underline from "@tiptap/extension-underline";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-
+import { useModalData } from "@/store/modal";
+import toast from "react-hot-toast";
 const CustomDocument = Document.extend({
 	content: "heading block*",
 });
-
+import { formatSplit } from "@/utils/helper";
+import { createNote } from "@/utils/article.helper";
 const PersonalNoteForm = () => {
+	const {postID} = useModalData() || {}
 	const editor = useEditor({
 		extensions: [
 			CustomDocument,
@@ -37,6 +40,13 @@ const PersonalNoteForm = () => {
 			},
 		},
 	});
+	const publish = async()=>{
+		if (editor && postID){
+			const {title, content} = formatSplit(editor.getHTML());
+			if (await (createNote(title, content, postID))) editor.commands.clearContent();	toast.success("Note Saved 🎉");
+
+		}
+	}
 	return (
 		<div className="mt-6">
 			<EditorContent editor={editor} />
@@ -44,8 +54,9 @@ const PersonalNoteForm = () => {
 				<button
 					type="button"
 					className="ml-auto w-full max-w-[100px] rounded-lg bg-[#04BF87] py-2 font-raleway text-sm font-semibold text-white md:py-[10px] md:text-base"
+					onClick={()=>publish()}
 				>
-					Publish
+					Save
 				</button>
 			</div>
 		</div>

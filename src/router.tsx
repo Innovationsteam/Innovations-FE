@@ -41,6 +41,10 @@ export const router = createBrowserRouter([
 				element: <Article />,
 			},
 			{
+				path: "article/:username/:slug", 
+				element: <Article />,
+			},
+			{
 				path: "article/new",
 				element: <CreateArticle />,
 			},

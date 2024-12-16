@@ -3,10 +3,14 @@ import Italic from "@tiptap/extension-italic";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import classNames from "classnames";
+import { addComment } from "@/utils/article.helper";
+import { useModalData } from "@/store/modal";
+import toast from "react-hot-toast";
 
-const content = `<h1>Aghedo <strong>Jason</strong></h1>`;
+const content = ``;
 
 const AddCommentForm = () => {
+	const {postID} = useModalData()
 	const editor = useEditor({
 		extensions: [StarterKit, Bold, Italic],
 		content,
@@ -17,6 +21,12 @@ const AddCommentForm = () => {
 			},
 		},
 	});
+	const handleComment = async () => {
+		if (editor && postID.id) {
+			const htmlContent = editor.getHTML();
+			if (await (addComment(htmlContent, postID.id))) toast.success("Comment Sent 🎉"); editor.commands.clearContent(); 
+		}
+	};
 	return (
 		<div className="rounded-lg md:p-5 md:shadow-[0px_4px_8px_0px_#0a3a6426]">
 			<div className="mb-5 flex items-center gap-x-2 md:gap-x-3">
@@ -49,6 +59,7 @@ const AddCommentForm = () => {
 				</div>
 				<button
 					type="button"
+					onClick={handleComment}
 					className="ml-auto h-10 rounded-lg bg-[#0089FF] px-4 text-sm font-semibold leading-7 text-white"
 				>
 					Comment

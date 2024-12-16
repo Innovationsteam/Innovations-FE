@@ -1,9 +1,12 @@
 import SectionContainer from "../../layouts/SectionContainer";
-import PostSkeleton from "../Dashboard/PostList/postskeleton";
-import { useState, useEffect } from "react";
-import { PostItem } from "@/utils/originalFormat";
+import { Post } from "../Post";
 import { client, token } from "@/libs/axios";
 import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
+import { BlogsType } from "@/types/post.types";
+import { PostItem } from "@/utils/article.helper";
+import { formatDate } from "@/utils/helper";
+import PostSkeleton from "../Dashboard/PostList/postskeleton";
 const Blogs = ({ title }: { title: string }) => {
 	const [blogs, setBlogs] = useState<PostItem[]>([]);
 
@@ -30,13 +33,26 @@ const Blogs = ({ title }: { title: string }) => {
 			setBlogs(prevPosts => [...prevPosts, ...sortedPosts]);
 		}
 	}, [data]);
+
 	return (
 		<SectionContainer title={title}>
-			<ol className="grid h-full gap-x-5 gap-y-9 lg:grid-cols-2">
-				{Array.from({ length: 10 }).map((_, i) => (
-					<PostSkeleton key={i} />
-				))}
-			</ol>
+			{
+				data ?
+					<ul className="grid h-full gap-x-5 gap-y-9 lg:grid-cols-2">
+						{blogs.map((item:BlogsType) => (
+							<Post
+								{...item}
+							/>
+
+						))
+						}
+					</ul> :
+					<ul className="grid h-full gap-x-5 gap-y-9 lg:grid-cols-2">
+						{Array.from({ length: 10 }).map((_, i) => (
+							<PostSkeleton key={i} />
+						))}
+					</ul>
+			}
 		</SectionContainer>
 	);
 };

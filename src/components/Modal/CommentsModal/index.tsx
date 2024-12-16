@@ -1,15 +1,26 @@
 import Container from "@/components/Container";
 import useSize from "@/hooks/useSize";
-import { ModalType, useActiveModal, useModalActions } from "@store/modal";
+import { ModalType, useActiveModal, useModalActions, useModalData } from "@store/modal";
 import { motion } from "framer-motion";
 import AddCommentForm from "../../AddCommentForm";
 import Comment from "../../Comment";
 import ModalContainer from "../ModalContainer";
-
+import { IComment } from "@/types/comment.type";
+import { useAllComments } from "@/hooks/useAllcomments";
+import CommentSkeleton from "./commentSkeleton";
+import Skeleton from "react-loading-skeleton";
 const CommentsModal = () => {
 	const { closeModal } = useModalActions();
 	const isOpen = useActiveModal(ModalType.Comments);
 	const [width] = useSize();
+	const modalData = useModalData() || {};
+	const postID = modalData.postID?.id;
+	const { data: commentsResponse, error, isLoading } = useAllComments(postID);
+	//@ts-ignore
+	const comments  = commentsResponse?.comments 
+	if (!isOpen || !postID) {
+		return null;
+	}
 
 	return (
 		<ModalContainer isOpen={isOpen}>
@@ -22,7 +33,7 @@ const CommentsModal = () => {
 			>
 				<Container className="pb-5 pt-8">
 					<header className="flex items-center">
-						<h1 className="font-roboto text-xl font-medium">Response (21)</h1>
+						<h1 className="font-roboto text-xl font-medium">Response ({comments? comments.length: " "})</h1>
 						<button
 							className="ml-auto rotate-90 transition-transform duration-200 ease-in-out hover:rotate-90"
 							onClick={closeModal}
@@ -34,10 +45,18 @@ const CommentsModal = () => {
 							/>
 						</button>
 					</header>
+					{isLoading ? <CommentSkeleton /> : null}
 					<div className="my-5">
-						{Array.from({ length: 10 }).map(() => (
-							<Comment />
+						{comments?.map(({ content, createdAt, publicId, user: { username, profileImg } }: IComment) => (
+							<Comment
+								key={publicId}
+								content={content}
+								createdAt={createdAt}
+								username={username}
+								profile={profileImg}
+							/>
 						))}
+						{!isLoading && comments && comments?.length < 1 ? <p>No comments yet</p> : null}
 					</div>
 					<AddCommentForm />
 				</Container>

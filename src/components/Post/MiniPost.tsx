@@ -29,7 +29,7 @@ export const MiniPost = ({ content, title, id }: MiniPostProps) => {
 			<div>
 				<span className="font-semibold text-[#141414CC]">{title}</span>
 				<p
-					className="max-w-[273px] text-xs leading-5 text-[#14141499]"
+					className="max-w-[273px] text-xs leading-5 text-[#14141499] line-clamp-4"
 					dangerouslySetInnerHTML={{ __html: convertToOriginalFormat(content) }}
 				/>
 			</div>

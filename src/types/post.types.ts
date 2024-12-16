@@ -1,3 +1,14 @@
+interface User {
+    name: string;         
+    profileImg: string | null; 
+    username: string;     
+}
+
+interface LikedItem {
+    likedAt: string;    
+    user: User;         
+}
+
 export interface IPost {
 	id: string;
 	title: string;
@@ -11,6 +22,7 @@ export interface IPost {
 	views: number;
 	likes: number;
 	image: string;
+	postLikes: LikedItem[];
 	socialMediaShares: number;
 	rating: number;
 	slug: string;
@@ -26,3 +38,14 @@ export interface IAuthor {
 	profileImg: string;
 	username: string;
 }
+
+export interface BlogsType {
+	id: string;
+	publishedDate: string;
+	image: string;
+	title: string;
+	content: string;
+	likes: number;
+	views: number;
+	socialMediaShares: number;
+	}

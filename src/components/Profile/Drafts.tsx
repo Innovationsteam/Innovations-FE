@@ -1,6 +1,7 @@
 import SectionContainer from "../../layouts/SectionContainer";
 import { useQuery } from "@tanstack/react-query";
-import { PostItem, convertToOriginalFormat } from "@/utils/originalFormat";
+import { PostItem } from "@/utils/article.helper";
+import { convertToOriginalFormat } from "@/utils/helper";
 import { client, token } from "@/libs/axios";
 import DraftSkeleton from "./DraftsSkeleton";
 import { useNavigate } from "react-router-dom";

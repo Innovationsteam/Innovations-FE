@@ -1,12 +1,11 @@
 import { ModalType, useModalActions } from "@/store/modal";
 import { extractH1Content, extractPContent } from "@/utils/helper";
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useRef, useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { client, token } from "@/libs/axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import Container from "../components/Container";
 import TipTapEditor from "../components/Editor/TipTapEditor";
-import { useEffect } from "react";
 const CreateArticle = () => {
 	const { openModal } = useModalActions();
 	const [article, setArticle] = useState(``);

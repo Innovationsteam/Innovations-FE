@@ -1,6 +1,6 @@
 import { ModalType, useModalActions } from "@/store/modal";
 import { Link } from "react-router-dom";
-
+import { follow, unfollow } from "@/miscellaneous/Follow";
 export const SignUpWithGoogle = () => {
 	return (
 		<button
@@ -49,13 +49,25 @@ export const CreateArticle = () => {
 	);
 };
 
-export const FollowUser = ({ className }: { className?: string }) => {
+export const FollowUser = ({ className, username }: { className?: string,  username?:string }) => {
 	return (
 		<button
 			type="button"
-			className={`rounded-lg bg-[#1C4532] px-4 py-2 font-roboto text-sm font-medium text-white md:px-6 md:text-base ${className}`}
+			onClick={()=>{follow(username)}}
+			className={`rounded-lg  bg-[#1C4532] px-4 py-2 font-roboto text-sm font-medium text-white md:px-6 md:text-base ${className}`}
 		>
-			Follow
+		Follow
+		</button>
+	);
+};
+export const UnFollowUser = ({ className, username }: { className?: string, username?:string }) => {
+	return (
+		<button
+			type="button"
+			onClick={()=>{unfollow(username)}}
+			className={`rounded-lg bg-[#1f1f1f] px-4 py-2 font-roboto text-sm font-medium text-white md:px-6 md:text-base ${className}`}
+		>
+			Following
 		</button>
 	);
 };
