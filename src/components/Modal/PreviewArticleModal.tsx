@@ -40,7 +40,6 @@ const PreviewArticleModal = () => {
 				},
 			})
 			toast.success("Post Sent 🎉");
-			console.log("Response--------", response)
 			closeModal();
 			navigate("/article", {
 				state: response.data.data.id

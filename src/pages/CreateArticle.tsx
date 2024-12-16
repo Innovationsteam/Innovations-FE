@@ -50,13 +50,11 @@ const CreateArticle = () => {
 					Authorization: `Bearer ${token}`,
 				},
 			})
-			console.log("Response--------", response)
 			toast.success("Draft Saved 🎉");
 			navigate("/home")
 		}
 		catch(err){
 			toast.error("Failed to upload");
-			console.log("Error---------------", err);
 		}
 	};
 	//////////////////////
@@ -87,7 +85,6 @@ const CreateArticle = () => {
 	};
 
 	const previewArticle = () => {
-		console.log("article-----------", article, articlebody)
 		if (article) {
 			if (selectedFile) {
 				openModal(ModalType.Preview, { article, url: selectedFile, backdrop: image, articlebody });

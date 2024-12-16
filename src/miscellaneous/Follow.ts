@@ -32,7 +32,6 @@ export const follow = async (username?:string)=>{
           "Content-Type": "application/json",
       },
   });
-  console.log(follow.data.data)
   }catch(error){
     throw error as AxiosError;
    }
@@ -47,7 +46,6 @@ export const unfollow = async (username?:string)=>{
           "Content-Type": "application/json",
       },
   });
-  console.log(follow.data.data)
   }catch(error){
     throw error as AxiosError;
    }

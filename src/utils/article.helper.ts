@@ -1,6 +1,6 @@
 import { client,token } from "@/libs/axios";
 import { AxiosError } from "axios";
-import { IComment, ICResponse } from "@/types/comment.type";
+import { IComment } from "@/types/comment.type";
 import { INotes } from "@/types/notes.types";
 import { IResponse } from "@/types/auth.types";
 export interface PostItem {
@@ -102,7 +102,6 @@ export const createNote =async(title:string|null,content:string, id:string):Prom
 }
 export const getNote =async(id:string)=>{
     try{
-        console.log(id)
         const note = await client.get(`/notes/${id}`,
        {
           headers: {

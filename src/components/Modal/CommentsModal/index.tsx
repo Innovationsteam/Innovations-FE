@@ -8,14 +8,13 @@ import ModalContainer from "../ModalContainer";
 import { IComment } from "@/types/comment.type";
 import { useAllComments } from "@/hooks/useAllcomments";
 import CommentSkeleton from "./commentSkeleton";
-import Skeleton from "react-loading-skeleton";
 const CommentsModal = () => {
 	const { closeModal } = useModalActions();
 	const isOpen = useActiveModal(ModalType.Comments);
 	const [width] = useSize();
 	const modalData = useModalData() || {};
 	const postID = modalData.postID?.id;
-	const { data: commentsResponse, error, isLoading } = useAllComments(postID);
+	const { data: commentsResponse, isLoading } = useAllComments(postID);
 	//@ts-ignore
 	const comments  = commentsResponse?.comments 
 	if (!isOpen || !postID) {

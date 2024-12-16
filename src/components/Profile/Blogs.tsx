@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { BlogsType } from "@/types/post.types";
 import { PostItem } from "@/utils/article.helper";
-import { formatDate } from "@/utils/helper";
 import PostSkeleton from "../Dashboard/PostList/postskeleton";
 const Blogs = ({ title }: { title: string }) => {
 	const [blogs, setBlogs] = useState<PostItem[]>([]);
