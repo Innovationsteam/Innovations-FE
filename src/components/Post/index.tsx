@@ -1,5 +1,5 @@
 import { IPost } from "@/types/post.types";
-import { cn, convertToOriginalFormat } from "@/utils/helper";
+import { cn, convertToOriginalFormat, formatDate } from "@/utils/helper";
 import { useState } from "react";
 import { BsShare } from "react-icons/bs";
 import { FaRegComment, FaRegHeart } from "react-icons/fa";
@@ -28,7 +28,7 @@ export const Post = ({ id, author, publishedDate, content, image, likes, socialM
 				<div className="flex flex-col items-start gap-x-5 font-roboto text-[#5B7083] xl:flex-row xl:items-center">
 					<span className="text-base text-[#2A2A2A] lg:mr-2">{author.username}</span>
 					<p className="flex items-center gap-x-[2px] text-sm">
-						<span>{publishedDate}</span>
+						<span>{formatDate(publishedDate)}</span>
 						<span>·</span>
 					</p>
 				</div>

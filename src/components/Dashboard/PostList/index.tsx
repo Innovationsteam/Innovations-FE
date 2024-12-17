@@ -1,10 +1,10 @@
 import { Post } from "@/components/Post";
 import { useAllPosts } from "@/hooks/useAllPosts";
+import { IPost } from "@/types/post.types";
 import InfiniteScroll from "react-infinite-scroll-component";
 import PostSkeleton from "./postskeleton";
 
 const PostList = () => {
-	// const token = sessionStorage.getItem("myToken");
 	const { data: posts, fetchNextPage, hasNextPage } = useAllPosts();
 
 	return (
@@ -20,7 +20,7 @@ const PostList = () => {
 					<ul className="grid h-full gap-y-4">
 						{posts?.pages.map(({ data }) => (
 							<>
-								{data.posts.map((item) => (
+								{data.posts.map((item: IPost) => (
 									<Post
 										{...item}
 										className="last:mb-10"

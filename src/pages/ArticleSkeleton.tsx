@@ -32,9 +32,7 @@ const ArticleSkeleton = () => {
                         <h1 className="my-1 font-roboto text-3xl text-[32px] font-bold capitalize text-[#141414] md:text-[42px] md:leading-[52px]">
                             <Skeleton width={300} />
                         </h1>
-                        <h2 className="font-roboto text-sm md:text-base lg:text-lg">
-                            <Skeleton width={250} />
-                        </h2>
+                    
                     </header>
                     <div className="relative my-10 h-[238px] md:h-[400px]">
                         <Skeleton className="h-full w-full" />

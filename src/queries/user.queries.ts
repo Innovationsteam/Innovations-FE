@@ -1,4 +1,4 @@
-import client from "@/libs/axios";
+import client from "@/lib/axios";
 import { IResponse } from "@/types/auth.types";
 import { ReadingList } from "@/types/readng-list.types";
 import { User } from "@/types/user.types";

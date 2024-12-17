@@ -1,5 +1,5 @@
 import { CreateReadingListData } from "@/components/forms/CreateReadingListForm";
-import client from "@/libs/axios";
+import client from "@/lib/axios";
 import { IResponse } from "@/types/auth.types";
 import { ReadingList } from "@/types/readng-list.types";
 import { AxiosError } from "axios";
