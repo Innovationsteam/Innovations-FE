@@ -48,7 +48,7 @@ const CreateArticle = () => {
 		formData.append("hashtags", "");
 		console.log("Data meant", formData);
 		try {
-			const response = await client.post("api/posts/", formData, {
+			const response = await client.post("/posts", formData, {
 				headers: {
 					Accept: "/*",
 					"Content-Type": "multipart/form-data",

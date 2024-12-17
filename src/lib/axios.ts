@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const client = axios.create({
-	baseURL: import.meta.env.VITE_API_KEY,
+	baseURL: "https://christianwritesbe.onrender.com/api",
 	headers: {
 		"Content-Type": "application/json",
 	},

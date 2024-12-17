@@ -38,7 +38,7 @@ const PreviewArticleModal = () => {
 		console.log("Data meant", formData);
 		setLoading(true);
 		try {
-			const response = await client.post("api/posts/", formData, {
+			const response = await client.post("/posts", formData, {
 				headers: {
 					Accept: "/*",
 					"Content-Type": "multipart/form-data",
@@ -48,9 +48,8 @@ const PreviewArticleModal = () => {
 			toast.success("Post Sent 🎉");
 			console.log("Response--------", response);
 			closeModal();
-			navigate("/article", {
-				state: response.data.data.id,
-			});
+			const id = response.data.data.id
+			navigate(`/article/${id}`);
 		} catch (err) {
 			toast.error("Failed to upload");
 			console.error("Error:", err);
