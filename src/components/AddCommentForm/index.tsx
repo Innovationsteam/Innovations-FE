@@ -4,7 +4,7 @@ import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import classNames from "classnames";
 
-const content = `<h1>Aghedo <strong>Jason</strong></h1>`;
+const content = ``;
 
 const AddCommentForm = () => {
 	const editor = useEditor({
