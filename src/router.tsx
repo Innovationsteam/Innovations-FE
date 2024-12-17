@@ -21,7 +21,7 @@ import CreateArticle from "./pages/CreateArticle";
 import Analytics from "./components/Profile/Analytics";
 import Notes from "./components/Profile/Notes";
 import Drafts from "./components/Profile/Drafts";
-// import Analytics from "./components/Profile/Analytics";
+import ProtectedRoutes from "./components/ProtectedRoutes";
 
 export const router = createBrowserRouter([
 	{
@@ -33,55 +33,60 @@ export const router = createBrowserRouter([
 		element: <MainLayout />,
 		children: [
 			{
-				path: "home",
-				element: <Home />,
-			},
-			{
-				path: "article",
-				element: <Article />,
-			},
-			{
-				path: "article/new",
-				element: <CreateArticle />,
-			},
-			{
-				path: "profile",
-				element: <Profile />,
+				element: <ProtectedRoutes />, // Protect all children below
 				children: [
-					{ path: "", element: <ProfileHome /> },
-					{ path: "about", element: <About /> },
-					{ path: "blogs", element: <Blogs title="Blogs" /> },
-					{ path: "reading-list", element: <ReadingList /> },
-					{ path: "followers", element: <FollowersList /> },
-					{ path: "following", element: <FollowersList /> },
-				],
-			},
-			{
-				path: "user/profile",
-				element: <Profile allowEdit />,
-				children: [
-					{ path: "", element: <ProfileHome /> },
-					{ path: "about", element: <About /> },
-					{ path: "blogs", element: <Blogs title="Blogs" /> },
-					{ path: "saved", element: <Blogs title="Saved" /> },
-					{ path: "reading-list", element: <ReadingList /> },
-					{ path: "followers", element: <FollowersList /> },
-					{ path: "following", element: <FollowersList /> },
-					{ path: "analytics", element: <Analytics /> },
-					{ path: "settings", element: <Settings /> },
-					{path:"notes",element:<Notes/>},
-					{path:"drafts",element:<Drafts/>}
+					{
+						path: "home",
+						element: <Home />,
+					},
+					{
+						path: "article/:postId",
+						element: <Article />,
+					},
+					{
+						path: "article/new",
+						element: <CreateArticle />,
+					},
+					{
+						path: "profile",
+						element: <Profile />,
+						children: [
+							{ path: "", element: <ProfileHome /> },
+							{ path: "about", element: <About /> },
+							{ path: "blogs", element: <Blogs title="Blogs" /> },
+							{ path: "reading-list", element: <ReadingList /> },
+							{ path: "followers", element: <FollowersList /> },
+							{ path: "following", element: <FollowersList /> },
+						],
+					},
+					{
+						path: "user/profile",
+						element: <Profile allowEdit />,
+						children: [
+							{ path: "", element: <ProfileHome /> },
+							{ path: "about", element: <About /> },
+							{ path: "blogs", element: <Blogs title="Blogs" /> },
+							{ path: "saved", element: <Blogs title="Saved" /> },
+							{ path: "reading-list", element: <ReadingList /> },
+							{ path: "followers", element: <FollowersList /> },
+							{ path: "following", element: <FollowersList /> },
+							{ path: "analytics", element: <Analytics /> },
+							{ path: "settings", element: <Settings /> },
+							{ path: "notes", element: <Notes /> },
+							{ path: "drafts", element: <Drafts /> },
+						],
+					},
+					{
+						path: "stories",
+						element: <Stories />,
+					},
+					{
+						path: "stories/new",
+						element: <NewStory />,
+					},
 				],
 			},
 		],
-	},
-	{
-		path: "stories",
-		element: <Stories />,
-	},
-	{
-		path: "stories/new",
-		element: <NewStory />,
 	},
 	{
 		path: "login",

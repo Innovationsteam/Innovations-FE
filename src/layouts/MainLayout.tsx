@@ -7,6 +7,9 @@ import NavBar from "@components/Navbar";
 import PageContainer from "@components/PageContainer";
 import TermsAndConditionsModal from "@/components/Modal/TermsAndConditionsModal";
 import PreviewArticleModal from "@/components/Modal/PreviewArticleModal";
+import EditProfileModal from "@/components/Modal/EditProfileModal";
+import CreateReadingListModal from "@/components/Modal/CreateReadingListModal";
+import AddToReadingListModal from "@/components/Modal/AddToReadingListModal";
 
 const MainLayout = () => {
 	const isOpen = useActiveModal(ModalType.None);
@@ -23,6 +26,9 @@ const MainLayout = () => {
 			<PersonalNotesModal />
 			<TermsAndConditionsModal />
 			<PreviewArticleModal />
+			<EditProfileModal />
+			<CreateReadingListModal />
+			<AddToReadingListModal />
 		</PageContainer>
 	);
 };

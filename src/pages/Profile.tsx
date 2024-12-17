@@ -3,51 +3,53 @@ import { EditProfile, FollowUser } from "../components/Buttons";
 // import DropDown from "../components/Buttons/DropDown";
 import Container from "../components/Container";
 import { MiniNav, MiniNavMobile } from "../components/MiniNav";
-import { client, token } from "@/libs/axios";
+import client from "@/lib/axios";
 import { useQuery } from "@tanstack/react-query";
-import Skeleton from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css';
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import { useCookies } from "react-cookie";
 const tabs = ["home", "about", "blogs", "reading-list", "followers", "following"];
 
 const adminTabs = [...tabs, "saved", "analytics", "drafts", "notes", "settings"];
 
 const Profile = ({ allowEdit }: { allowEdit?: boolean }) => {
+	const [cookies] = useCookies(["access_token"]);
 
 	type userData = {
 		name: string;
 		followersCount: number;
 		followingCount: number;
-	}
+	};
 	const getData = async (): Promise<userData> => {
-		const User1: userData = { name: "", followersCount: 0, followingCount: 0 }
-		const name = await client.get(`/api/users/me`, {
+		const User1: userData = { name: "", followersCount: 0, followingCount: 0 };
+		const name = await client.get(`/users/me`, {
 			headers: {
-				Authorization: `Bearer ${token}`,
+				Authorization: `Bearer ${cookies?.access_token}`,
 				"Content-Type": "application/json",
 			},
 		});
-		User1.name = name.data.data.name || ""
-		const followers = await client.get(`/api/users/followers/count`, {
+		User1.name = name.data.data.name || "";
+		const followers = await client.get(`/users/followers/count`, {
 			headers: {
-				Authorization: `Bearer ${token}`,
+				Authorization: `Bearer ${cookies?.access_token}`,
 				"Content-Type": "application/json",
 			},
 		});
-		User1.followersCount = followers.data.data.count || 0
-		const following = await client.get(`/api/users/following/count`, {
+		User1.followersCount = followers.data.data.count || 0;
+		const following = await client.get(`/users/following/count`, {
 			headers: {
-				Authorization: `Bearer ${token}`,
+				Authorization: `Bearer ${cookies?.access_token}`,
 				"Content-Type": "application/json",
 			},
 		});
-		User1.followingCount = following.data.data.count || 0
-		return User1
-	}
+		User1.followingCount = following.data.data.count || 0;
+		return User1;
+	};
 	const { data } = useQuery({
 		queryFn: () => getData(),
-		queryKey: ["data", token],
-		staleTime: 100 * 60 * 3
-	})
+		queryKey: ["data"],
+		staleTime: 100 * 60 * 3,
+	});
 	return (
 		<Container>
 			<header className="mt-3 h-[183px] overflow-hidden rounded-md md:mt-9 md:h-[400px]">
@@ -69,24 +71,34 @@ const Profile = ({ allowEdit }: { allowEdit?: boolean }) => {
 					/>
 					<div className="mt-6 flex items-center text-black">
 						<div>
-							{data ?
-								<>	<h1 className="font-roboto text-[16px] text-xl font-semibold md:text-3xl">{data?.name}</h1>
+							{data ? (
+								<>
+									{" "}
+									<h1 className="font-roboto text-[16px] text-xl font-semibold md:text-3xl">{data?.name}</h1>
 									<h2 className="font-roboto text-sm md:text-xl">Content Creator</h2>
 									<div className="mt-1 flex items-center gap-x-2">
 										<p className="text-xs text-[#14141499] md:text-base">{data?.followersCount} followers</p>
 										<p className="text-xs text-[#14141499] md:text-base">{data?.followingCount} followers</p>
-									</div></> :
-								<>
-
-									<h1 className="font-roboto text-[16px] text-xl font-semibold md:text-3xl"><Skeleton width={120} /></h1>
-									<h2 className="font-roboto text-sm md:text-xl"><Skeleton width={140} /></h2>
-									<div className="mt-1 flex items-center gap-x-2">
-										<p className="text-xs text-[#14141499] md:text-base"><Skeleton width={90}/></p>
-										<p className="text-xs text-[#14141499] md:text-base"><Skeleton width={90}/></p>
 									</div>
 								</>
-							}
-
+							) : (
+								<>
+									<h1 className="font-roboto text-[16px] text-xl font-semibold md:text-3xl">
+										<Skeleton width={120} />
+									</h1>
+									<h2 className="font-roboto text-sm md:text-xl">
+										<Skeleton width={140} />
+									</h2>
+									<div className="mt-1 flex items-center gap-x-2">
+										<p className="text-xs text-[#14141499] md:text-base">
+											<Skeleton width={90} />
+										</p>
+										<p className="text-xs text-[#14141499] md:text-base">
+											<Skeleton width={90} />
+										</p>
+									</div>
+								</>
+							)}
 						</div>
 						<div className="ml-auto flex items-center gap-x-2">
 							{/* <DropDown position="top">

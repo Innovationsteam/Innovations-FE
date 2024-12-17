@@ -9,7 +9,7 @@ import { Like } from "../components/Buttons/Like";
 import Tag from "../components/Buttons/Tag";
 import Container from "../components/Container";
 import ArticleSkeleton from "./ArticleSkeleton";
-
+import { convertToOriginalFormat } from "@/utils/helper";
 const Article = () => {
 	const { postId } = useParams();
 	const { data: post, isPending } = usePost(postId);
@@ -44,7 +44,7 @@ const Article = () => {
 							<span>·</span>
 						</p>
 						<h1 className="my-1 font-roboto text-3xl text-[32px] font-bold capitalize text-[#141414] md:text-[42px] md:leading-[52px]">{post.title}</h1>
-						<h2 className="font-roboto text-sm md:text-base lg:text-lg">101 ways on how to build your faith</h2>
+						{/* <h2 className="font-roboto text-sm md:text-base lg:text-lg">101 ways on how to build your faith</h2> */}
 					</header>
 					<div className="relative my-10 h-[238px] md:h-[400px]">
 						<img
@@ -55,7 +55,7 @@ const Article = () => {
 					</div>
 					<p
 						className="font-roboto text-base leading-7 text-[#141414B2] md:text-lg md:leading-8"
-						dangerouslySetInnerHTML={{ __html: post.content }}
+						dangerouslySetInnerHTML={{ __html: convertToOriginalFormat(post.content) }}
 					/>
 					<div className="my-4 flex flex-wrap justify-center gap-2">
 						{labels?.map((text: string) => (
@@ -78,7 +78,7 @@ const Article = () => {
 									alt=""
 								/>
 							</button>
-							<button>
+							<button onClick={() => openModal(ModalType.ADD_TO_READING_LIST, postId)}>
 								<img
 									className="inline-block size-6"
 									src="/assets/icons/bookmark.svg"

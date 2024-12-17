@@ -1,13 +1,13 @@
 import { LoginFormData } from "@/components/LoginForm";
 import { SignUpFormData } from "@/components/SignUpForm";
-import { ResetPasswordData } from "@/pages/ResetPassword";
-import {client} from "@/libs/axios";
+import client from "@/lib/axios";
+import { OTPFormData } from "@/pages/VerifyOTP";
 import { LoginResponse, SignUpResponse } from "@/types/auth.types";
 import { AxiosError } from "axios";
 
 export const loginUser = async (payload: LoginFormData): Promise<LoginResponse> => {
 	try {
-		const res = await client.post("/api/auth/login", payload);
+		const res = await client.post("/auth/login", payload);
 		return res.data;
 	} catch (error) {
 		throw error as AxiosError;
@@ -16,16 +16,25 @@ export const loginUser = async (payload: LoginFormData): Promise<LoginResponse> 
 
 export const signUpUser = async (payload: SignUpFormData): Promise<SignUpResponse> => {
 	try {
-		const res = await client.post("/api/auth/register", payload);
+		const res = await client.post("/auth/register", payload);
 		return res.data;
 	} catch (error) {
 		throw error as AxiosError;
 	}
 };
 
-export const sendToken = async (payload: ResetPasswordData) => {
+export const verifyEmail = async (payload: OTPFormData) => {
 	try {
-		const res = await client.post("/api/auth/send-reset-token", payload);
+		const res = await client.post("/auth/verify-email", payload);
+		return res.data;
+	} catch (error) {
+		throw error as AxiosError;
+	}
+};
+
+export const resendVerifyEmail = async (payload: { email: string }) => {
+	try {
+		const res = await client.post("/auth/resend-confirmation", payload);
 		return res.data;
 	} catch (error) {
 		throw error as AxiosError;

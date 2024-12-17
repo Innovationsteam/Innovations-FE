@@ -1,5 +1,5 @@
-import { PAGE_LIMIT } from "@/utils/constants";
-import {client} from "@/libs/axios";
+import { PAGE_LIMIT } from "@/constants";
+import client from "@/lib/axios";
 import { IResponse } from "@/types/auth.types";
 import { IPost } from "@/types/post.types";
 import { AxiosError } from "axios";
@@ -13,7 +13,7 @@ interface PostsResponse {
 
 export const getAllPosts = async ({ pageParam = 1 }: { pageParam: number }) => {
 	try {
-		const res = await client.get<IResponse<PostsResponse>>(`/posts/?page=${pageParam}&limit=${5}`);
+		const res = await client.get<IResponse<PostsResponse>>(`/posts/?page=${pageParam}&limit=${PAGE_LIMIT}`);
 		return res.data;
 	} catch (error) {
 		throw error as AxiosError;

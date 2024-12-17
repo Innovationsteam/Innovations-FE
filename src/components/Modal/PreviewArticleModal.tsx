@@ -1,59 +1,63 @@
-import { ModalType, useModal, useModalActions } from "@/store/modal";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import client from "@/lib/axios";
+import { ModalType, useActiveModal, useModalActions, useModalData } from "@/store/modal";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import ClipLoader from "react-spinners/ClipLoader";
 import Container from "../Container";
 import ModalContainer from "./ModalContainer";
-import { useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { client, token } from "@/libs/axios";
-import toast from "react-hot-toast";
-import ClipLoader from "react-spinners/ClipLoader";
+import { useCookies } from "react-cookie";
 
 const PreviewArticleModal = () => {
 	const { closeModal } = useModalActions();
 
-	const { modal, data } = useModal();
+	const isOpen = useActiveModal(ModalType.Preview);
+	const modalData = useModalData();
 
-	const isOpen = useMemo(() => modal === ModalType.Preview, [modal]);
+	const [cookies] = useCookies(["access_token"]);
 
 	const navigate = useNavigate();
-	const [Hash, setHash] = useState("")
-	const [loading, setLoading] = useState(false)
+	const [Hash, setHash] = useState("");
+	const [loading, setLoading] = useState(false);
 	const addHashtag = (event: any) => {
-		const hashtags = event.target.value.split(' ').map((item: string) => item.startsWith('#') ? item : `#${item}`).filter(Boolean);
-		setHash(hashtags.join(','));
+		const hashtags = event.target.value
+			.split(" ")
+			.map((item: string) => (item.startsWith("#") ? item : `#${item}`))
+			.filter(Boolean);
+		setHash(hashtags.join(","));
 	};
 	const handlePublish = async () => {
-		const formData = new FormData()
-		formData.append("title", data?.article);
-		formData.append("content", data?.articlebody.join(''));
+		const formData = new FormData();
+		formData.append("title", modalData?.article);
+		formData.append("content", modalData?.articlebody.join(""));
 		formData.append("category", Hash);
-		formData.append("image", data?.url);
+		formData.append("image", modalData?.url);
 		formData.append("hashtags", Hash);
 		formData.append("status", "published");
-		console.log("Data meant", formData)
-		setLoading(true)
+		console.log("Data meant", formData);
+		setLoading(true);
 		try {
-			const response = await client.post("api/posts/", formData, {
+			const response = await client.post("/posts", formData, {
 				headers: {
 					Accept: "/*",
 					"Content-Type": "multipart/form-data",
-					Authorization: `Bearer ${token}`,
+					Authorization: `Bearer ${cookies?.access_token}`,
 				},
-			})
-			toast.success("Post Sent 🎉");
-			console.log("Response--------", response)
-			closeModal();
-			navigate("/article", {
-				state: response.data.data.id
 			});
-		}
-		catch (err) {
+			toast.success("Post Sent 🎉");
+			console.log("Response--------", response);
+			closeModal();
+			const id = response.data.data.id
+			navigate(`/article/${id}`);
+		} catch (err) {
 			toast.error("Failed to upload");
 			console.error("Error:", err);
 		}
-		setLoading(false)
+		setLoading(false);
 	};
 
-	if (!data) return null;
+	if (!modalData) return null;
 
 	return (
 		<ModalContainer isOpen={isOpen}>
@@ -74,11 +78,11 @@ const PreviewArticleModal = () => {
 						<div className="relative my-6 flex h-[min(20vw,200px)] min-h-[140px] items-center justify-center overflow-hidden rounded">
 							<img
 								className="h-full w-full object-cover"
-								src={data?.backdrop}
+								src={modalData?.backdrop}
 								alt=""
 							/>
 						</div>
-						<h1 className="font-roboto text-2xl font-semibold text-black">{data.article}</h1>
+						<h1 className="font-roboto text-2xl font-semibold text-black">{modalData?.article}</h1>
 						<div className="mt-6 flex flex-col">
 							<h3 className="mb-2 font-bold text-[#141414]">Add Hashtags</h3>
 							<textarea
@@ -92,12 +96,15 @@ const PreviewArticleModal = () => {
 								onClick={handlePublish}
 								className="ml-auto w-full max-w-[100px] rounded-lg bg-[#04BF87] py-2 font-raleway text-sm font-semibold text-white md:py-[10px] md:text-base"
 							>
-								{loading ? <ClipLoader
-									loading={loading}
-									size={25}
-
-									color="#fff"
-								/> : "publish"}
+								{loading ? (
+									<ClipLoader
+										loading={loading}
+										size={25}
+										color="#fff"
+									/>
+								) : (
+									"publish"
+								)}
 							</button>
 						</div>
 					</section>

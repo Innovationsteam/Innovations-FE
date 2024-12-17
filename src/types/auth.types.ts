@@ -13,4 +13,17 @@ export type SignUpResponse = IResponse<{
 export type LoginResponse = IResponse<{
 	access_token: string;
 	username: string;
+	is_active: boolean;
 }>;
+
+export interface IError {
+	statusCode: number;
+	success: false;
+	timestamp: string;
+	message: string;
+	error: {
+		message: string;
+		error: string;
+		statusCode: number;
+	};
+}
