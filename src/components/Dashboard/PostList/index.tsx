@@ -1,99 +1,44 @@
-import { Post } from "../../Post";
-import { useEffect, useState, useCallback } from "react";
-import {client, token} from "@/libs/axios";
-import PostSkeleton from './postskeleton';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import { useQuery } from "@tanstack/react-query";
-import { PostItem, formatDate } from "@/hooks/originalFormat";
+import { Post } from "@/components/Post";
+import { useAllPosts } from "@/hooks/useAllPosts";
+import InfiniteScroll from "react-infinite-scroll-component";
+import PostSkeleton from "./postskeleton";
+import { IPost } from "@/types/post.types";
 const PostList = () => {
-    const [posts, setPosts] = useState<PostItem[]>([]);
-    const [hasMore, setHasMore] = useState(true);
-    const [page, setPage] = useState(1);
+	// const token = sessionStorage.getItem("myToken");
+	const { data: posts, fetchNextPage, hasNextPage } = useAllPosts();
 
-
-
-    const getPost = useCallback(async (page: number) => {
-        const response = await client.get(`/api/posts/?page=${page}&limit=${5}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json",
-            },
-        });
-        const newPosts = response?.data?.data?.posts || [];
-        return newPosts;
-    }, [token]);
-
-    const { data, isLoading, isError } = useQuery({
-        queryFn: () => getPost(page),
-        queryKey: ["post", page],
-        staleTime: 1000 * 60 * 5,
-    });
-
-    useEffect(() => {
-        if (data) {
-            const sortedPosts = data.sort((a: PostItem, b: PostItem) => {
-                return new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime();
-            });
-            setPosts(prevPosts => [...prevPosts, ...sortedPosts]);
-            setHasMore(data.length > 0);
-        }
-    }, [data]);
-
-    const loadMorePosts = () => {
-        if (hasMore) {
-            setPage(prevPage => prevPage + 1);
-        }
-    };
-
-    if (isLoading) {
-
-    }
-    if (isError) {
-        return <p className="text-center text-lg text-gray-600 mt-5">Error loading posts.</p>;
-    }
-
-    return (
-        <InfiniteScroll
-            dataLength={posts.length}
-            next={loadMorePosts}
-            hasMore={hasMore}
-            loader={<PostSkeleton />}
-            endMessage={<p className="text-center text-lg text-gray-600 mt-5">
-                You're all caught up!!       </p>}
-        >
-            <ul className="mt-10 grid h-full gap-y-4">
-                {posts.length > 0 ? (
-                    posts.map((item: PostItem, i) => (
-                        <Post
-                            key={i}
-                            id={item.id}
-                            author={item.author.name}
-                            date={formatDate(item.publishedDate)}
-                            img={item.image}
-                            title={item.title}
-                            content={item.content}
-                            likes={item.likes}
-                            views={item.views}
-                            hashtags={item.category}
-                            socialMediaShares={item.socialMediaShares}
-                        />
-
-                    ))
-                ) : (
-                    <></>
-                )}
-            </ul>
-            {
-                isLoading ?
-                    <div>
-                        {
-                            Array.from({ length: 3 }).map((_, i) => (
-                                <PostSkeleton key={i} />
-                            ))
-                        }
-                    </div> : <></>}
-        </InfiniteScroll >
-    );
+	return (
+		<section className="mt-10">
+			{posts ? (
+				<InfiniteScroll
+					dataLength={posts.pages.flatMap((page) => page.data.posts).length}
+					next={fetchNextPage}
+					hasMore={hasNextPage}
+					loader={<PostSkeleton />}
+					endMessage={<p>No more posts to load.</p>}
+				>
+					<ul className="grid h-full gap-y-4">
+						{posts?.pages.map(({ data }) => (
+							<>
+								{data.posts.map((item:IPost) => (
+									<Post
+										{...item}
+										className="last:mb-10"
+									/>
+								))}
+							</>
+						))}
+					</ul>
+				</InfiniteScroll>
+			) : (
+				<ul className="grid h-full gap-y-4">
+					{Array.from({ length: 3 }).map((_, i) => (
+						<PostSkeleton key={i} />
+					))}
+				</ul>
+			)}
+		</section>
+	);
 };
 
 export default PostList;
