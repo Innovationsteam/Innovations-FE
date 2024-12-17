@@ -58,7 +58,7 @@ const LoginForm = () => {
 				<Input
 					{...register("password")}
 					id="password"
-					type="text"
+					type="password"
 					placeholder="Enter your password"
 				/>
 				{errors.password && <p className="font-poppins mt-1 inline-block text-left text-sm text-red-500">{errors.password?.message}</p>}
@@ -89,7 +89,7 @@ const LoginForm = () => {
 			<Button
 				type="submit"
 				disabled={isPending || !isValid}
-				className="mt-3 bg-primary"
+				className="bg-primary"
 			>
 				{isPending ? (
 					<img

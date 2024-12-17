@@ -21,12 +21,10 @@ export const useLoginUser = () => {
 };
 
 export const useSignUpUser = () => {
-	const navigate = useNavigate();
 	return useMutation({
 		mutationFn: signUpUser,
-		onSuccess: ({ data }) => {
+		onSuccess: () => {
 			toast.success("SignUp Successful");
-			navigate("/verify", { state: { email: data.email } });
 		},
 	});
 };

@@ -1,15 +1,15 @@
 import { Button } from "@/components/ui/button";
+import { useResendEmail } from "@/hooks/useResendEmail";
 import { useVerifyEmail } from "@/hooks/useVerifyEmail";
 import { InputOTP, InputOTPSlot } from "@components/ui/input-otp";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { LoaderCircle } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
-import { Link, useLocation, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
+import { useDebounceCallback } from "usehooks-ts";
 import { z } from "zod";
 import Container from "../components/Container";
 import PageContainer from "../components/PageContainer";
-import { useResendEmail } from "@/hooks/useResendEmail";
-import { useDebounceCallback } from "usehooks-ts";
-import { LoaderCircle } from "lucide-react";
 
 const schema = z.object({
 	token: z.string().length(6, { message: "Must be Exactly 6 digits" }),
@@ -19,7 +19,6 @@ export type OTPFormData = z.infer<typeof schema>;
 
 const VerifyOTP = () => {
 	const [searchParams] = useSearchParams();
-	const location = useLocation();
 
 	const {
 		control,
@@ -35,7 +34,7 @@ const VerifyOTP = () => {
 	const { mutate: verifyEmail, isPending: isVerifyingEmail } = useVerifyEmail();
 	const { mutate: resendEmail, isPending: isResendingEmail } = useResendEmail();
 
-	const debouncedResendEmail = useDebounceCallback(() => resendEmail({ email: location.state?.email ?? "" }), 800);
+	const debouncedResendEmail = useDebounceCallback(() => resendEmail({ email: searchParams.get("email") ?? "" }), 800);
 
 	const onSubmit = (data: OTPFormData) => verifyEmail(data);
 

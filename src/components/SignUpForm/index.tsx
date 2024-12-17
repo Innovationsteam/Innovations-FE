@@ -87,7 +87,7 @@ const SignUpForm = () => {
 				<Input
 					{...register("password")}
 					id="password"
-					type="text"
+					type="password"
 					placeholder="Enter your password"
 				/>
 				{errors.password && <p className="font-poppins mt-1 inline-block text-left text-sm text-red-500">{errors.password?.message}</p>}
@@ -102,7 +102,7 @@ const SignUpForm = () => {
 						src="/assets/icons/loader.svg"
 					/>
 				) : (
-					"SignUp"
+					"Sign Up"
 				)}
 			</button>
 		</form>

@@ -4,9 +4,37 @@ const client = axios.create({
 	baseURL: import.meta.env.VITE_API_KEY,
 	headers: {
 		"Content-Type": "application/json",
-		Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsInVzZXJuYW1lIjoiam9obnNvbiB0aGUgd3JpdGVyIiwic2NvcGUiOiJnbG9iYWwiLCJpYXQiOjE3MzQzNjYwOTksImV4cCI6MTczNDUzODg5OX0.oQc9IA1ljscLPKS6Q6pzRHAAythwBoVIZ1cZ8cYbQp0",
 	},
 	// withCredentials: true,
 });
+
+// Helper function to get a cookie by name
+const getCookie = (name: string): string | undefined => {
+	const cookieString = document.cookie;
+	const cookies = cookieString.split("; ");
+	for (const cookie of cookies) {
+		const [key, value] = cookie.split("=");
+		if (key === name) {
+			return decodeURIComponent(value);
+		}
+	}
+	return undefined;
+};
+
+client.interceptors.request.use(
+	(config) => {
+		// Retrieve the token from the cookie
+		const token = getCookie("access_token"); // Replace with your cookie name
+		// If the token exists, add it to the Authorization header
+		if (token) {
+			config.headers.Authorization = `Bearer ${token}`;
+		}
+
+		return config;
+	},
+	(error) => {
+		return Promise.reject(error);
+	}
+);
 
 export default client;
