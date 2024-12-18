@@ -2,6 +2,7 @@ import { client, token } from "@/libs/axios";
 import { AxiosError } from "axios";
 import { userData } from "@/types/user.types";
 export const Writer = async (username?:string)=>{
+  if(username){
     try{
       const bio = await client.get(`/users/${username}`,{
         headers: {
@@ -37,4 +38,8 @@ export const Writer = async (username?:string)=>{
     }catch(error){
       throw error as AxiosError;
      }
+  }else{
+    return
+  }
+  
   }

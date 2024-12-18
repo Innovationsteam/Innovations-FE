@@ -17,9 +17,11 @@ import { useWriter } from "@/hooks/usewriter";
 import Skeleton from "react-loading-skeleton";
 import { Post } from "@/components/Post";
 const Article = () => {
+	
 	interface LocationState {
 		postId?: string; 
 	}
+
     const { postId: paramPostId } = useParams<{ postId: string }>();
     const location = useLocation();
     const statePostId = (location.state as LocationState)?.postId;
@@ -29,8 +31,8 @@ const Article = () => {
 	const labels = post?.category.split(/[\s,#]+/).map((tag: string) => tag.replace('#', ''));
 	labels?.splice(0, 1)
 	const { data: writer, isFetching } = useWriter(post?.author.username);
-
 	const [following, setFollowing] = useState<boolean | null>(null);
+
 	useEffect(() => {
 		const checkFollowing = async () => {
 			const isFollowing = await IsaFollower(post?.author.username)
