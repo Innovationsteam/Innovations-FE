@@ -10,6 +10,7 @@ import TipTapEditor from "../components/Editor/TipTapEditor";
 const CreateArticle = () => {
 	const { openModal } = useModalActions();
 	const [article, setArticle] = useState(``);
+
 	const [articlebody, setArticlebody] = useState([]);
 	const [file, setFile] = useState("");
 	const navigate = useNavigate();
@@ -17,8 +18,8 @@ const CreateArticle = () => {
 	const uploadContainerRef = useRef(null);
 	const fileInputRef = useRef<HTMLInputElement>(null!);
 	const [selectedFile, setSelectedFile] = useState<File | null>(null);
-
 	//////////////////////
+
 	const location = useLocation();
 	const { title, body, imageUrl } = location.state || {};
 	useEffect(() => {
@@ -57,6 +58,7 @@ const CreateArticle = () => {
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const onUploadContainerClick = (e: any) => {
+		console.log(e.target.files);
 		console.log(e.target.files);
 		e.stopPropagation();
 		if (e.target == uploadContainerRef.current) fileInputRef.current.click();
@@ -127,6 +129,19 @@ const CreateArticle = () => {
 						alt=""
 					/>
 				)}
+				{imageUrl ? (
+					<img
+						className="absolute inset-0 object-cover"
+						src={selectedFile ? URL.createObjectURL(selectedFile) : imageUrl}
+						alt=""
+					/>
+				) : (
+					<img
+						className="absolute inset-0 object-cover"
+						src={selectedFile ? URL.createObjectURL(selectedFile) : "/assets/images/post-placeholder.png"}
+						alt=""
+					/>
+				)}
 				{/* <img
 					className="absolute inset-0 object-cover"
 					src={selectedFile ? URL.createObjectURL(selectedFile) : "/assets/images/post-placeholder.png"}
@@ -146,6 +161,8 @@ const CreateArticle = () => {
 					titlePlaceholder={"What’s the title?"}
 					textPlaceholder={"Type your article here or click the plus icon for more options"}
 					setContent={(content) => {
+						setArticle(extractH1Content(content));
+						setArticlebody(extractPContent(content));
 						setArticle(extractH1Content(content));
 						setArticlebody(extractPContent(content));
 					}}

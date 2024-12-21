@@ -1,9 +1,11 @@
 ///////Worked On
-import { client, token } from "@/libs/axios";
+import  client  from "@/lib/axios";
 import { AxiosError } from "axios";
 import { IComment } from "@/types/comment.type";
 import { INotes } from "@/types/notes.types";
 import { IResponse } from "@/types/auth.types";
+import { useCookies } from "react-cookie";
+
 
 export const likePost = async (id: string): Promise<boolean> => {
 	try {
@@ -12,7 +14,6 @@ export const likePost = async (id: string): Promise<boolean> => {
 			{},
 			{
 				headers: {
-					Authorization: `Bearer ${token}`,
 					"Content-Type": "application/json",
 				},
 			}
@@ -33,7 +34,6 @@ export const addComment = async (comment: string, id: string): Promise<boolean> 
 			},
 			{
 				headers: {
-					Authorization: `Bearer ${token}`,
 					"Content-Type": "application/json",
 				},
 			}
@@ -47,7 +47,6 @@ export const getComment = async (id: string) => {
 	try {
 		const allComments = await client.get<IResponse<IComment[]>>(`/comments/${id}`, {
 			headers: {
-				Authorization: `Bearer ${token}`,
 				"Content-Type": "application/json",
 			},
 		});
@@ -60,7 +59,6 @@ export const deleteComment = async (id: string) => {
 	try {
 		const commentDeleted = await client.delete(`/comments/${id}`, {
 			headers: {
-				Authorization: `Bearer ${token}`,
 				"Content-Type": "application/json",
 			},
 		});
@@ -79,7 +77,6 @@ export const createNote = async (title: string | null, content: string, id: stri
 			},
 			{
 				headers: {
-					Authorization: `Bearer ${token}`,
 					"Content-Type": "application/json",
 				},
 			}
@@ -93,7 +90,6 @@ export const getNote = async (id: string) => {
 	try {
 		const note = await client.get(`/notes/${id}`, {
 			headers: {
-				Authorization: `Bearer ${token}`,
 				"Content-Type": "application/json",
 			},
 		});
@@ -105,7 +101,6 @@ export const deleteNote = async (id: string) => {
 	try {
 		const noteDeleted = await client.delete(`/notes/${id}`, {
 			headers: {
-				Authorization: `Bearer ${token}`,
 				"Content-Type": "application/json",
 			},
 		});
@@ -117,7 +112,6 @@ export const getAllNote = async () => {
 	try {
 		const allNotes = await client.get<IResponse<INotes[]>>(`/notes/`, {
 			headers: {
-				Authorization: `Bearer ${token}`,
 				"Content-Type": "application/json",
 			},
 		});

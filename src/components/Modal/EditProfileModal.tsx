@@ -1,65 +1,71 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useUpdateProfile } from "@/hooks/useUpdateProfile";
+import { useUserProfile } from "@/hooks/useUserProfile";
 import { ModalType, useActiveModal, useModalActions } from "@/store/modal";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FieldValues, useForm } from "react-hook-form";
-import { z } from "zod";
-import ModalContainer from "./ModalContainer";
 import { ChangeEvent, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { z } from "zod";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
+import { Textarea } from "../ui/textarea";
+import ModalContainer from "./ModalContainer";
+import { CircleX } from "lucide-react";
 
 const schema = z.object({
-	name: z.string().min(4, { message: "Minimum of 4 characters" }).max(20, { message: "Maximum of 20 characters" }),
-	phoneNo: z.string().min(4, { message: "Minimum of 4 characters" }),
-	email: z.string().min(4, { message: "Minimum of 4 characters" }),
-	about: z.string().min(4, { message: "Minimum of 4 characters" }),
+	name: z.string().min(2, { message: "Must be at least 2 characters" }).max(50, { message: "Cannot exceed 50 characters" }).optional(),
+	bio: z.string().min(4, { message: "Must be at least 4 characters" }).max(100, { message: "Cannot exceed 100 characters" }).optional(),
 });
 
-export type EditProfileForm = z.infer<typeof schema>;
+export type EditProfileData = z.infer<typeof schema>;
 
 const EditProfileModal = () => {
-	const isOpen = useActiveModal(ModalType.EDIT_PROFILE);
-	const { closeModal } = useModalActions();
-	const [selectedFile, setSelectedFile] = useState<File | null>(null);
-
-	const uploadContainerRef = useRef(null);
 	const fileInputRef = useRef<HTMLInputElement>(null!);
 
-	const onFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-		const file = e.currentTarget.files![0];
-		if (file) {
-			const isValid = file.type.startsWith("image/");
-			if (isValid) {
-				setSelectedFile(file);
-				const reader = new FileReader();
-				// reader.onload = () => {
-				// 	setImage(reader.result as string);
-				// };
-				reader.readAsDataURL(file);
-			} else {
-				toast.error("Only images are allowed");
-			}
-		} else {
-			toast.error("Select an Image");
-		}
-	};
+	const isOpen = useActiveModal(ModalType.EDIT_PROFILE);
+	const { closeModal } = useModalActions();
+
+	const { data, isPending: isPendingProfile } = useUserProfile();
+	const [profileImage, setProfileImage] = useState<string | null>(data?.profileImg ?? null);
+	const { mutate: updateProfile, isPending: isUpdatingProfile } = useUpdateProfile();
 
 	const {
 		register,
 		handleSubmit,
-		formState: { errors },
-	} = useForm<EditProfileForm>({
+		formState: { isValid, errors },
+	} = useForm<EditProfileData>({
 		resolver: zodResolver(schema),
+		mode: "onChange",
+		values: {
+			name: data?.name ?? "",
+			bio: data?.bio ?? "",
+		},
 	});
-	const isPending = false;
 
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	const onUploadContainerClick = (e: any) => {
-		console.log(e.target.files);
-		e.stopPropagation();
-		fileInputRef.current.click();
+	const onFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+		const files = e.target.files;
+		if (files && files.length > 0) {
+			const file = files[0];
+			file.type.startsWith("image/") ? setProfileImage(URL.createObjectURL(file)) : toast.error("Only image files are allowed.");
+		} else {
+			toast.error("Please select an image.");
+		}
 	};
 
-	const onSubmit = (data: FieldValues) => {
-		console.log(data);
+	const onSubmit = (data: EditProfileData) => {
+		if (!profileImage) {
+			toast.error("Profile picture is required!");
+			return;
+		}
+
+		const formData = new FormData();
+		formData.append("name", data.name || "");
+		formData.append("bio", data.bio || "");
+		formData.append("profile", profileImage);
+
+		updateProfile(formData);
 	};
 	return (
 		<ModalContainer isOpen={isOpen}>
@@ -70,35 +76,32 @@ const EditProfileModal = () => {
 							<h2 className="font-roboto text-xl font-bold">Edit Profile</h2>
 							<p className="font-roboto text-base">Kindly fill in your information </p>
 						</header>
-						<button
-							className="ml-auto rotate-90 transition-transform duration-200 ease-in-out hover:rotate-90"
+						<CircleX
 							onClick={closeModal}
+							className="ml-auto rotate-90 cursor-pointer transition-transform duration-200 ease-in-out hover:rotate-90"
+							size={24}
+						/>
+					</div>
+					<div>
+						<label
+							className="relative mx-auto flex size-[100px] items-center justify-center overflow-hidden rounded-full"
+							htmlFor="profile"
 						>
 							<img
-								className="size-8 object-cover"
-								src="/assets/icons/close.svg"
+								className="absolute inset-0 h-full w-full object-cover"
+								src={profileImage ?? "/assets/images/writer.png"}
 								alt=""
 							/>
-						</button>
-					</div>
-					<div
-						ref={uploadContainerRef}
-						onClick={onUploadContainerClick}
-						className="relative mx-auto flex size-[100px] items-center justify-center overflow-hidden rounded-full"
-					>
-						<img
-							className="absolute inset-0 h-full w-full object-cover"
-							src={selectedFile ? URL.createObjectURL(selectedFile) : "/assets/images/writer.png"}
-							alt=""
-						/>
-						<div className="z-30 flex h-full w-full cursor-pointer	items-center justify-center bg-[#00000099] ">
-							<img
-								src="/assets/icons/camera.svg"
-								className="size-10"
-							/>
-						</div>
+							<div className="z-30 flex h-full w-full cursor-pointer	items-center justify-center bg-[#00000099] ">
+								<img
+									src="/assets/icons/camera.svg"
+									className="size-10"
+								/>
+							</div>
+						</label>
 						<input
 							ref={fileInputRef}
+							id="profile"
 							type="file"
 							accept="image/*"
 							onChange={onFileChange}
@@ -107,77 +110,45 @@ const EditProfileModal = () => {
 					</div>
 					<form
 						onSubmit={handleSubmit(onSubmit)}
-						className="mt-6"
+						className="mt-6 grid gap-3"
 					>
-						<div className="text-left">
-							<label
-								htmlFor="email"
-								className="block tracking-[-0.15px] text-[#718096]"
+						<div className="space-y-1 text-left">
+							<Label
+								htmlFor="name"
+								className="text-base"
 							>
 								Name
-							</label>
-							<input
+							</Label>
+							<Input
 								{...register("name")}
-								required
+								id="name"
 								type="text"
-								className="mt-2 h-10 w-full rounded-lg border border-[#CBD5E0] px-3 text-sm text-black transition-colors duration-200 ease-in focus:border-black"
-								placeholder="Enter your Email"
+								disabled={isPendingProfile}
+								placeholder="Enter your name"
 							/>
-							{errors.name && <p className="font-poppins mt-1 text-left text-sm text-red-500">{errors.name?.message}</p>}
+							{errors.name && <p className="font-poppins mt-1 inline-block text-left text-sm text-red-500">{errors.name?.message}</p>}
 						</div>
-						<div className="mt-5 text-left">
-							<label
-								htmlFor="password"
-								className="block tracking-[-0.15px] text-[#718096]"
+						<div className="space-y-1 text-left">
+							<Label
+								htmlFor="bio"
+								className="text-base"
 							>
-								Phone Number
-							</label>
-							<input
-								{...register("phoneNo")}
-								required
-								type="text"
-								className="mt-2 h-10 w-full rounded-lg border border-[#CBD5E0] px-3 text-sm text-black transition-colors duration-200 ease-in focus:border-black"
-								placeholder="Enter your Password"
+								Bio
+							</Label>
+							<Textarea
+								{...register("bio")}
+								id="bio"
+								disabled={isPendingProfile}
+								placeholder="Enter your bio"
 							/>
-							{errors.phoneNo && <p className="font-poppins mt-1 text-left text-sm text-red-500">{errors.phoneNo?.message}</p>}
+							{errors.bio && <p className="font-poppins mt-1 inline-block text-left text-sm text-red-500">{errors.bio?.message}</p>}
 						</div>
-						<div className="mt-5 text-left">
-							<label
-								htmlFor="password"
-								className="block tracking-[-0.15px] text-[#718096]"
-							>
-								Email
-							</label>
-							<input
-								{...register("email")}
-								required
-								type="email"
-								className="mt-2 h-10 w-full rounded-lg border border-[#CBD5E0] px-3 text-sm text-black transition-colors duration-200 ease-in focus:border-black"
-								placeholder="Enter your Password"
-							/>
-							{errors.email && <p className="font-poppins mt-1 text-left text-sm text-red-500">{errors.email?.message}</p>}
-						</div>
-						<div className="mt-5 text-left">
-							<label
-								htmlFor="password"
-								className="block tracking-[-0.15px] text-[#718096]"
-							>
-								About
-							</label>
-							<textarea
-								{...register("about")}
-								required
-								className="mt-2 h-[100px] w-full rounded-lg border border-[#CBD5E0] p-3 text-sm text-black transition-colors duration-200 ease-in focus:border-black"
-								placeholder="Type Here..."
-							/>
-							{errors.about && <p className="font-poppins mt-1 text-left text-sm text-red-500">{errors.about?.message}</p>}
-						</div>
-						<button
+						<Button
 							type="submit"
-							disabled={isPending}
-							className="mt-6 flex h-[47px] w-full items-center justify-center rounded-lg bg-[#04BF87] py-1 text-center font-semibold text-white lg:text-lg"
+							disabled={isPendingProfile || isUpdatingProfile || !profileImage || !isValid}
+							className="mt-3"
 						>
-							{isPending ? (
+							{isUpdatingProfile ? (
 								<img
 									className="h-full object-cover"
 									src="/assets/icons/loader.svg"
@@ -185,7 +156,7 @@ const EditProfileModal = () => {
 							) : (
 								"Update Profile"
 							)}
-						</button>
+						</Button>
 					</form>
 				</div>
 			</div>

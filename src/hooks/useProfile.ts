@@ -1,11 +1,12 @@
 ///////Worked On
 import { getBlogs, getAbout, getDrafts } from "@/queries/profile.queries";
 import { useQuery } from "@tanstack/react-query";
-import { token } from "@/libs/axios";
+
+
 export const useBlogs = () => {
 	return useQuery({
 		queryFn: () => getBlogs(),
-		queryKey: ["blogs", token],
+		queryKey: ["blogs"],
 		staleTime: 100 * 60 * 3,
 	});
 };
@@ -13,7 +14,7 @@ export const useBlogs = () => {
 export const useAbout = () => {
 	return useQuery({
 		queryFn: () => getAbout(),
-		queryKey: ["about", token],
+		queryKey: ["about"],
 		staleTime: 100 * 60 * 3,
 	});
 };
@@ -21,7 +22,7 @@ export const useAbout = () => {
 export const useDrafts = () => {
 	return useQuery({
 		queryFn: () => getDrafts(),
-		queryKey: ["drafts", token],
+		queryKey: ["drafts"],
 		staleTime: 100 * 60 * 5,
 	});
 };

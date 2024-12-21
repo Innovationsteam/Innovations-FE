@@ -1,5 +1,5 @@
 ///////Worked On
-import { ModalType, useModal, useModalActions } from "@/store/modal";
+import { ModalType, useModal, useModalActions, useModalData } from "@/store/modal";
 import Container from "../Container";
 import ModalContainer from "./ModalContainer";
 import { useMemo, useState } from "react";
@@ -7,6 +7,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { setArticle } from "@/hooks/usePublish";
 const PreviewArticleModal = () => {
 	const { closeModal } = useModalActions();
+	const modalData = useModalData();
 	const { modal, data } = useModal();
 	const isOpen = useMemo(() => modal === ModalType.Preview, [modal]);
 	const [Hash, setHash] = useState("");
@@ -40,11 +41,11 @@ const PreviewArticleModal = () => {
 						<div className="relative my-6 flex h-[min(20vw,200px)] min-h-[140px] items-center justify-center overflow-hidden rounded">
 							<img
 								className="h-full w-full object-cover"
-								src={data?.backdrop}
+								src={modalData?.backdrop}
 								alt=""
 							/>
 						</div>
-						<h1 className="font-roboto text-2xl font-semibold text-black">{data.article}</h1>
+						<h1 className="font-roboto text-2xl font-semibold text-black">{modalData?.article}</h1>
 						<div className="mt-6 flex flex-col">
 							<h3 className="mb-2 font-bold text-[#141414]">Add Hashtags</h3>
 							<textarea

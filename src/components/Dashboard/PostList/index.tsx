@@ -1,5 +1,6 @@
 import { Post } from "@/components/Post";
 import { useAllPosts } from "@/hooks/useAllPosts";
+import { IPost } from "@/types/post.types";
 import InfiniteScroll from "react-infinite-scroll-component";
 import PostSkeleton from "./postskeleton";
 
@@ -8,18 +9,18 @@ const PostList = () => {
 
 	return (
 		<section className="mt-10">
-			{posts ? (
+			{posts && posts.pages.length > 0 ? (
 				<InfiniteScroll
 					dataLength={posts.pages.flatMap((page) => page.data.posts).length}
 					next={fetchNextPage}
 					hasMore={hasNextPage}
 					loader={<PostSkeleton />}
-					endMessage={<p>No more posts to load.</p>}
+					endMessage={<p className="text-center text-lg font-semibold">All Caught Up</p>}
 				>
 					<ul className="grid h-full gap-y-4">
 						{posts?.pages.map(({ data }) => (
 							<>
-								{data.posts.map((item:any) => (
+								{data.posts.map((item: IPost) => (
 									<Post
 										{...item}
 										className="last:mb-10"

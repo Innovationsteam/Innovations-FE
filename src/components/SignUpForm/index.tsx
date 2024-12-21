@@ -2,10 +2,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useSignUpUser } from "../../hooks/useUser";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
 
 const schema = z.object({
-	username: z.string().min(4, { message: "Minimum of 4 characters" }).max(20, { message: "Maximum of 20 characters" }),
 	name: z.string().min(4, { message: "Minimum of 4 characters" }).max(20, { message: "Maximum of 20 characters" }),
+	username: z.string().min(4, { message: "Minimum of 4 characters" }).max(20, { message: "Maximum of 20 characters" }),
 	email: z.string().email({ message: "Field must be a valid email" }),
 	password: z.string().min(4, { message: "Minimum of 4 characters" }),
 });
@@ -28,86 +30,68 @@ const SignUpForm = () => {
 	return (
 		<form
 			onSubmit={handleSubmit(onSubmit)}
-			className="mt-6"
+			className="mt-6 grid gap-4"
 		>
-			<div className="text-left">
-				<label
-					htmlFor="email"
-					className="block tracking-[-0.15px] text-[#718096]"
-				>
-					Username
-				</label>
-				<input
-					required
-					{...register("username")}
-					type="text"
-					className="mt-2 h-10 w-full rounded-lg border border-[#CBD5E0] px-3 text-sm text-black transition-colors duration-200 ease-in focus:border-black"
-					placeholder="Enter your Email"
-				/>
-				{errors.username && <p className="font-poppins mt-1 text-left text-sm text-red-500">{errors.username.message}</p>}
-			</div>
-			<div className="text-left">
-				<label
-					htmlFor="email"
-					className="block tracking-[-0.15px] text-[#718096]"
+			<div className="space-y-1 text-left">
+				<Label
+					htmlFor="name"
+					className="text-base"
 				>
 					Name
-				</label>
-				<input
-					required
+				</Label>
+				<Input
 					{...register("name")}
+					id="name"
 					type="text"
-					className="mt-2 h-10 w-full rounded-lg border border-[#CBD5E0] px-3 text-sm text-black transition-colors duration-200 ease-in focus:border-black"
-					placeholder="Enter your Email"
+					placeholder="Enter your name"
 				/>
-				{errors.username && <p className="font-poppins mt-1 text-left text-sm text-red-500">{errors.username.message}</p>}
+				{errors.name && <p className="font-poppins mt-1 inline-block text-left text-sm text-red-500">{errors.name?.message}</p>}
 			</div>
-			<div className="mt-5 text-left">
-				<label
+			<div className="space-y-1 text-left">
+				<Label
 					htmlFor="email"
-					className="block tracking-[-0.15px] text-[#718096]"
+					className="text-base"
 				>
-					E-mail
-				</label>
-				<input
+					Email
+				</Label>
+				<Input
 					{...register("email")}
-					required
+					id="email"
 					type="text"
-					className="mt-2 h-10 w-full rounded-lg border border-[#CBD5E0] px-3 text-sm text-black transition-colors duration-200 ease-in focus:border-black"
-					placeholder="Enter your Email"
+					placeholder="Enter your email"
 				/>
-				{errors.email && <p className="font-poppins mt-1 text-left text-sm text-red-500">{errors.email?.message}</p>}
+				{errors.email && <p className="font-poppins mt-1 inline-block text-left text-sm text-red-500">{errors.email?.message}</p>}
 			</div>
-			<div className="mt-5 text-left">
-				<label
+			<div className="space-y-1 text-left">
+				<Label
+					htmlFor="username"
+					className="text-base"
+				>
+					Username
+				</Label>
+				<Input
+					{...register("username")}
+					id="username"
+					type="text"
+					placeholder="Enter your username"
+				/>
+				{errors.username && <p className="font-poppins mt-1 inline-block text-left text-sm text-red-500">{errors.username?.message}</p>}
+			</div>
+			<div className="space-y-1 text-left">
+				<Label
 					htmlFor="password"
-					className="block tracking-[-0.15px] text-[#718096]"
+					className="text-base"
 				>
 					Password
-				</label>
-				<input
+				</Label>
+				<Input
 					{...register("password")}
-					required
-					type="text"
-					className="mt-2 h-10 w-full rounded-lg border border-[#CBD5E0] px-3 text-sm text-black transition-colors duration-200 ease-in focus:border-black"
-					placeholder="Enter your Password"
+					id="password"
+					type="password"
+					placeholder="Enter your password"
 				/>
-				{errors.password && <p className="font-poppins mt-1 text-left text-sm text-red-500">{errors.password?.message}</p>}
+				{errors.password && <p className="font-poppins mt-1 inline-block text-left text-sm text-red-500">{errors.password?.message}</p>}
 			</div>
-			{/* <div className="mt-5 text-left">
-				<label
-					htmlFor="confirm-password"
-					className="block tracking-[-0.15px] text-[#718096]"
-				>
-					Re-Enter Password
-				</label>
-				<input
-					required
-					type="text"
-					className="mt-2 h-10 w-full rounded-lg border border-[#CBD5E0] px-3 text-sm text-black transition-colors duration-200 ease-in focus:border-black"
-					placeholder="Re-Enter your Password"
-				/>
-			</div> */}
 			<button
 				type="submit"
 				className="mt-6 flex h-[47px] w-full items-center justify-center rounded-lg bg-black py-1 text-center text-lg font-semibold text-white"
@@ -118,7 +102,7 @@ const SignUpForm = () => {
 						src="/assets/icons/loader.svg"
 					/>
 				) : (
-					"SignUp"
+					"Sign Up"
 				)}
 			</button>
 		</form>

@@ -39,7 +39,7 @@ const Profile = ({ allowEdit }: { allowEdit?: boolean }) => {
 									{/* <h2 className="font-roboto text-sm md:text-xl">Content Creator</h2> */}
 									<div className="mt-1 flex items-center gap-x-2">
 										<p className="text-xs text-[#14141499] md:text-base">{data?.followers} followers</p>
-										<p className="text-xs text-[#14141499] md:text-base">{data?.following} followers</p>
+										<p className="text-xs text-[#14141499] md:text-base">{data?.following} following</p>
 									</div>
 								</>
 							)}
@@ -56,9 +56,16 @@ const Profile = ({ allowEdit }: { allowEdit?: boolean }) => {
 										<p className="text-xs text-[#14141499] md:text-base">
 											<Skeleton width={90} />
 										</p>
+										<p className="text-xs text-[#14141499] md:text-base">
+											<Skeleton width={90} />
+										</p>
+										<p className="text-xs text-[#14141499] md:text-base">
+											<Skeleton width={90} />
+										</p>
 									</div>
 								</>
 							)}
+							
 						</div>
 						<div className="ml-auto flex items-center gap-x-2">
 							{/* <DropDown position="top">

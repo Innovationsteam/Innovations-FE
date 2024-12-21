@@ -4,7 +4,7 @@ import PageContainer from "../components/PageContainer";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSendToken } from "../hooks/useUser";
+import { useVerifyEmail } from "@/hooks/useVerifyEmail";
 
 const schema = z.object({
 	email: z.string().email(),
@@ -21,9 +21,9 @@ const ResetPassword = () => {
 		resolver: zodResolver(schema),
 	});
 
-	const { mutate: sendToken, isPending } = useSendToken();
+	const { mutate: sendToken, isPending } = useVerifyEmail();
 
-	const onSubmit = (formData: ResetPasswordData) => sendToken(formData);
+	const onSubmit = () => sendToken({ token: "ssss" });
 
 	return (
 		<PageContainer className="flex h-screen items-center justify-center md:bg-[#F5F5F5]">

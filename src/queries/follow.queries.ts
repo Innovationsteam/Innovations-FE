@@ -1,5 +1,5 @@
 ///////Worked On
-import { client, token } from "@/libs/axios";
+import  client  from "@/lib/axios";
 import { AxiosError } from "axios";
 
 export const IsaFollower = async (username?: string) => {
@@ -12,7 +12,6 @@ export const IsaFollower = async (username?: string) => {
 	try {
 		const followers = await client.get(`/users/${username}/followers`, {
 			headers: {
-				Authorization: `Bearer ${token}`,
 				"Content-Type": "application/json",
 			},
 		});
@@ -32,7 +31,6 @@ export const follow = async (username?: string) => {
 			},
 			{
 				headers: {
-					Authorization: `Bearer ${token}`,
 					"Content-Type": "application/json",
 				},
 			}
@@ -50,7 +48,6 @@ export const unfollow = async (username?: string) => {
 			},
 			{
 				headers: {
-					Authorization: `Bearer ${token}`,
 					"Content-Type": "application/json",
 				},
 			}

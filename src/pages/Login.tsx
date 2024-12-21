@@ -6,7 +6,7 @@ import PageContainer from "../components/PageContainer";
 const Login = () => {
 	return (
 		<PageContainer className="flex h-screen items-center justify-center md:bg-[#F5F5F5]">
-			<Container className="max-w-[600px] bg-white p-8 font-roboto md:rounded-xl md:shadow-lg">
+			<Container className="!h-fit max-w-[600px] bg-white p-8 font-roboto md:rounded-xl md:shadow-lg">
 				<h1 className="text-4xl font-bold">Welcome Back</h1>
 				<p className="mt-1 text-sm text-[#242424B2] sm:text-base">Sign in and see what we have install for you</p>
 				<LoginForm />

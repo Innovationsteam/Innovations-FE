@@ -1,9 +1,8 @@
 ///////Worked On
-import { client, token } from "@/libs/axios";
+import  client  from "@/lib/axios";
 export const getBlogs = async () => {
 	const response = await client.get(`/posts/me/`, {
 		headers: {
-			Authorization: `Bearer ${token}`,
 			"Content-Type": "application/json",
 		},
 	});
@@ -14,7 +13,6 @@ export const getBlogs = async () => {
 export const getAbout = async () => {
 	const response = await client.get(`/users/me`, {
 		headers: {
-			Authorization: `Bearer ${token}`,
 			"Content-Type": "application/json",
 		},
 	});
@@ -25,7 +23,6 @@ export const getAbout = async () => {
 export const getDrafts = async () => {
 	const response = await client.get(`/posts/me/?status=draft`, {
 		headers: {
-			Authorization: `Bearer ${token}`,
 			"Content-Type": "application/json",
 		},
 	});
@@ -35,7 +32,6 @@ export const getDrafts = async () => {
 export const getName = async () => {
 	const name = await client.get(`/users/me`, {
 		headers: {
-			Authorization: `Bearer ${token}`,
 			"Content-Type": "application/json",
 		},
 	});
@@ -45,7 +41,6 @@ export const getName = async () => {
 export const getFollowersCount = async () => {
 	const followers = await client.get(`/users/followers/count`, {
 		headers: {
-			Authorization: `Bearer ${token}`,
 			"Content-Type": "application/json",
 		},
 	});
@@ -54,7 +49,6 @@ export const getFollowersCount = async () => {
 export const getFollowCount = async () => {
 	const following = await client.get(`/users/following/count`, {
 		headers: {
-			Authorization: `Bearer ${token}`,
 			"Content-Type": "application/json",
 		},
 	});

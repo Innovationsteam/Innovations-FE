@@ -1,5 +1,5 @@
 ///////Worked On
-import { client, token } from "@/libs/axios";
+import  client  from "@/lib/axios";
 
 import { asDraft } from "@/types/post.types";
 export const publishArticle = async (data: any, Hash: string) => {
@@ -16,7 +16,6 @@ export const publishArticle = async (data: any, Hash: string) => {
 			headers: {
 				Accept: "/*",
 				"Content-Type": "multipart/form-data",
-				Authorization: `Bearer ${token}`,
 			},
 		});
 		return response.data.data.id;
@@ -38,7 +37,6 @@ export const saveAsDraft = async ({ title, content, img }: asDraft) => {
 			headers: {
 				Accept: "/*",
 				"Content-Type": "multipart/form-data",
-				Authorization: `Bearer ${token}`,
 			},
 		});
 	} catch (error) {

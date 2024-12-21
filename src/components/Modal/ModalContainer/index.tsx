@@ -18,7 +18,7 @@ const ModalContainer: FC<ModalContainerProps> = ({ children, isOpen, closeOnClic
 	return (
 		<>
 			{createPortal(
-				<AnimatePresence mode="popLayout">
+				<AnimatePresence mode="sync">
 					{isOpen ? (
 						<motion.section
 							initial={{ opacity: 0 }}
