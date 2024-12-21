@@ -1,13 +1,5 @@
-interface User {
-    name: string;         
-    profileImg: string | null; 
-    username: string;     
-}
-
-interface LikedItem {
-    likedAt: string;    
-    user: User;         
-}
+///////Worked On
+import { LikedItem } from "./user.types";
 
 export interface IPost {
 	id: string;
@@ -48,4 +40,36 @@ export interface BlogsType {
 	likes: number;
 	views: number;
 	socialMediaShares: number;
-	}
+}
+
+export interface PostItem {
+	author?: {
+		name: string;
+		profileImg: string;
+		username: string;
+	};
+	id: string;
+	publishedDate: string;
+	image: string;
+	title: string;
+	hashtags?: string;
+	content: string;
+	likes: number;
+	commentsCount?: number;
+	views: number;
+	category?: string;
+	slug?: string;
+	socialMediaShares: number;
+}
+
+export type draftSet = {
+	title: string;
+	content: string;
+	image: string;
+};
+
+export type asDraft = {
+	title: string;
+	content: string[];
+	img?: string | File;
+};

@@ -1,52 +1,19 @@
+///////Worked On
 import SectionContainer from "../../layouts/SectionContainer";
-import { useQuery } from "@tanstack/react-query";
-import { PostItem } from "@/utils/article.helper";
+import { PostItem } from "@/types/post.types";
 import { convertToOriginalFormat } from "@/utils/helper";
-import { client, token } from "@/libs/axios";
 import DraftSkeleton from "./DraftsSkeleton";
 import { useNavigate } from "react-router-dom";
-
-type draftSet = {
-	id: string,
-	title: string,
-	content: string,
-	image: string
-}
+import { useDrafts } from "@/hooks/useProfile";
+import { draftSet } from "@/types/post.types";
 const DraftsList = () => {
-	const getDrafts = async () => {
-		const response = await client.get(`/posts/me/?status=draft`, {
-			headers: {
-				Authorization: `Bearer ${token}`,
-				"Content-Type": "application/json",
-			},
-		});
-		const drafts = response.data.data.posts
-		return drafts
-
-	}
-	const { data } = useQuery({
-		queryFn: () => getDrafts(),
-		queryKey: ["drafts", token],
-		staleTime: 100 * 60 * 5
-	})
+	const { data, isLoading } = useDrafts();
 	return (
 		<SectionContainer title="Drafts">
 			<ul className="mt-4 grid gap-y-7">
-				{data
-					?
-					data.map((item: PostItem, i: number) => (
-						<Draft
-							key={i}
-							id={item.id}
-							title={item.title}
-							content={item.content}
-							image={item.image}
-						/>
-					)) :
-					Array.from({ length: 5 }).map((_, i) => (
-						<DraftSkeleton key={i} />
-					))
-				}
+				{isLoading ? Array.from({ length: 5 }).map((_, i) => <DraftSkeleton key={i} />) : <></>}
+				{data ? data.map((item: PostItem) => <Draft {...item} />) : <></>}
+				{data?.length < 1 ? <p>No Drafts yet</p> : <></>}
 			</ul>
 		</SectionContainer>
 	);
@@ -54,27 +21,27 @@ const DraftsList = () => {
 
 export default DraftsList;
 
-const Draft = (props: draftSet) => {
+const Draft = ({ title, content, image }: draftSet) => {
 	const navigate = useNavigate();
 
 	const toEdit = () => {
-		navigate("/article/new",
-			{
-				state: {
-					title: props.title,
-					body: props.content,
-					imageUrl: props.image
-				}
-			}
-		)
-	}
+		navigate("/article/new", {
+			state: {
+				title: title,
+				body: content,
+				imageUrl: image,
+			},
+		});
+	};
 	return (
 		<button className="group block w-full text-start">
 			<div className="flex items-start gap-x-2 pb-2 font-roboto sm:gap-x-5">
 				<div>
-					<span className="text-base font-medium leading-5 text-[#141414E5]">{props.title}</span>
-					<p className="mt-1 max-w-[273px] text-sm text-[#14141499] overflow-ellipsis line-clamp-2 max-h-[125px] overflow-hidden break-words leading-6"
-						dangerouslySetInnerHTML={{ __html: convertToOriginalFormat(props.content) }} />
+					<span className="text-base font-medium leading-5 text-[#141414E5]">{title}</span>
+					<p
+						className="mt-1 line-clamp-2 max-h-[125px] max-w-[273px] overflow-hidden overflow-ellipsis break-words text-sm leading-6 text-[#14141499]"
+						dangerouslySetInnerHTML={{ __html: convertToOriginalFormat(content) }}
+					/>
 				</div>
 				<button
 					type="button"

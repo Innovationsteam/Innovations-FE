@@ -1,16 +1,17 @@
+///////Worked On
 import Bold from "@tiptap/extension-bold";
 import Italic from "@tiptap/extension-italic";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import classNames from "classnames";
-import { addComment } from "@/utils/article.helper";
+import { addComment } from "@/queries/article.queries";
 import { useModalData } from "@/store/modal";
 import toast from "react-hot-toast";
 
 const content = ``;
 
 const AddCommentForm = () => {
-	const {postID} = useModalData()
+	const { postID } = useModalData();
 	const editor = useEditor({
 		extensions: [StarterKit, Bold, Italic],
 		content,
@@ -24,7 +25,8 @@ const AddCommentForm = () => {
 	const handleComment = async () => {
 		if (editor && postID.id) {
 			const htmlContent = editor.getHTML();
-			if (await (addComment(htmlContent, postID.id))) toast.success("Comment Sent 🎉"); editor.commands.clearContent(); 
+			if (await addComment(htmlContent, postID.id)) toast.success("Comment Sent 🎉");
+			editor.commands.clearContent();
 		}
 	};
 	return (

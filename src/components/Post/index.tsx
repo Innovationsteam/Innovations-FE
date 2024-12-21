@@ -1,5 +1,5 @@
-// import { IPost } from "@/types/post.types";
-import { PostItem } from "@/utils/article.helper";
+///////Worked On
+import { PostItem } from "@/types/post.types";
 import { cn, convertToOriginalFormat, formatDate } from "@/utils/helper";
 import { useState } from "react";
 import { BsShare } from "react-icons/bs";
@@ -38,7 +38,10 @@ export const Post = ({ id, author, publishedDate, content, image, likes, socialM
 					alt=""
 				/>
 			</Link>
-			<Link to={`/article/${author?.username}/${slug}`} state={{ postId: id }}>
+			<Link
+				to={`/article/${author?.username}/${slug}`}
+				state={{ postId: id }}
+			>
 				<div className="my-5 max-h-[202px] overflow-hidden rounded-lg">
 					<div className="relative">
 						{!isImageLoaded && (
@@ -56,32 +59,49 @@ export const Post = ({ id, author, publishedDate, content, image, likes, socialM
 					</div>
 				</div>
 				<div className="mb-6 font-roboto text-black">
-					<h3 className="mb-1 text-lg font-medium leading-8 line-clamp-1">{title}</h3>
+					<h3 className="mb-1 line-clamp-1 text-lg font-medium leading-8">{title}</h3>
 					<p
-						className={`overflow-ellipsis line-clamp-3 max-h-[125px] overflow-hidden break-words text-sm leading-6 text-[#14141499]`}
+						className={`line-clamp-3 max-h-[125px] overflow-hidden overflow-ellipsis break-words text-sm leading-6 text-[#14141499]`}
 						dangerouslySetInnerHTML={{ __html: convertToOriginalFormat(content) }}
 					/>
 				</div>
-				
+
 				<div className="flex justify-between">
 					<button>
-						<span className="text-xs sm:text-sm flex items-center">
-							<FaRegHeart className="mr-2" style={{ fontSize: '1.1rem' }} />{likes}</span>
-
+						<span className="flex items-center text-xs sm:text-sm">
+							<FaRegHeart
+								className="mr-2"
+								style={{ fontSize: "1.1rem" }}
+							/>
+							{likes}
+						</span>
 					</button>
 					<button>
-						<span className="text-xs sm:text-sm flex items-center">
-							<FaRegComment className="mr-2" style={{ fontSize: '1.1rem' }} />{commentsCount}</span>
+						<span className="flex items-center text-xs sm:text-sm">
+							<FaRegComment
+								className="mr-2"
+								style={{ fontSize: "1.1rem" }}
+							/>
+							{commentsCount}
+						</span>
 					</button>
 					<button>
-						<span className="text-xs sm:text-sm flex items-center">
-							<FaRegEye className="mr-2" style={{ fontSize: '1.1rem' }} />{views}</span>
-
+						<span className="flex items-center text-xs sm:text-sm">
+							<FaRegEye
+								className="mr-2"
+								style={{ fontSize: "1.1rem" }}
+							/>
+							{views}
+						</span>
 					</button>
 					<button>
-						<span className="text-xs sm:text-sm flex items-center">
-							<BsShare className="mr-2" style={{ fontSize: '1.1rem' }} />{socialMediaShares}</span>
-
+						<span className="flex items-center text-xs sm:text-sm">
+							<BsShare
+								className="mr-2"
+								style={{ fontSize: "1.1rem" }}
+							/>
+							{socialMediaShares}
+						</span>
 					</button>
 				</div>
 			</Link>

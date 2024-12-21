@@ -1,57 +1,24 @@
+///////Worked On
 import { ModalType, useModal, useModalActions } from "@/store/modal";
 import Container from "../Container";
 import ModalContainer from "./ModalContainer";
 import { useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { client, token } from "@/libs/axios";
-import toast from "react-hot-toast";
 import ClipLoader from "react-spinners/ClipLoader";
-
+import { setArticle } from "@/hooks/usePublish";
 const PreviewArticleModal = () => {
 	const { closeModal } = useModalActions();
-
 	const { modal, data } = useModal();
-
 	const isOpen = useMemo(() => modal === ModalType.Preview, [modal]);
-
-	const navigate = useNavigate();
-	const [Hash, setHash] = useState("")
-	const [loading, setLoading] = useState(false)
+	const [Hash, setHash] = useState("");
 	const addHashtag = (event: any) => {
-		const hashtags = event.target.value.split(' ').map((item: string) => item.startsWith('#') ? item : `#${item}`).filter(Boolean);
-		setHash(hashtags.join(','));
-	};
-	const handlePublish = async () => {
-		const formData = new FormData()
-		formData.append("title", data?.article);
-		formData.append("content", data?.articlebody.join(''));
-		formData.append("category", Hash);
-		formData.append("image", data?.url);
-		formData.append("hashtags", Hash);
-		formData.append("status", "published");
-		console.log("Data meant", formData)
-		setLoading(true)
-		try {
-			const response = await client.post("api/posts/", formData, {
-				headers: {
-					Accept: "/*",
-					"Content-Type": "multipart/form-data",
-					Authorization: `Bearer ${token}`,
-				},
-			})
-			toast.success("Post Sent 🎉");
-			closeModal();
-			navigate("/article", {
-				state: response.data.data.id
-			});
-		}
-		catch (err) {
-			toast.error("Failed to upload");
-			console.error("Error:", err);
-		}
-		setLoading(false)
+		const hashtags = event.target.value
+			.split(" ")
+			.map((item: string) => (item.startsWith("#") ? item : `#${item}`))
+			.filter(Boolean);
+		setHash(hashtags.join(","));
 	};
 
+	const { mutate, isPending } = setArticle();
 	if (!data) return null;
 
 	return (
@@ -88,15 +55,18 @@ const PreviewArticleModal = () => {
 							></textarea>
 							<button
 								type="button"
-								onClick={handlePublish}
+								onClick={() => mutate({ data, Hash })}
 								className="ml-auto w-full max-w-[100px] rounded-lg bg-[#04BF87] py-2 font-raleway text-sm font-semibold text-white md:py-[10px] md:text-base"
 							>
-								{loading ? <ClipLoader
-									loading={loading}
-									size={25}
-
-									color="#fff"
-								/> : "publish"}
+								{isPending ? (
+									<ClipLoader
+										loading={isPending}
+										size={25}
+										color="#fff"
+									/>
+								) : (
+									"publish"
+								)}
 							</button>
 						</div>
 					</section>
