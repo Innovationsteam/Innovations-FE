@@ -23,6 +23,6 @@ export const useDrafts = () => {
 	return useQuery({
 		queryFn: () => getDrafts(),
 		queryKey: ["drafts"],
-		staleTime: 100 * 60 * 5,
+		staleTime: 100 * 60 * 3,
 	});
 };
