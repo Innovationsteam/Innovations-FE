@@ -9,7 +9,7 @@ const About = () => {
 		<SectionContainer title="About Me">
 			{data ? (
 				<p className="font-roboto text-sm text-[#14141499] md:text-lg md:leading-8">{data}</p>
-			) : (
+			): (
 				<p className="font-roboto text-sm text-[#14141499] md:text-lg md:leading-8">
 					{Array.from({ length: 4 }).map((_, i) => (
 						<Skeleton

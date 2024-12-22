@@ -4,7 +4,6 @@ import { AxiosError } from "axios";
 import { IComment } from "@/types/comment.type";
 import { INotes } from "@/types/notes.types";
 import { IResponse } from "@/types/auth.types";
-import { useCookies } from "react-cookie";
 
 
 export const likePost = async (id: string): Promise<boolean> => {

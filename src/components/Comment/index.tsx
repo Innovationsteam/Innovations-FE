@@ -10,9 +10,16 @@ const Comment = ({ content, createdAt, username, profile }: CommentProps) => {
 		<div className="border-b py-4 last:border-none">
 			<div className="mb-2 flex items-center gap-x-3">
 				{profile ? (
-					<img src={profile} alt={`${username}'s profile`} />
+					<img
+						src={profile}
+						alt={`${username}'s profile`}
+						className="h-6 w-6 rounded-full object-cover"
+					/>
 				) : (
-					<img src="/assets/images/profile3.png" alt="Default profile" />
+					<img
+						src="/assets/images/profile3.png"
+						alt="Default profile"
+					/>
 				)}
 				<div className="flex gap-x-2 font-roboto">
 					<p className="text-sm font-medium text-[#2A2A2A]">{username}</p>
@@ -24,8 +31,8 @@ const Comment = ({ content, createdAt, username, profile }: CommentProps) => {
 					alt=""
 				/>
 			</div>
-			<p 
-			className="text-sm leading-6 text-[#14141499]"
+			<p
+				className="text-sm leading-6 text-[#14141499]"
 				dangerouslySetInnerHTML={{ __html: convertComment(content) }}
 			/>
 		</div>
