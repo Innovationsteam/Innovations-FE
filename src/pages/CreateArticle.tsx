@@ -10,7 +10,6 @@ import TipTapEditor from "../components/Editor/TipTapEditor";
 const CreateArticle = () => {
 	const { openModal } = useModalActions();
 	const [article, setArticle] = useState(``);
-
 	const [articlebody, setArticlebody] = useState([]);
 	const [file, setFile] = useState("");
 	const navigate = useNavigate();

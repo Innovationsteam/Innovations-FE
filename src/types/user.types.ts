@@ -1,5 +1,13 @@
 ///////Worked On
 import { IPost } from "./post.types";
+export interface User {
+	email: string;
+	name: string;
+	bio: string;
+	username: string;
+	profileImg: string;
+	backdropImg: string;
+}
 export type userData = {
 	name: Promise<string>;
 	blogs?: Promise<IPost[]>;
@@ -7,7 +15,7 @@ export type userData = {
 	following: Promise<number>;
 };
 
-export interface User {
+export interface User1 {
 	name: string;
 	profileImg: string | null;
 	username: string;
@@ -15,5 +23,5 @@ export interface User {
 
 export interface LikedItem {
 	likedAt: string;
-	user: User;
+	user: User1;
 }
