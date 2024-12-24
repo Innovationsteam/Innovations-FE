@@ -3,7 +3,7 @@ import { ModalType, useModalActions } from "@/store/modal";
 import { extractH1Content, extractPContent } from "@/utils/helper";
 import { ChangeEvent, useRef, useState, useEffect } from "react";
 import toast from "react-hot-toast";
-import { setDrafts } from "@/hooks/usePublish";
+import { setDrafts } from "@/hooks/posts/usePublish";
 import { useNavigate, useLocation } from "react-router-dom";
 import Container from "../components/Container";
 import TipTapEditor from "../components/Editor/TipTapEditor";

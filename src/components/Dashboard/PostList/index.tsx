@@ -1,5 +1,5 @@
 import { Post } from "@/components/Post";
-import { useAllPosts } from "@/hooks/useAllPosts";
+import { useAllPosts } from "@/hooks/posts/useAllPosts";
 import { IPost } from "@/types/post.types";
 import InfiniteScroll from "react-infinite-scroll-component";
 import PostSkeleton from "./postskeleton";

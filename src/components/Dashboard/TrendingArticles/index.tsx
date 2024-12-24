@@ -1,4 +1,4 @@
-import { useTrendingPosts } from "@/hooks/useTrendingPosts.ts";
+import { useTrendingPosts } from "@/hooks/posts/useTrendingPosts.ts";
 import { MiniPost } from "../../Post/MiniPost";
 import TrendingSkeleton from "./trendingSkeleton.tsx";
 import { IPost } from "@/types/post.types.ts";

@@ -6,8 +6,9 @@ import AddCommentForm from "../../AddCommentForm";
 import Comment from "../../Comment";
 import ModalContainer from "../ModalContainer";
 import { IComment } from "@/types/comment.type";
-import { useAllComments } from "@/hooks/useAllcomments";
+import { useAllComments } from "@/hooks/posts/useAllcomments";
 import CommentSkeleton from "./commentSkeleton";
+
 const CommentsModal = () => {
 	const { closeModal } = useModalActions();
 	const isOpen = useActiveModal(ModalType.Comments);
@@ -16,7 +17,7 @@ const CommentsModal = () => {
 	const postID = modalData.postID?.id;
 	const { data: commentsResponse, isLoading } = useAllComments(postID);
 	//@ts-ignore
-	const comments  = commentsResponse?.comments 
+	const comments = commentsResponse?.comments;
 	if (!isOpen || !postID) {
 		return null;
 	}
@@ -32,7 +33,7 @@ const CommentsModal = () => {
 			>
 				<Container className="pb-5 pt-8">
 					<header className="flex items-center">
-						<h1 className="font-roboto text-xl font-medium">Response ({comments? comments.length: " "})</h1>
+						<h1 className="font-roboto text-xl font-medium">Response ({comments ? comments.length : " "})</h1>
 						<button
 							className="ml-auto rotate-90 transition-transform duration-200 ease-in-out hover:rotate-90"
 							onClick={closeModal}

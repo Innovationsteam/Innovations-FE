@@ -4,59 +4,38 @@ import { AxiosError } from "axios";
 import { IPost } from "@/types/post.types";
 import { IResponse } from "@/types/auth.types";
 import { ReadingList } from "@/types/readng-list.types";
-import { User } from "@/types/user.types";
-export const userBio = async (username?: string): Promise<string> => {
+import { UserConnection, IUser } from "@/types/user.types";
+
+export const getPostsbyUser = async (username: string): Promise<IPost[]> => {
 	try {
-		const bio = await client.get(`/users/${username}`, {
-			headers: {
-				"Content-Type": "application/json",
-			},
-		});
-		return bio.data.data.name;
-	} catch (error) {
-		throw error as AxiosError;
-	}
-};
-export const userBlogs = async (username?: string): Promise<IPost[]> => {
-	try {
-		const blogs = await client.get(`/posts/author/${username}`, {
-			headers: {
-				"Content-Type": "application/json",
-			},
-		});
+		const blogs = await client.get(`/posts/author/${username}`);
 		return blogs.data.data.posts;
 	} catch (error) {
 		throw error as AxiosError;
 	}
 };
-export const userFollowers = async (username?: string): Promise<number> => {
+
+export const getUserFollowers = async (username: string) => {
 	try {
-		const followers = await client.get(`/users/${username}/followers/count`, {
-			headers: {
-				"Content-Type": "application/json",
-			},
-		});
-		return followers.data.data.count;
-	} catch (error) {
-		throw error as AxiosError;
-	}
-};
-export const userFollowing = async (username?: string): Promise<number> => {
-	try {
-		const following = await client.get(`/users/${username}/following/count`, {
-			headers: {
-				"Content-Type": "application/json",
-			},
-		});
-		return following.data.data.count;
+		const followers = await client.get<IResponse<{ followers: UserConnection[] }>>(`/users/${username}/followers`);
+		return followers.data.data;
 	} catch (error) {
 		throw error as AxiosError;
 	}
 };
 
-export const getUserProfile = async () => {
+export const getUserFollowing = async (username: string) => {
 	try {
-		const res = await client.get<IResponse<User>>(`/users/me`);
+		const followers = await client.get<IResponse<{ following: UserConnection[] }>>(`/users/${username}/following`);
+		return followers.data.data;
+	} catch (error) {
+		throw error as AxiosError;
+	}
+};
+
+export const getUserProfile = async (username: string) => {
+	try {
+		const res = await client.get<IResponse<IUser>>(`/users/${username}`);
 		return res.data.data;
 	} catch (error) {
 		throw error as AxiosError;
@@ -70,4 +49,14 @@ export const getUserReadingList = async () => {
 	} catch (error) {
 		throw error as AxiosError;
 	}
+};
+
+export const getDrafts = async () => {
+	const response = await client.get(`/posts/me/?status=draft`, {
+		headers: {
+			"Content-Type": "application/json",
+		},
+	});
+	const drafts = response.data.data.posts;
+	return drafts;
 };

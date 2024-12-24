@@ -1,9 +1,9 @@
-import { User } from "@/types/user.types";
+import { IUser } from "@/types/user.types";
 import { create } from "zustand";
 
 interface UserStoreType {
-	user: User | null;
-	setUser: (user: User | null) => void;
+	user: IUser | null;
+	setUser: (user?: IUser) => void;
 }
 
 export const useUserStore = create<UserStoreType>((set) => ({

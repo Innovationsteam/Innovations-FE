@@ -1,9 +1,8 @@
 import { getUserProfile } from "@/queries/user.queries";
 import { useQuery } from "@tanstack/react-query";
 
-export const useUserProfile = () =>
+export const useUserProfile = (username: string = "me") =>
 	useQuery({
-		queryKey: ["user"],
-		queryFn: getUserProfile,
-		staleTime: 10 * 60 * 60,
+		queryKey: ["users", username],
+		queryFn: () => getUserProfile(username),
 	});

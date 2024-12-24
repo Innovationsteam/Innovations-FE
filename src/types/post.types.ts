@@ -1,5 +1,4 @@
 ///////Worked On
-import { LikedItem } from "./user.types";
 
 export interface IPost {
 	id: string;
@@ -14,15 +13,11 @@ export interface IPost {
 	views: number;
 	likes: number;
 	image: string;
-	postLikes: LikedItem[];
+	postLikes: Like[];
 	socialMediaShares: number;
 	rating: number;
 	slug: string;
-	author: {
-		name: string;
-		profileImg: string;
-		username: string;
-	};
+	author: IAuthor;
 }
 
 export interface IAuthor {
@@ -31,19 +26,12 @@ export interface IAuthor {
 	username: string;
 }
 
-export interface BlogsType {
-	id: string;
-	publishedDate: string;
-	image: string;
-	title: string;
-	content: string;
-	likes: number;
-	views: number;
-	socialMediaShares: number;
+export interface Like {
+	likedAt: string;
+	user: { name: string; profileImg: string; username: string };
 }
-
 export interface PostItem {
-	author?: {
+	author: {
 		name: string;
 		profileImg: string;
 		username: string;
@@ -52,13 +40,13 @@ export interface PostItem {
 	publishedDate: string;
 	image: string;
 	title: string;
-	hashtags?: string;
+	hashtags: string;
 	content: string;
 	likes: number;
 	commentsCount?: number;
 	views: number;
-	category?: string;
-	slug?: string;
+	category: string;
+	slug: string;
 	socialMediaShares: number;
 }
 

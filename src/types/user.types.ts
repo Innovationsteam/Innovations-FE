@@ -1,6 +1,7 @@
 ///////Worked On
+import { IResponse } from "./auth.types";
 import { IPost } from "./post.types";
-export interface User {
+export interface IUser {
 	email: string;
 	name: string;
 	bio: string;
@@ -8,6 +9,20 @@ export interface User {
 	profileImg: string;
 	backdropImg: string;
 }
+
+export interface UserConnection {
+	username: string;
+	email: string;
+	profileImg: string | null;
+}
+
+export type FollowResponse = IResponse<{
+	followerId: number;
+	followingId: number;
+	createdAt: string;
+	updatedAt: string;
+}>;
+
 export type userData = {
 	name: Promise<string>;
 	blogs?: Promise<IPost[]>;
@@ -19,9 +34,4 @@ export interface User1 {
 	name: string;
 	profileImg: string | null;
 	username: string;
-}
-
-export interface LikedItem {
-	likedAt: string;
-	user: User1;
 }

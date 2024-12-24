@@ -20,6 +20,15 @@ export const getAllPosts = async ({ pageParam = 1 }: { pageParam: number }) => {
 	}
 };
 
+export const getPostBySlug = async (username: string, slug: string) => {
+	try {
+		const res = await client.get<IResponse<IPost>>(`/posts/${username}/${slug}`);
+		return res.data.data;
+	} catch (error) {
+		throw error as AxiosError;
+	}
+};
+
 export const getPostById = async (postId: string) => {
 	try {
 		const res = await client.get<IResponse<IPost>>(`/posts/${postId}`);

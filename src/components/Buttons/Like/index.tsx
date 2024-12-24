@@ -1,24 +1,23 @@
 ///////Worked On
-import { useState } from "react";
+import { useLikePost } from "@/hooks/posts/useLikePost";
 import { motion } from "framer-motion";
-import { likePost } from "@/queries/article.queries";
-export const Like = ({ likes, id, hasLiked }: { likes: number; id: string; hasLiked: boolean }) => {
-	const [liked, setLiked] = useState(hasLiked);
-	const [addlike, setAddedlike] = useState(likes);
+
+interface Props {
+	postId: string;
+	likes: number;
+	isLiked: boolean;
+}
+
+export const Like = ({ postId, isLiked, likes }: Props) => {
+	const { mutate: likePost, isPending } = useLikePost();
+
 	return (
 		<button
+			disabled={isPending}
+			onClick={() => likePost(postId)}
 			className="flex items-center gap-x-1"
-			onClick={async () => {
-				const like = await likePost(id);
-				setLiked(like);
-				if (like) {
-					setAddedlike(addlike + 1);
-				} else {
-					setAddedlike(addlike - 1);
-				}
-			}}
 		>
-			{liked ? (
+			{isLiked ? (
 				<motion.svg
 					width="24"
 					height="24"
@@ -53,7 +52,7 @@ export const Like = ({ likes, id, hasLiked }: { likes: number; id: string; hasLi
 					/>
 				</motion.svg>
 			)}
-			<span className="text-xs sm:text-sm">{addlike}</span>
+			<span className="text-xs sm:text-sm">{likes}</span>
 		</button>
 	);
 };

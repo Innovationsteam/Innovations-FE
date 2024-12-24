@@ -1,23 +1,28 @@
-///////Worked On
+import { useUserPosts } from "@/hooks/posts/useUserPosts";
+import { useParams } from "react-router-dom";
 import SectionContainer from "../../layouts/SectionContainer";
-import { Post } from "../Post";
-import { BlogsType } from "@/types/post.types";
 import PostSkeleton from "../Dashboard/PostList/postskeleton";
-import { useBlogs } from "@/hooks/useProfile";
+import { Post } from "../Post";
+
 const Blogs = ({ title }: { title: string }) => {
-	const { data } = useBlogs();
+	const { username } = useParams();
+	const { data: userPosts, isPending } = useUserPosts(username!);
+
 	return (
 		<SectionContainer title={title}>
-			{data ? (
+			{isPending ? (
 				<ul className="grid h-full gap-x-5 gap-y-9 lg:grid-cols-2">
-					{data.map((item: BlogsType) => (
-						<Post {...item} />
+					{Array.from({ length: 10 }).map((_, i) => (
+						<PostSkeleton key={i} />
 					))}
 				</ul>
 			) : (
 				<ul className="grid h-full gap-x-5 gap-y-9 lg:grid-cols-2">
-					{Array.from({ length: 10 }).map((_, i) => (
-						<PostSkeleton key={i} />
+					{userPosts?.map((item) => (
+						<Post
+							key={item.id}
+							{...item}
+						/>
 					))}
 				</ul>
 			)}

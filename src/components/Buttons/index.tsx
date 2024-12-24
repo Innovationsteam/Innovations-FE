@@ -1,7 +1,5 @@
 ///////Worked On
-import { ModalType, useModalActions } from "@/store/modal";
 import { Link } from "react-router-dom";
-import { follow, unfollow } from "@/queries/follow.queries";
 export const SignUpWithGoogle = () => {
 	return (
 		<button
@@ -47,45 +45,5 @@ export const CreateArticle = () => {
 			/>
 			<span className="font-medium text-white">Write Article</span>
 		</Link>
-	);
-};
-
-export const FollowUser = ({ className, username }: { className?: string; username?: string }) => {
-	return (
-		<button
-			type="button"
-			onClick={() => {
-				follow(username);
-			}}
-			className={`rounded-lg  bg-[#1C4532] px-4 py-2 font-roboto text-sm font-medium text-white md:px-6 md:text-base ${className}`}
-		>
-			Follow
-		</button>
-	);
-};
-export const UnFollowUser = ({ className, username }: { className?: string; username?: string }) => {
-	return (
-		<button
-			type="button"
-			onClick={() => {
-				unfollow(username);
-			}}
-			className={`rounded-lg bg-[#1f1f1f] px-4 py-2 font-roboto text-sm font-medium text-white md:px-6 md:text-base ${className}`}
-		>
-			Following
-		</button>
-	);
-};
-
-export const EditProfile = ({ className }: { className?: string }) => {
-	const { openModal } = useModalActions();
-	return (
-		<button
-			type="button"
-			className={`rounded-lg bg-[#1C4532] px-3 py-2 font-roboto text-sm font-medium text-white md:px-6 md:text-base ${className}`}
-			onClick={() => openModal(ModalType.EDIT_PROFILE)}
-		>
-			Edit Profile
-		</button>
 	);
 };

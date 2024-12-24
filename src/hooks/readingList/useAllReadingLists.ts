@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export const useAllReadingLists = () =>
 	useQuery({
-		queryKey: ["user", "reading-lists"],
+		queryKey: ["users", "reading-lists"],
 		queryFn: getUserReadingList,
 		staleTime: 10 * 60 * 60,
 	});
