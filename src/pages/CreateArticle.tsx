@@ -76,7 +76,7 @@ const CreateArticle = () => {
 			<header className="mt-6 flex flex-col items-center gap-y-5 sm:flex-row lg:mt-10">
 				<button
 					type="button"
-					onClick={() => navigate("/home")}
+					onClick={() => navigate("/feed")}
 					className="mr-auto flex items-center gap-x-2"
 				>
 					<img

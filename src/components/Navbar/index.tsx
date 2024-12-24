@@ -6,7 +6,7 @@ import Container from "../Container";
 
 const NavBar = () => {
 	const [scrolled, setScrolled] = useState(false);
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const onScroll = () => {
@@ -34,7 +34,7 @@ const NavBar = () => {
 		>
 			<Container className="flex items-center py-5">
 				<Link
-					to="/home"
+					to="/feed"
 					className="font-roboto text-xl font-semibold uppercase leading-6 text-[#141414]"
 				>
 					<span className="text-[#04BF87]">Christian</span>Writes

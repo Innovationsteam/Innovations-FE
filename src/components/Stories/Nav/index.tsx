@@ -99,7 +99,7 @@ const StoriesNav = ({ totalStories, currentStory, handleStory }: Props) => {
 							alt=""
 						/>
 					</button>
-					<Link to="/home">
+					<Link to="/feed">
 						<img
 							className="size-6 lg:size-8"
 							src="/assets/icons/delete-white.svg"

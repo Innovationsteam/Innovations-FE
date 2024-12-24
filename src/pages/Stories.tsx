@@ -13,7 +13,7 @@ const Stories = () => {
 
 	const handleStory = (storyId: number) => {
 		if (storyId >= data.length) {
-			navigate("/home");
+			navigate("/feed");
 		} else {
 			let newDirection = "right";
 			if (storyId < currentStory) {

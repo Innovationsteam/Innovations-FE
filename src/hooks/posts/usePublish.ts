@@ -31,7 +31,7 @@ export const setDrafts = () => {
 		mutationFn: ({ title, content, img }: asDraft) => saveAsDraft({ title, content, img }),
 		onSuccess: () => {
 			toast.success("draft saved! 🎉");
-			navigate("/home");
+			navigate("/feed");
 		},
 		onError: (error) => {
 			toast.error("Failed to upload 🚫");

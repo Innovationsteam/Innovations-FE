@@ -24,7 +24,7 @@ const Loader = () => {
 
 		const controls = animate(sequence as AnimationSequence);
 
-		controls.then(() => navigate("/home"));
+		controls.then(() => navigate("/feed"));
 
 		return () => controls.stop();
 	}, [animate, navigate]);

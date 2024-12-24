@@ -38,7 +38,7 @@ const Article = () => {
 			<section className="py-10">
 				<Container className="max-w-[992px]">
 					<Link
-						to="/home"
+						to="/feed"
 						className="mr-auto flex items-center gap-x-2"
 					>
 						<img

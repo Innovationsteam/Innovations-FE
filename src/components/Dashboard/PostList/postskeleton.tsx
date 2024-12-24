@@ -6,7 +6,7 @@ const PostSkeleton = () => {
 	return (
 		<li className="mx-auto mb-4 h-fit w-full list-none rounded-xl border border-[#E6E6E6] p-4">
 			<Link
-				to="/home"
+				to="/feed"
 				className="flex items-center gap-x-3"
 			>
 				<Skeleton
@@ -32,7 +32,7 @@ const PostSkeleton = () => {
 					width={20}
 				/>
 			</Link>
-			<Link to="/home">
+			<Link to="/feed">
 				<div className="my-5 max-h-[202px] overflow-hidden rounded-lg">
 					<Skeleton
 						height={202}

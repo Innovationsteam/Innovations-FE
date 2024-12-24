@@ -14,7 +14,7 @@ const NewStory = () => {
 						<p className="font-roboto text-sm text-[#6D6D6D]">Add your images here.</p>
 					</div>
 					<button
-						onClick={() => navigate("/home")}
+						onClick={() => navigate("/feed")}
 						className="ml-auto"
 					>
 						<img
