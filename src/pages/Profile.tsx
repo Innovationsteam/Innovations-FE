@@ -41,7 +41,7 @@ const Profile = () => {
 				</div>
 				<div className="mb-10 h-full w-full border-y-0 md:px-5 lg:border-l-[1.5px]">
 					<img
-						className="h-5 w-5 rounded-full object-cover md:size-[80px]"
+						className="size-8 rounded-full object-cover md:size-[80px]"
 						src={`${userData?.profileImg}`}
 						alt="Profile"
 					/>

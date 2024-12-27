@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import About from "./components/Profile/About";
 import Blogs from "./components/Profile/Blogs";
-import FollowersList from "./components/Profile/FollowersList";
+import {FollowersList, FollowingList} from "./components/Profile/FollowersList";
 import ProfileHome from "./components/Profile/Home";
 import ReadingList from "./components/Profile/ReadingList";
 import ProtectedRoutes from "./components/ProtectedRoutes";
@@ -56,7 +56,7 @@ export const router = createBrowserRouter([
 							{ path: "blogs", element: <Blogs title="Blogs" /> },
 							{ path: "reading-list", element: <ReadingList /> },
 							{ path: "followers", element: <FollowersList /> },
-							{ path: "following", element: <FollowersList /> },
+							{ path: "following", element: <FollowingList /> },
 						],
 					},
 					// {
