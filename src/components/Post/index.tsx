@@ -7,12 +7,15 @@ import { FaRegComment, FaRegHeart, FaRegEye } from "react-icons/fa";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { Link } from "react-router-dom";
+import { getCookie } from "@/lib/axios";
+
 interface PostProps extends PostItem {
 	className?: string;
 }
 
 export const Post = ({ id, author, publishedDate, content, image, likes, socialMediaShares, commentsCount, title, views, className, slug }: PostProps) => {
 	const [isImageLoaded, setIsImageLoaded] = useState(false);
+	const username = getCookie("username");
 
 	return (
 		<li className={cn("mx-auto h-fit w-full !list-none rounded-xl border border-[#E6E6E6] p-4", className)}>
@@ -26,7 +29,7 @@ export const Post = ({ id, author, publishedDate, content, image, likes, socialM
 					alt="user profile picture"
 				/>
 				<div className="flex flex-col items-start gap-x-5 font-roboto text-[#5B7083] xl:flex-row xl:items-center">
-					<span className="text-base text-[#2A2A2A] lg:mr-2">{author.username}</span>
+					<span className="text-base text-[#2A2A2A] lg:mr-2">{author?.username ? author.username : username}</span>
 					<p className="flex items-center gap-x-[2px] text-sm">
 						<span>{formatDate(publishedDate)}</span>
 						<span>·</span>
@@ -39,11 +42,11 @@ export const Post = ({ id, author, publishedDate, content, image, likes, socialM
 				/>
 			</Link>
 			<Link
-				to={`/article/${author?.username}/${slug}`}
+				to={`/article/${author?.username ? author.username : username}/${slug}`}
 				state={{ postId: id }}
 			>
 				<div className="my-5 max-h-[202px] overflow-hidden rounded-lg">
-					<div className="relative">
+					<div className="relative flex h-60 items-center justify-center">
 						{!isImageLoaded && (
 							<Skeleton
 								height={202}

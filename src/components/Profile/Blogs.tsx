@@ -7,7 +7,6 @@ import { Post } from "../Post";
 const Blogs = ({ title }: { title: string }) => {
 	const { username } = useParams();
 	const { data: userPosts, isPending } = useUserPosts(username!);
-
 	return (
 		<SectionContainer title={title}>
 			{isPending ? (

@@ -48,7 +48,7 @@ export const router = createBrowserRouter([
 						element: <CreateArticle />,
 					},
 					{
-						path: "cw/:username",
+							path: "cw/:username",
 						element: <Profile />,
 						children: [
 							{ path: "", element: <ProfileHome /> },

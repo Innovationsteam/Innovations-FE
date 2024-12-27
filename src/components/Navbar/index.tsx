@@ -3,10 +3,12 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Container from "../Container";
+import { getCookie } from "@/lib/axios";
 
 const NavBar = () => {
 	const [scrolled, setScrolled] = useState(false);
 	const navigate = useNavigate();
+	const username = getCookie("username");
 
 	useEffect(() => {
 		const onScroll = () => {
@@ -61,7 +63,7 @@ const NavBar = () => {
 						alt="notification"
 					/>
 
-					<Link to="/user/profile">
+					<Link to={`/cw/${username}`}>
 						<img
 							className="size-8 rounded-full object-cover"
 							src="/assets/images/profile.png"
