@@ -15,8 +15,9 @@ export const useLoginUser = () => {
 			setCookie("access_token", data?.access_token, {
 				expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
 			});
-			setCookie("username", data?.username, {
-				expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
+			const dataString = JSON.stringify(data);
+			setCookie("userData", dataString, {
+				expires: new Date(Date.now() + 1000 * 60 * 60 * 24), 
 			});
 			navigate("/feed");
 		},
