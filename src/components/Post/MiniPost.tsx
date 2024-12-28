@@ -1,18 +1,22 @@
 import { convertToOriginalFormat } from "@/utils/helper";
 import { Link } from "react-router-dom";
-
 interface MiniPostProps {
 	image: string;
 	content: string;
-	// author: string;
+	author: {
+		name: string;
+		profileImg: string;
+		username: string;
+	};
+	slug: string;
 	id: string;
 	title: string;
 }
 
-export const MiniPost = ({ content, title, id }: MiniPostProps) => {
+export const MiniPost = ({ content, title, author, slug }: MiniPostProps) => {
 	return (
 		<Link
-			to={`/article/${id}`}
+			to={`/article/${author?.username}/${slug}`}
 			className="font-roboto"
 		>
 			{/* <div className="mb-1 flex items-center gap-x-2">
@@ -29,7 +33,7 @@ export const MiniPost = ({ content, title, id }: MiniPostProps) => {
 			<div>
 				<span className="font-semibold text-[#141414CC]">{title}</span>
 				<p
-					className="max-w-[273px] text-xs leading-5 text-[#14141499] line-clamp-4"
+					className="line-clamp-4 max-w-[273px] text-xs leading-5 text-[#14141499]"
 					dangerouslySetInnerHTML={{ __html: convertToOriginalFormat(content) }}
 				/>
 			</div>
