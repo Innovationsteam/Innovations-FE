@@ -13,7 +13,7 @@ const Comment = ({ content, createdAt, username, profile }: CommentProps) => {
 					<img
 						src={profile}
 						alt={`${username}'s profile`}
-						className="h-6 w-6 rounded-full object-cover"
+						className="size-9 rounded-full object-cover"
 					/>
 				) : (
 					<img

@@ -41,8 +41,8 @@ const Profile = () => {
 				</div>
 				<div className="mb-10 h-full w-full border-y-0 md:px-5 lg:border-l-[1.5px]">
 					<img
-						className="size-12 object-cover md:size-[80px]"
-						src="/assets/images/writer.png"
+						className="size-8 rounded-full object-cover md:size-[80px]"
+						src={`${userData?.profileImg}`}
 						alt="Profile"
 					/>
 					<div className="mt-6 flex items-center text-black">
@@ -54,7 +54,7 @@ const Profile = () => {
 							) : (
 								<h1 className="font-roboto text-[16px] text-xl font-semibold md:text-3xl">{userData?.name}</h1>
 							)}
-							<h2 className="font-roboto text-sm md:text-xl">Content Creator</h2>
+							{/* <h2 className="font-roboto text-sm md:text-xl">Content Creator</h2> */}
 
 							<div className="mt-1 flex items-center gap-x-2">
 								{isConnectionsPending ? (
