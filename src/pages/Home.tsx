@@ -16,7 +16,7 @@ const Home = () => {
 				<Profile />
 				<CreateArticle />
 				<div className="sticky top-0 pt-5">
-					<ExploreTopics />
+					{/* <ExploreTopics /> */}
 					<TrendingArticles />
 				</div>
 			</section>

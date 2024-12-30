@@ -31,7 +31,7 @@ const Follower = ({ profileImg, username }: { profileImg: string |null; username
 			<div className="flex items-start gap-x-2 pb-2 font-roboto sm:gap-x-5">
 				<img
 					className="size-9 rounded-full object-cover"
-					src={profileImg || ""}
+					src={profileImg ?? "/assets/images/profile.png"}
 					alt=""
 				/>
 				<div>
@@ -42,7 +42,7 @@ const Follower = ({ profileImg, username }: { profileImg: string |null; username
 					type="button"
 					className="rounded-lg border border-[#22222299] px-3 py-1 font-roboto text-sm text-[#22222299] md:ml-auto md:text-base"
 				>
-					Follow Back
+					Follow
 				</button>
 			</div>
 			<div className="relative">
@@ -58,7 +58,7 @@ const Following = ({ profileImg, username }: { profileImg: string |null; usernam
 			<div className="flex items-start gap-x-2 pb-2 font-roboto sm:gap-x-5">
 				<img
 					className="size-9 rounded-full object-cover"
-					src={profileImg || ""}
+					src={profileImg ?? "/assets/images/profile.png"}
 					alt=""
 				/>
 				<div>

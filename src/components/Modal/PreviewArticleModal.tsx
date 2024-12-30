@@ -2,7 +2,7 @@
 import { ModalType, useModal, useModalActions, useModalData } from "@/store/modal";
 import Container from "../Container";
 import ModalContainer from "./ModalContainer";
-import { useMemo, useState } from "react";
+import {  useMemo, useState } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 import { setArticle } from "@/hooks/posts/usePublish";
 const PreviewArticleModal = () => {
@@ -11,6 +11,7 @@ const PreviewArticleModal = () => {
 	const { modal, data } = useModal();
 	const isOpen = useMemo(() => modal === ModalType.Preview, [modal]);
 	const [Hash, setHash] = useState("");
+	const [category, setCategory] = useState("")
 	const addHashtag = (event: any) => {
 		const hashtags = event.target.value
 			.split(" ")
@@ -45,7 +46,6 @@ const PreviewArticleModal = () => {
 							/>
 						</div>
 						<h1 className="font-roboto text-2xl font-semibold text-black">{modalData?.article}</h1>
-						<h1 className="font-roboto text-2xl font-semibold text-black">{modalData?.article}</h1>
 						<div className="mt-6 flex flex-col">
 							<h3 className="mb-2 font-bold text-[#141414]">Add Hashtags</h3>
 							<textarea
@@ -54,9 +54,43 @@ const PreviewArticleModal = () => {
 								className="mb-4 h-[90px] w-full rounded-lg border border-[#CBD5E0] bg-[#CBD5E01C] px-2 py-3 text-xs text-black placeholder:text-[#2A2A2AB2] sm:text-sm"
 								onChange={addHashtag}
 							></textarea>
+							<div className="flex items-center space-x-4">
+								<label className="flex items-center">
+									<input
+										type="radio"
+										name="contentType"
+										value="article"
+										className="mr-2"
+										onClick={(e) => setCategory(e.currentTarget.value)} // Use e.currentTarget.value
+									/>
+									Article
+								</label>
+
+								<label className="flex items-center">
+									<input
+										type="radio"
+										name="contentType"
+										value="story"
+										className="mr-2"
+										onClick={(e) => setCategory(e.currentTarget.value)} // Use e.currentTarget.value
+									/>
+									Story
+								</label>
+
+								<label className="flex items-center">
+									<input
+										type="radio"
+										name="contentType"
+										value="poem"
+										className="mr-2"
+										onClick={(e) => setCategory(e.currentTarget.value)} // Use e.currentTarget.value
+									/>
+									Poem
+								</label>
+							</div>
 							<button
 								type="button"
-								onClick={() => mutate({ data, Hash })}
+								onClick={() => mutate({ data, Hash, category })}
 								className="ml-auto w-full max-w-[100px] rounded-lg bg-[#04BF87] py-2 font-raleway text-sm font-semibold text-white md:py-[10px] md:text-base"
 							>
 								{isPending ? (

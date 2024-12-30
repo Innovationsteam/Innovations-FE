@@ -6,7 +6,7 @@ const Profile = () => {
 			<div className="mb-3 flex items-center gap-x-3 p-3">
 				<img
 					className="size-10 rounded-full rounded-full"
-					src={user?.img || ""}
+					src={user?.img ?? "/assets/images/profile.png"}
 					alt=""
 				/>
 				<div className="font-roboto">

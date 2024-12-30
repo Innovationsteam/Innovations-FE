@@ -9,18 +9,12 @@ const Comment = ({ content, createdAt, username, profile }: CommentProps) => {
 	return (
 		<div className="border-b py-4 last:border-none">
 			<div className="mb-2 flex items-center gap-x-3">
-				{profile ? (
-					<img
-						src={profile}
-						alt={`${username}'s profile`}
-						className="size-9 rounded-full object-cover"
-					/>
-				) : (
-					<img
-						src="/assets/images/profile3.png"
-						alt="Default profile"
-					/>
-				)}
+				<img
+					src={profile ?? "/assets/images/profile3.png"}
+					alt={`${username}'s profile`}
+					className="size-9 rounded-full object-cover"
+				/>
+
 				<div className="flex gap-x-2 font-roboto">
 					<p className="text-sm font-medium text-[#2A2A2A]">{username}</p>
 					<p className="text-sm text-[#5B7083]">{formatDate(createdAt)}</p>

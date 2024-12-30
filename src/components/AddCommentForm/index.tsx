@@ -35,7 +35,7 @@ const AddCommentForm = () => {
 			<div className="mb-5 flex items-center gap-x-2 md:gap-x-3">
 				<img
 					className="size-8 rounded-full object-cover"
-					src={user?.img || ""}
+					src={user?.img ?? "/assets/images/profile.png"}
 					alt="user profile picture"
 				/>
 				<span className="font-roboto text-[15px] font-medium text-[#222222CC] md:text-base">{user?.username}</span>

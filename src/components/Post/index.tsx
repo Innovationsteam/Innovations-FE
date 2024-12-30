@@ -19,21 +19,13 @@ export const Post = ({ id, author, publishedDate, content, image, likes, socialM
 		<li className={cn("mx-auto h-fit w-full !list-none rounded-xl border border-[#E6E6E6] p-4", className)}>
 			<Link
 				to={`/cw/${author?.username ? author.username : user?.username}`}
-				className="flex items-center gap-x-3"
-			>
-				{author?.profileImg ? (
+				className="flex items-center gap-x-3"			>
 					<img
 						className="size-8 rounded-full object-cover lg:size-[35px]"
-						src={author?.profileImg}
+						src={author?.profileImg ?? "/assets/images/profile3.png"}
 						alt="user profile picture"
 					/>
-				) : (
-					<img
-						className="size-10 object-cover lg:size-[35px]"
-						src="/assets/images/profile3.png"
-						alt="user profile picture"
-					/>
-				)}
+				
 				<div className="flex flex-col items-start gap-x-5 font-roboto text-[#5B7083] xl:flex-row xl:items-center">
 					<span className="text-base text-[#2A2A2A] lg:mr-2">{author?.username ? author.username : user?.username}</span>
 					<p className="flex items-center gap-x-[2px] text-sm">

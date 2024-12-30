@@ -5,16 +5,17 @@ import toast from "react-hot-toast";
 import { useModalActions } from "@/store/modal";
 import { useNavigate } from "react-router-dom";
 import { asDraft } from "@/types/post.types";
+import { user } from "@/lib/userData";
 export const setArticle = () => {
 	const { closeModal } = useModalActions();
 	const navigate = useNavigate();
 
 	return useMutation({
-		mutationFn: ({ data, Hash }: { data: any; Hash: string }) => publishArticle(data, Hash),
+		mutationFn: ({ data, Hash, category }: { data: any; Hash: string; category:string }) => publishArticle(data, Hash, category),
 		onSuccess: (data) => {
 			toast.success("Article published successfully! 🎉");
 			closeModal();
-			navigate(`/article/${data}`, {
+			navigate(`/article/${user?.username}/${data}`, {
 				state: data,
 			});
 		},
