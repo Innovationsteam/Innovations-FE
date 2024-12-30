@@ -107,7 +107,7 @@ const Article = () => {
 							</button>
 							<DropDown>
 								<button
-									onClick={() => openModal(ModalType.PersonalNote, { postID: post.id })}
+									onClick={() => openModal(ModalType.PersonalNote, { postID: post.id , notes:post.notes})}
 									className="pb-2 font-roboto text-sm text-[#141414CC] transition-colors hover:text-black"
 								>
 									Add a personal note

@@ -57,7 +57,26 @@ export const createNote = async (title: string | null, content: string, id: stri
 		throw error as AxiosError;
 	}
 };
+export const editNote = async (title: string| null, content: string, id: string): Promise<boolean> => {
+	try {
+		const noteEdited = await client.patch(
+			`/notes/${id}`,
+			{
+				content: content,
+				title: title,
+			},
+			{
+				headers: {
+					"Content-Type": "application/json",
+				},
+			}
+		);
 
+		return noteEdited.data.success || false;
+	} catch (error) {
+		throw error as AxiosError;
+	}
+};
 export const getAllNote = async () => {
 	try {
 		const allNotes = await client.get<IResponse<INotes[]>>(`/notes/`, {
@@ -95,14 +114,4 @@ export const getAllNote = async () => {
 // 	}
 // };
 
-// export const deleteNote = async (id: string) => {
-// 	try {
-// 		const noteDeleted = await client.delete(`/notes/${id}`, {
-// 			headers: {
-// 				"Content-Type": "application/json",
-// 			},
-// 		});
-// 	} catch (error) {
-// 		throw error as AxiosError;
-// 	}
-// };
+
