@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 export interface IResponse<T = null> {
 	data: T;
 	success: boolean;
@@ -14,8 +15,8 @@ export type LoginResponse = IResponse<{
 	access_token: string;
 	username: string;
 	is_active: boolean;
-	img:string | null;
-	name:string;
+	img: string | null;
+	name: string;
 }>;
 
 export interface IError {
@@ -23,9 +24,14 @@ export interface IError {
 	success: false;
 	timestamp: string;
 	message: string;
-	error: {
-		message: string;
-		error: string;
-		statusCode: number;
-	};
+	error:
+		| {
+				message: string;
+				error: string;
+				statusCode: number;
+		  }
+		| {
+				path: string;
+				message: string;
+		  }[];
 }

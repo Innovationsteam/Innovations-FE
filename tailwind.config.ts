@@ -62,6 +62,7 @@ const config = {
 			},
 			textColor: {
 				DEFAULT: "hsl(var(--text))",
+				subtitle: "hsl(var(--subtitle))",
 			},
 			borderRadius: {
 				lg: "var(--radius)",

@@ -14,7 +14,7 @@ const CreateReadingListModal = () => {
 					<header className="mb-8 flex items-center">
 						<span className="font-roboto text-2xl font-semibold">Create New List</span>
 						<CircleX
-							onClick={closeModal}
+							onClick={() => closeModal()}
 							className="ml-auto cursor-pointer"
 							size={24}
 						/>

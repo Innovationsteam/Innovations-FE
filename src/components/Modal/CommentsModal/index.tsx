@@ -16,7 +16,7 @@ const CommentsModal = () => {
 	const modalData = useModalData() || {};
 	const postID = modalData.postID?.id;
 	const { data: commentsResponse, isLoading } = useAllComments(postID);
-	//@ts-ignore
+	//@ts-expect-error ddd
 	const comments = commentsResponse?.comments;
 	if (!isOpen || !postID) {
 		return null;
@@ -36,7 +36,7 @@ const CommentsModal = () => {
 						<h1 className="font-roboto text-xl font-medium">Response ({comments ? comments.length : " "})</h1>
 						<button
 							className="ml-auto rotate-90 transition-transform duration-200 ease-in-out hover:rotate-90"
-							onClick={closeModal}
+							onClick={() => closeModal()}
 						>
 							<img
 								className="size-8 object-cover"

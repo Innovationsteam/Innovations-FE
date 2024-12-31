@@ -27,7 +27,7 @@ const PreviewArticleModal = () => {
 				<div className="h-full w-full max-w-[760px] overflow-hidden rounded-lg bg-white px-7 py-5">
 					<button
 						type="button"
-						onClick={closeModal}
+						onClick={() => closeModal()}
 						className="mb-4 ml-auto flex size-6 items-center gap-x-2"
 					>
 						<img

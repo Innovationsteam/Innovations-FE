@@ -1,10 +1,11 @@
 import { createBrowserRouter } from "react-router-dom";
 import About from "./components/Profile/About";
 import Blogs from "./components/Profile/Blogs";
-import {FollowersList, FollowingList} from "./components/Profile/FollowersList";
+import { FollowersList, FollowingList } from "./components/Profile/FollowersList";
 import ProfileHome from "./components/Profile/Home";
 import ReadingList from "./components/Profile/ReadingList";
 import ProtectedRoutes from "./components/ProtectedRoutes";
+import AppLayout from "./layouts/AppLayout";
 import MainLayout from "./layouts/MainLayout";
 import Article from "./pages/Article";
 import ChangePassword from "./pages/ChangePassword";
@@ -22,90 +23,79 @@ import VerifyOTP from "./pages/VerifyOTP";
 export const router = createBrowserRouter([
 	{
 		path: "/",
-		element: <Loader />,
+		element: <Loader />, // Only the loader component at this level
 	},
 	{
 		path: "/",
-		element: <MainLayout />,
+		element: <AppLayout />, // Encompassing layout for the entire app
 		children: [
 			{
-				element: <ProtectedRoutes />, // Protect all children below
+				path: "/",
+				element: <MainLayout />,
 				children: [
 					{
-						path: "feed",
-						element: <Home />,
-					},
-					{
-						path: "article/:postId",
-						element: <Article />,
-					},
-					{
-						path: "article/:username/:slug",
-						element: <Article />,
-					},
-					{
-						path: "article/new",
-						element: <CreateArticle />,
-					},
-					{
-							path: "cw/:username",
-						element: <Profile />,
+						element: <ProtectedRoutes />, // Protect all children below
 						children: [
-							{ path: "", element: <ProfileHome /> },
-							{ path: "about", element: <About /> },
-							{ path: "blogs", element: <Blogs title="Blogs" /> },
-							{ path: "reading-list", element: <ReadingList /> },
-							{ path: "followers", element: <FollowersList /> },
-							{ path: "following", element: <FollowingList /> },
+							{
+								path: "feed",
+								element: <Home />,
+							},
+							{
+								path: "article/:postId",
+								element: <Article />,
+							},
+							{
+								path: "article/:username/:slug",
+								element: <Article />,
+							},
+							{
+								path: "article/new",
+								element: <CreateArticle />,
+							},
+							{
+								path: "cw/:username",
+								element: <Profile />,
+								children: [
+									{ path: "", element: <ProfileHome /> },
+									{ path: "about", element: <About /> },
+									{ path: "blogs", element: <Blogs title="Blogs" /> },
+									{ path: "reading-list", element: <ReadingList /> },
+									{ path: "followers", element: <FollowersList /> },
+									{ path: "following", element: <FollowingList /> },
+								],
+							},
+							{
+								path: "stories",
+								element: <Stories />,
+							},
+							{
+								path: "stories/new",
+								element: <NewStory />,
+							},
 						],
-					},
-					// {
-					// 	path: "user/profile",
-					// 	element: <Profile />,
-					// 	children: [
-					// 		{ path: "", element: <ProfileHome /> },
-					// 		{ path: "about", element: <About /> },
-					// 		{ path: "blogs", element: <Blogs title="Blogs" /> },
-					// 		{ path: "saved", element: <Blogs title="Saved" /> },
-					// 		{ path: "reading-list", element: <ReadingList /> },
-					// 		{ path: "followers", element: <FollowersList /> },
-					// 		{ path: "following", element: <FollowersList /> },
-					// 		{ path: "analytics", element: <Analytics /> },
-					// 		{ path: "settings", element: <Settings /> },
-					// 		{ path: "notes", element: <Notes /> },
-					// 		{ path: "drafts", element: <Drafts /> },
-					// 	],
-					// },
-					{
-						path: "stories",
-						element: <Stories />,
-					},
-					{
-						path: "stories/new",
-						element: <NewStory />,
 					},
 				],
 			},
+			{
+				path: "login",
+				element: <Login />,
+			},
+			{
+				path: "signup",
+				element: <SignUp />,
+			},
+			{
+				path: "verify",
+				element: <VerifyOTP />,
+			},
+			{
+				path: "/forgot-password",
+				element: <ResetPassword />,
+			},
+			{
+				path: "/change-password",
+				element: <ChangePassword />,
+			},
 		],
-	},
-	{
-		path: "login",
-		element: <Login />,
-	},
-	{
-		path: "signup",
-		element: <SignUp />,
-	},
-	{
-		path: "verify",
-		element: <VerifyOTP />,
-	},
-	{
-		path: "/forgot-password",
-		element: <ResetPassword />,
-	},
-	{
-		path: "/change-password",
-		element: <ChangePassword />,
 	},
 ]);
