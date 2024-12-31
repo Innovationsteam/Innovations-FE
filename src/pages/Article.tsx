@@ -1,5 +1,5 @@
 ///////Worked On
-import PostList from "@/components/Dashboard/PostList";
+// import PostList from "@/components/Dashboard/PostList";
 import FollowButton from "@/components/FollowButton";
 import { useUserConnections } from "@/hooks/follow/useUserConnections";
 import { usePostBySlug } from "@/hooks/posts/usePost";
@@ -13,7 +13,9 @@ import { Like } from "../components/Buttons/Like";
 import Tag from "../components/Buttons/Tag";
 import Container from "../components/Container";
 import ArticleSkeleton from "./ArticleSkeleton";
-
+import { useUserPosts } from "@/hooks/posts/useUserPosts";
+import PostSkeleton from "@/components/Dashboard/PostList/postskeleton";
+import { Post } from "@/components/Post";
 const Article = () => {
 	const { openModal } = useModalActions();
 	// const { data: posts, isPending: isPostsPending } = useUserPosts(username);
@@ -21,7 +23,7 @@ const Article = () => {
 	const { username, slug } = useParams<{ username: string; slug: string }>();
 
 	const { data: post, isPending } = usePostBySlug(username, slug);
-
+	const {data:writer , isFetching}  = useUserPosts(username)
 	const { data: connectionsData, isPending: isConnectionsPending } = useUserConnections(username!);
 
 	const isFollowing = connectionsData?.following?.some((follower) => follower.username === username) || false;
@@ -84,7 +86,7 @@ const Article = () => {
 								postId={post.id}
 								isLiked={isLiked}
 							/>
-							<AddComment id={post.id} />
+							<AddComment id={post.id} comment = {post?.comments}/>
 						</div>
 						<div className="relative flex items-center gap-x-3">
 							<button>
@@ -119,8 +121,8 @@ const Article = () => {
 					<div className="mb-10 flex flex-col">
 						<div className="mb-6 flex items-end">
 							<img
-								className="size-16 object-cover lg:size-20"
-								src="/assets/images/avatar.svg"
+								className="size-16 rounded-full object-cover lg:size-20"
+								src={writer && writer[0]?.author?.profileImg}
 								alt=""
 							/>
 
@@ -131,16 +133,16 @@ const Article = () => {
 							/>
 						</div>
 						<span className="mb-2 font-roboto text-2xl font-medium text-[#141414CC]">
-							Written by Aghedo Jason
-							{/* Written by {writer?.name}{" "} */}
-							{/* {isFetching ? (
+							{/* Written by Aghedo Jason */}
+							Written by {writer && writer[0]?.author?.name}{" "}
+							{isFetching ? (
 								<Skeleton
 									height={40}
 									width={80}
 								/>
 							) : (
 								<></>
-							)} */}
+							)}
 						</span>
 						<div className="mb-2 flex gap-x-4">
 							{isConnectionsPending ? (
@@ -163,7 +165,22 @@ const Article = () => {
 						</div>
 						{/* <p className="font-roboto text-[#141414CC]">Gen Z Design Student - Exploring the connections between UX and multiculturalism.</p> */}
 					</div>
-					<PostList />
+					{isFetching ? (
+						<ul className="grid h-full gap-x-5 gap-y-9 lg:grid-cols-2">
+							{Array.from({ length: 10 }).map((_, i) => (
+								<PostSkeleton key={i} />
+							))}
+						</ul>
+					) : (
+						<ul className="grid h-full gap-x-5 gap-y-9 lg:grid-cols-2">
+							{writer?.map((item) => (
+								<Post
+									key={item.id}
+									{...item}
+								/>
+							))}
+						</ul>
+					)}{" "}
 				</Container>
 			</section>
 		</div>

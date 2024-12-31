@@ -7,8 +7,7 @@ import classNames from "classnames";
 import { addComment } from "@/queries/article.queries";
 import { useModalData } from "@/store/modal";
 import toast from "react-hot-toast";
-import { getCookie } from "@/lib/axios";
-
+import { user } from "@/lib/userData";
 const content = ``;
 
 const AddCommentForm = () => {
@@ -30,17 +29,16 @@ const AddCommentForm = () => {
 			editor.commands.clearContent();
 		}
 	};
-	const username = getCookie("username");
 
 	return (
 		<div className="rounded-lg md:p-5 md:shadow-[0px_4px_8px_0px_#0a3a6426]">
 			<div className="mb-5 flex items-center gap-x-2 md:gap-x-3">
 				<img
-					className="size-[35px] object-cover"
-					src="/assets/images/profile3.png"
+					className="size-8 rounded-full object-cover"
+					src={user?.img || ""}
 					alt="user profile picture"
 				/>
-				<span className="font-roboto text-[15px] font-medium text-[#222222CC] md:text-base">{username}</span>
+				<span className="font-roboto text-[15px] font-medium text-[#222222CC] md:text-base">{user?.username}</span>
 			</div>
 			<EditorContent editor={editor} />
 			<div className="flex items-center">

@@ -1,5 +1,5 @@
 ///////Worked On
-
+import { IComment } from "./comment.type";
 export interface IPost {
 	id: string;
 	title: string;
@@ -7,6 +7,7 @@ export interface IPost {
 	authorId: number;
 	category: string;
 	publishedDate: string;
+	comments: IComment[];
 	hashtags: string;
 	lastUpdated: string;
 	status: "published" | "draft" | "archived";

@@ -1,4 +1,5 @@
 ///////Worked On
+import { userInfo } from "os";
 import { IResponse } from "./auth.types";
 import { IPost } from "./post.types";
 export interface IUser {
@@ -35,3 +36,10 @@ export interface User1 {
 	profileImg: string | null;
 	username: string;
 }
+export type userInfo = {
+	access_token:string;
+	username: string;
+	isActive: boolean
+	img: string | null
+	name: string
+};

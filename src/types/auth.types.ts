@@ -14,6 +14,8 @@ export type LoginResponse = IResponse<{
 	access_token: string;
 	username: string;
 	is_active: boolean;
+	img:string | null;
+	name:string;
 }>;
 
 export interface IError {
