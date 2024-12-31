@@ -2,11 +2,11 @@ import { loginUser, signUpUser } from "@/actions/auth.actions";
 import { useMutation } from "@tanstack/react-query";
 import { useCookies } from "react-cookie";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 export const useLoginUser = () => {
 	const [, setCookie] = useCookies();
-	const navigate = useNavigate();
+	// const navigate = useNavigate();
 
 	return useMutation({
 		mutationFn: loginUser,
@@ -17,9 +17,10 @@ export const useLoginUser = () => {
 			});
 			const dataString = JSON.stringify(data);
 			setCookie("userData", dataString, {
-				expires: new Date(Date.now() + 1000 * 60 * 60 * 24), 
+				expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
 			});
-			navigate("/feed");
+			// navigate("/feed");
+			window.location.replace("/feed");
 		},
 	});
 };
