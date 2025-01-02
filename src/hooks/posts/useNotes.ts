@@ -1,5 +1,5 @@
 ///////Worked On
-import { editNote, createNote } from "@/queries/article.queries";
+import { editNote, createNote } from "@/actions/post.actions";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 export const useNoteUpdate = () => {

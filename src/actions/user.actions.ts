@@ -24,3 +24,21 @@ export const updateUserProfile = async (payload: FormData): Promise<IResponse<IU
 		throw error as AxiosError;
 	}
 };
+export const follow = async (username?: string) => {
+	try {
+		await client.post(`/users/follow`, {
+			username: username,
+		});
+	} catch (error) {
+		throw error as AxiosError;
+	}
+};
+export const unfollow = async (username?: string) => {
+	try {
+		await client.post(`/users/unfollow`, {
+			username: username,
+		});
+	} catch (error) {
+		throw error as AxiosError;
+	}
+};

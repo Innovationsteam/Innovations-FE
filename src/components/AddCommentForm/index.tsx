@@ -4,7 +4,7 @@ import Italic from "@tiptap/extension-italic";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import classNames from "classnames";
-import { addComment } from "@/queries/article.queries";
+import { addComment } from "@/actions/post.actions";
 import { useModalData } from "@/store/modal";
 import toast from "react-hot-toast";
 import { user } from "@/lib/userData";

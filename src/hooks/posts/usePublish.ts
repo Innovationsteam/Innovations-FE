@@ -1,6 +1,6 @@
 ///////Worked On
 import { useMutation } from "@tanstack/react-query";
-import { publishArticle, saveAsDraft } from "@/queries/publish.queries";
+import { publishArticle, saveAsDraft } from "@/actions/article.actions";
 import toast from "react-hot-toast";
 import { useModalActions } from "@/store/modal";
 import { useNavigate } from "react-router-dom";
@@ -11,7 +11,7 @@ export const setArticle = () => {
 	const navigate = useNavigate();
 
 	return useMutation({
-		mutationFn: ({ data, Hash, category }: { data: any; Hash: string; category:string }) => publishArticle(data, Hash, category),
+		mutationFn: (articleData: FormData) => publishArticle(articleData),
 		onSuccess: (data) => {
 			toast.success("Article published successfully! 🎉");
 			closeModal();
@@ -29,7 +29,7 @@ export const setDrafts = () => {
 	const navigate = useNavigate();
 
 	return useMutation({
-		mutationFn: ({ title, content, img }: asDraft) => saveAsDraft({ title, content, img }),
+		mutationFn: (draftForm: FormData) => saveAsDraft(draftForm),
 		onSuccess: () => {
 			toast.success("draft saved! 🎉");
 			navigate("/feed");

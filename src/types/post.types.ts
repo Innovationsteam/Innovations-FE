@@ -64,3 +64,11 @@ export type asDraft = {
 	content: string[];
 	img?: string | File;
 };
+export type articleForm = {
+	title: string; 
+	content: string; 
+	category: string; 
+	image: string | null; 
+	hashtags: string; 
+	status: "published" ;
+};
