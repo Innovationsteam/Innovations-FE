@@ -4,7 +4,6 @@ import { publishArticle, saveAsDraft } from "@/actions/article.actions";
 import toast from "react-hot-toast";
 import { useModalActions } from "@/store/modal";
 import { useNavigate } from "react-router-dom";
-import { asDraft } from "@/types/post.types";
 import { user } from "@/lib/userData";
 export const setArticle = () => {
 	const { closeModal } = useModalActions();
