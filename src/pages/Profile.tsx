@@ -1,3 +1,4 @@
+import FollowButton from "@/components/FollowButton";
 import { Button } from "@/components/ui/button";
 import { useUserConnections } from "@/hooks/follow/useUserConnections";
 import { useUserProfile } from "@/hooks/useUserProfile";
@@ -7,8 +8,6 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { Outlet, useParams } from "react-router-dom";
 import Container from "../components/Container";
 import { MiniNav, MiniNavMobile } from "../components/MiniNav";
-import FollowButton from "@/components/FollowButton";
-import { useEffect } from "react";
 import { useUserStore } from "@/store/user";
 
 const Profile = () => {
@@ -16,15 +15,11 @@ const Profile = () => {
 	const { data: userData, isPending: isUserPending } = useUserProfile(username);
 	const { data: connectionsData, isPending: isConnectionsPending } = useUserConnections(username!);
 	const { openModal } = useModalActions();
-	const setUser = useUserStore((s) => s.setUser);
+	const loggedInUser = useUserStore((s) => s.user);
 
-	const isFollowing = connectionsData?.following?.some((follower) => follower.username === username) || false;
+	const isFollowing = connectionsData?.followers?.some((follower) => follower.username === loggedInUser?.username) || false;
 
 	const tabs = isFollowing ? ["home", "about", "blogs", "reading-list", "followers", "following", "saved", "analytics", "drafts", "notes", "settings"] : ["home", "about", "blogs", "reading-list", "followers", "following"];
-
-	useEffect(() => {
-		setUser(userData);
-	}, [setUser, userData]);
 
 	return (
 		<Container>
@@ -71,7 +66,12 @@ const Profile = () => {
 							</div>
 						</div>
 						<div className="ml-auto flex items-center gap-x-2">
-							{isFollowing ? (
+							{isConnectionsPending ? (
+								<Skeleton
+									width={107}
+									height={30}
+								/>
+							) : loggedInUser?.username === username ? (
 								<Button
 									onClick={() => openModal(ModalType.EDIT_PROFILE)}
 									className="md:text-base"

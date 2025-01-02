@@ -3,10 +3,12 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Container from "../Container";
-import { user } from "@/lib/userData";
+import { useUserStore } from "@/store/user";
+
 const NavBar = () => {
 	const [scrolled, setScrolled] = useState(false);
 	const navigate = useNavigate();
+	const user = useUserStore((s) => s.user);
 
 	useEffect(() => {
 		const onScroll = () => {
@@ -64,7 +66,7 @@ const NavBar = () => {
 					<Link to={`/cw/${user?.username}`}>
 						<img
 							className="size-8 rounded-full object-cover"
-							src={user?.img || ""}
+							src={user?.profileImg || ""}
 							alt=""
 						/>
 					</Link>

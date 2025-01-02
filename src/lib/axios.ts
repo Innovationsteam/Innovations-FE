@@ -9,7 +9,7 @@ const client = axios.create({
 });
 
 // Helper function to get a cookie by name
-export const getCookie = (name: string): string | undefined => {
+const getCookie = (name: string): string | undefined => {
 	const cookieString = document.cookie;
 	const cookies = cookieString.split("; ");
 	for (const cookie of cookies) {

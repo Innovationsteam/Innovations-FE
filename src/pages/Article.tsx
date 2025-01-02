@@ -23,7 +23,7 @@ const Article = () => {
 	const { username, slug } = useParams<{ username: string; slug: string }>();
 
 	const { data: post, isPending } = usePostBySlug(username, slug);
-	const {data:writer , isFetching}  = useUserPosts(username)
+	const { data: writer, isFetching } = useUserPosts(username);
 	const { data: connectionsData, isPending: isConnectionsPending } = useUserConnections(username!);
 
 	const isFollowing = connectionsData?.following?.some((follower) => follower.username === username) || false;
@@ -86,7 +86,10 @@ const Article = () => {
 								postId={post.id}
 								isLiked={isLiked}
 							/>
-							<AddComment id={post.id} comment = {post?.comments}/>
+							<AddComment
+								id={post.id}
+								comment={post?.comments}
+							/>
 						</div>
 						<div className="relative flex items-center gap-x-3">
 							<button>
@@ -126,11 +129,18 @@ const Article = () => {
 								alt=""
 							/>
 
-							<FollowButton
-								className="ml-auto w-fit"
-								username={username!}
-								isFollowing={isFollowing}
-							/>
+							{isConnectionsPending ? (
+								<Skeleton
+									width={107}
+									height={30}
+								/>
+							) : (
+								<FollowButton
+									className="ml-auto w-fit"
+									username={username!}
+									isFollowing={isFollowing}
+								/>
+							)}
 						</div>
 						<span className="mb-2 font-roboto text-2xl font-medium text-[#141414CC]">
 							{/* Written by Aghedo Jason */}

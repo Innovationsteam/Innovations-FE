@@ -1,4 +1,5 @@
 ///////Worked On
+import { useUserStore } from "@/store/user";
 import { PostItem } from "@/types/post.types";
 import { cn, convertToOriginalFormat, formatDate } from "@/utils/helper";
 import { useState } from "react";
@@ -7,13 +8,14 @@ import { FaRegComment, FaRegHeart, FaRegEye } from "react-icons/fa";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { Link } from "react-router-dom";
-import { user } from "@/lib/userData";
 interface PostProps extends PostItem {
 	className?: string;
 }
 
 export const Post = ({ id, author, publishedDate, content, image, likes, socialMediaShares, commentsCount, title, views, className, slug }: PostProps) => {
 	const [isImageLoaded, setIsImageLoaded] = useState(false);
+
+	const user = useUserStore((s) => s.user);
 
 	return (
 		<li className={cn("mx-auto h-fit w-full !list-none rounded-xl border border-[#E6E6E6] p-4", className)}>

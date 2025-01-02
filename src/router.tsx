@@ -5,6 +5,7 @@ import { FollowersList, FollowingList } from "./components/Profile/FollowersList
 import ProfileHome from "./components/Profile/Home";
 import ReadingList from "./components/Profile/ReadingList";
 import ProtectedRoutes from "./components/ProtectedRoutes";
+import Redirecting from "./components/Redirecting";
 import AppLayout from "./layouts/AppLayout";
 import MainLayout from "./layouts/MainLayout";
 import Article from "./pages/Article";
@@ -75,6 +76,10 @@ export const router = createBrowserRouter([
 						],
 					},
 				],
+			},
+			{
+				path: "redirecting",
+				element: <Redirecting />,
 			},
 			{
 				path: "login",

@@ -3,7 +3,13 @@ import { cn } from "@/utils/helper";
 import { useCallback } from "react";
 import { Button } from "./ui/button";
 
-const FollowButton = ({ className, username, isFollowing }: { className?: string; username: string; isFollowing: boolean }) => {
+interface Props {
+	className?: string;
+	username: string;
+	isFollowing: boolean;
+}
+
+const FollowButton = ({ className, username, isFollowing }: Props) => {
 	const { mutate: followUser, isPending } = useFollowUser();
 
 	const unfollowUser = useCallback(() => {
