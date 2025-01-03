@@ -5,25 +5,6 @@ import { IComment } from "@/types/comment.type";
 import { INotes } from "@/types/notes.types";
 import { IResponse } from "@/types/auth.types";
 
-export const addComment = async (comment: string, id: string): Promise<boolean> => {
-	try {
-		const commentAdded = await client.post(
-			`/comments/`,
-			{
-				content: comment,
-				postId: id,
-			},
-			{
-				headers: {
-					"Content-Type": "application/json",
-				},
-			}
-		);
-		return commentAdded?.data?.success || false;
-	} catch (error) {
-		throw error as AxiosError;
-	}
-};
 export const getComment = async (id: string) => {
 	try {
 		const allComments = await client.get<IResponse<IComment[]>>(`/comments/${id}`, {
@@ -32,27 +13,6 @@ export const getComment = async (id: string) => {
 			},
 		});
 		return allComments.data.data;
-	} catch (error) {
-		throw error as AxiosError;
-	}
-};
-
-export const createNote = async (title: string | null, content: string, id: string): Promise<boolean> => {
-	try {
-		const noteCreated = await client.post(
-			`/notes/`,
-			{
-				title: title,
-				content: content,
-				postId: id,
-			},
-			{
-				headers: {
-					"Content-Type": "application/json",
-				},
-			}
-		);
-		return noteCreated.data.success || false;
 	} catch (error) {
 		throw error as AxiosError;
 	}
@@ -86,18 +46,6 @@ export const getAllNote = async () => {
 // export const getNote = async (id: string) => {
 // 	try {
 // 		const note = await client.get(`/notes/${id}`, {
-// 			headers: {
-// 				"Content-Type": "application/json",
-// 			},
-// 		});
-// 	} catch (error) {
-// 		throw error as AxiosError;
-// 	}
-// };
-
-// export const deleteNote = async (id: string) => {
-// 	try {
-// 		const noteDeleted = await client.delete(`/notes/${id}`, {
 // 			headers: {
 // 				"Content-Type": "application/json",
 // 			},

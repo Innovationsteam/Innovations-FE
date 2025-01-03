@@ -42,7 +42,7 @@ const Profile = () => {
 				<div className="mb-10 h-full w-full border-y-0 md:px-5 lg:border-l-[1.5px]">
 					<img
 						className="size-8 rounded-full object-cover md:size-[80px]"
-						src={`${userData?.profileImg}`}
+						src={userData?.profileImg ?? "/assets/images/profile.png"}
 						alt="Profile"
 					/>
 					<div className="mt-6 flex items-center text-black">

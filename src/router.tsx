@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import About from "./components/Profile/About";
 import Blogs from "./components/Profile/Blogs";
-import {FollowersList, FollowingList} from "./components/Profile/FollowersList";
+import { FollowersList, FollowingList } from "./components/Profile/FollowersList";
 import ProfileHome from "./components/Profile/Home";
 import ReadingList from "./components/Profile/ReadingList";
 import ProtectedRoutes from "./components/ProtectedRoutes";
@@ -48,7 +48,7 @@ export const router = createBrowserRouter([
 						element: <CreateArticle />,
 					},
 					{
-							path: "cw/:username",
+						path: "cw/:username",
 						element: <Profile />,
 						children: [
 							{ path: "", element: <ProfileHome /> },

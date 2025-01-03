@@ -37,9 +37,9 @@ export interface User1 {
 	username: string;
 }
 export type userInfo = {
-	access_token:string;
+	access_token: string;
 	username: string;
-	isActive: boolean
-	img: string | null
-	name: string
+	isActive: boolean;
+	img: string | null;
+	name: string;
 };

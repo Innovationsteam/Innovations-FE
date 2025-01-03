@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { ModalType, useModalActions } from "@store/modal";
 import { IComment } from "@/types/comment.type";
 
-const AddComment = (ids: { id: string , comment: IComment[]}) => {
+const AddComment = (ids: { id: string; comment: IComment[] }) => {
 	const { openModal } = useModalActions();
 	return (
 		<button
