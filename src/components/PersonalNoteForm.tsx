@@ -3,7 +3,7 @@ import { cn } from "@/utils/helper";
 import Document from "@tiptap/extension-document";
 import Placeholder from "@tiptap/extension-placeholder";
 import Underline from "@tiptap/extension-underline";
-import { EditorContent, useEditor } from "@tiptap/react";
+import { Editor, EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useModalData } from "@/store/modal";
 const CustomDocument = Document.extend({
@@ -13,7 +13,8 @@ import { formatSplit } from "@/utils/helper";
 import { useNoteCreate, useNoteUpdate } from "@/hooks/posts/useNotes";
 
 const PersonalNoteForm = () => {
-	const { postID, notes } = useModalData() || {};
+	const { postId, notes } = useModalData();
+
 	const editor = useEditor({
 		extensions: [
 			CustomDocument,
@@ -41,20 +42,22 @@ const PersonalNoteForm = () => {
 			},
 		},
 	});
+
 	const { mutate: createNote } = useNoteCreate();
 	const { mutate: editNote } = useNoteUpdate();
-	const publish = async () => {
-		if (editor && postID) {
-			const { title, content } = formatSplit(editor.getHTML());
-			createNote({ title, content, postID });
-		}
+
+	const publish = () => {
+		const { title, content } = formatSplit((editor as Editor).getHTML());
+		createNote({ title, content, postId });
 	};
-	const update = async () => {
-		if (editor && postID) {
-			const { title, content } = formatSplit(editor.getHTML());
-			editNote({ title, content, noteID: notes?.[0]?.publicId });
-		}
+
+	const update = () => {
+		const { title, content } = formatSplit((editor as Editor).getHTML());
+		editNote({ title, content, noteId: notes?.[0]?.publicId });
 	};
+
+	if (!editor) return null;
+
 	return (
 		<div className="mt-6">
 			<EditorContent editor={editor} />
@@ -63,7 +66,7 @@ const PersonalNoteForm = () => {
 					<button
 						type="button"
 						className="ml-auto w-full max-w-[100px] rounded-lg bg-[#04BF87] py-2 font-raleway text-sm font-semibold text-white md:py-[10px] md:text-base"
-						onClick={() => update()}
+						onClick={update}
 					>
 						Update
 					</button>
@@ -71,7 +74,7 @@ const PersonalNoteForm = () => {
 					<button
 						type="button"
 						className="ml-auto w-full max-w-[100px] rounded-lg bg-[#04BF87] py-2 font-raleway text-sm font-semibold text-white md:py-[10px] md:text-base"
-						onClick={() => publish()}
+						onClick={publish}
 					>
 						Save
 					</button>

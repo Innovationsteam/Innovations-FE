@@ -2,14 +2,16 @@ import SectionContainer from "../../layouts/SectionContainer";
 import { useUserConnections } from "@/hooks/follow/useUserConnections";
 import { useParams } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css"; 
+import "react-loading-skeleton/dist/skeleton.css";
 export const FollowersList = () => {
 	const { username } = useParams();
 	const { data: connectionsData, isPending: isConnectionsPending } = useUserConnections(username!);
 	return (
 		<SectionContainer title="Followers">
-			<ul className="mt-4 grid gap-y-7">{connectionsData ? connectionsData.followers?.map((items) => <Follower {...items} />) :<>No followers</>}
-			{isConnectionsPending && Array.from({ length: 3 }).map((_, i) => <FollowSkeleton key={i} />)}</ul>
+			<ul className="mt-4 grid gap-y-7">
+				{connectionsData ? connectionsData.followers?.map((items) => <Follower {...items} />) : <>No followers</>}
+				{isConnectionsPending && Array.from({ length: 3 }).map((_, i) => <FollowSkeleton key={i} />)}
+			</ul>
 		</SectionContainer>
 	);
 };
@@ -18,14 +20,15 @@ export const FollowingList = () => {
 	const { data: connectionsData, isPending: isConnectionsPending } = useUserConnections(username!);
 	return (
 		<SectionContainer title="Following">
-			<ul className="mt-4 grid gap-y-7">{connectionsData ? connectionsData.following?.map((items) => <Following {...items} />) :<>No followers</>}
-			{isConnectionsPending && Array.from({ length: 3 }).map((_, i) => <FollowSkeleton key={i} />)}</ul>
+			<ul className="mt-4 grid gap-y-7">
+				{connectionsData ? connectionsData.following?.map((items) => <Following {...items} />) : <>No followers</>}
+				{isConnectionsPending && Array.from({ length: 3 }).map((_, i) => <FollowSkeleton key={i} />)}
+			</ul>
 		</SectionContainer>
 	);
 };
 
-
-const Follower = ({ profileImg, username }: { profileImg: string |null; username: string }) => {
+const Follower = ({ profileImg, username }: { profileImg: string | null; username: string }) => {
 	return (
 		<button className="group block w-full text-start">
 			<div className="flex items-start gap-x-2 pb-2 font-roboto sm:gap-x-5">
@@ -52,7 +55,7 @@ const Follower = ({ profileImg, username }: { profileImg: string |null; username
 		</button>
 	);
 };
-const Following = ({ profileImg, username }: { profileImg: string |null; username: string }) => {
+const Following = ({ profileImg, username }: { profileImg: string | null; username: string }) => {
 	return (
 		<button className="group block w-full text-start">
 			<div className="flex items-start gap-x-2 pb-2 font-roboto sm:gap-x-5">
@@ -79,7 +82,6 @@ const Following = ({ profileImg, username }: { profileImg: string |null; usernam
 		</button>
 	);
 };
-
 
 const FollowSkeleton = () => {
 	return (
@@ -116,4 +118,3 @@ const FollowSkeleton = () => {
 		</button>
 	);
 };
-

@@ -10,46 +10,25 @@ export const likePost = async (postId: string): Promise<string> => {
 	}
 };
 
-export const createNote = async (title: string | null, content: string, id: string): Promise<boolean> => {
+export const createNote = async (payload: { title: string; content: string; postId: string }) => {
 	try {
-		const noteCreated = await client.post(
-			`/notes/`,
-			{
-				title: title,
-				content: content,
-				postId: id,
-			},
-			{
-				headers: {
-					"Content-Type": "application/json",
-				},
-			}
-		);
-		return noteCreated.data.success || false;
+		const res = await client.post(`/notes/`, payload);
+		return res.data;
 	} catch (error) {
 		throw error as AxiosError;
 	}
 };
-export const editNote = async (title: string | null, content: string, id: string): Promise<boolean> => {
+
+export const updateNote = async (payload: { title: string; content: string; noteId: string }) => {
 	try {
-		const noteEdited = await client.patch(
-			`/notes/${id}`,
-			{
-				content: content,
-				title: title,
-			},
-			{
-				headers: {
-					"Content-Type": "application/json",
-				},
-			}
-		);
+		const noteEdited = await client.patch(`/notes/${payload.noteId}`, payload);
 
 		return noteEdited.data.success || false;
 	} catch (error) {
 		throw error as AxiosError;
 	}
 };
+
 export const addComment = async (comment: string, id: string): Promise<boolean> => {
 	try {
 		const commentAdded = await client.post(

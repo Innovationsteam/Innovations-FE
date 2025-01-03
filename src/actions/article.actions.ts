@@ -1,6 +1,6 @@
 ///////Worked On
 import client from "@/lib/axios";
-export const publishArticle = async (formData:FormData) => {
+export const publishArticle = async (formData: FormData) => {
 	try {
 		const response = await client.post("/posts/", formData, {
 			headers: {

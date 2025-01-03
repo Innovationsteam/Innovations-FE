@@ -19,7 +19,7 @@ const SectionContainer = ({ title, showIcon = false, modal = ModalType.None, chi
 				{showIcon && (
 					<Plus
 						onClick={() => openModal(modal)}
-						className="stroke-basic ml-auto cursor-pointer"
+						className="ml-auto cursor-pointer stroke-basic"
 						size={24}
 						strokeWidth={2.5}
 					/>

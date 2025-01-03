@@ -22,4 +22,3 @@ export const IsaFollower = async (username?: string) => {
 		throw error as AxiosError;
 	}
 };
-

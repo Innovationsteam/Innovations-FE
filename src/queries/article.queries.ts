@@ -5,7 +5,6 @@ import { IComment } from "@/types/comment.type";
 import { INotes } from "@/types/notes.types";
 import { IResponse } from "@/types/auth.types";
 
-
 export const getComment = async (id: string) => {
 	try {
 		const allComments = await client.get<IResponse<IComment[]>>(`/comments/${id}`, {
@@ -18,8 +17,6 @@ export const getComment = async (id: string) => {
 		throw error as AxiosError;
 	}
 };
-
-
 
 export const getAllNote = async () => {
 	try {
@@ -57,5 +54,3 @@ export const getAllNote = async () => {
 // 		throw error as AxiosError;
 // 	}
 // };
-
-

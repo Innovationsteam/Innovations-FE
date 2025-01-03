@@ -75,7 +75,7 @@ interface Props {
 	initialContent?: string;
 }
 
-const TipTapEditor = ({ titlePlaceholder, textPlaceholder, className, setContent, initialContent = '' }: Props) => { 
+const TipTapEditor = ({ titlePlaceholder, textPlaceholder, className, setContent, initialContent = "" }: Props) => {
 	const editor = useEditor({
 		extensions: [
 			CustomDocument,
@@ -95,7 +95,7 @@ const TipTapEditor = ({ titlePlaceholder, textPlaceholder, className, setContent
 				},
 			}),
 		],
-		content: initialContent, 
+		content: initialContent,
 		onUpdate: ({ editor }) => setContent(editor.getHTML()),
 		editorProps: {
 			attributes: {

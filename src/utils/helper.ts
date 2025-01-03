@@ -55,6 +55,7 @@ export function convertToOriginalFormat(htmlString: string) {
 	htmlContent = htmlContent.replace(/<(strong|em|u|span|b|i)>/g, "<$1> ");
 	return htmlContent.trim();
 }
+
 export function convertComment(htmlString: string) {
 	const tempDiv = document.createElement("div");
 	tempDiv.innerHTML = htmlString;
@@ -66,17 +67,19 @@ export function convertComment(htmlString: string) {
 	htmlContent = htmlContent.replace(/<(strong|em|u|span|b|i)>/g, "<$1> ");
 	return htmlContent.trim();
 }
-export function formatSplit(htmlString:string){
-	const parser = new DOMParser();
-	const doc = parser.parseFromString(htmlString, 'text/html');
 
-	const titleElement = doc.querySelector('h1');
-	const contentElements = doc.querySelectorAll('p');
+export function formatSplit(htmlString: string) {
+	const parser = new DOMParser();
+	const doc = parser.parseFromString(htmlString, "text/html");
+
+	const titleElement = doc.querySelector("h1");
+	const contentElements = doc.querySelectorAll("p");
 
 	const result = {
-		title: titleElement ? titleElement.outerHTML : null,
-		content: Array.from(contentElements).map(p => p.outerHTML).join('')
+		title: titleElement ? titleElement.outerHTML : "",
+		content: Array.from(contentElements)
+			.map((p) => p.outerHTML)
+			.join(""),
 	};
-	return result
-
+	return result;
 }

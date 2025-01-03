@@ -11,7 +11,7 @@ export interface IPost {
 	comments: IComment[];
 	hashtags: string;
 	lastUpdated: string;
-	notes : INotes[];
+	notes: INotes[];
 	status: "published" | "draft" | "archived";
 	views: number;
 	likes: number;
@@ -65,10 +65,10 @@ export type asDraft = {
 	img?: string | File;
 };
 export type articleForm = {
-	title: string; 
-	content: string; 
-	category: string; 
-	image: string | null; 
-	hashtags: string; 
-	status: "published" ;
+	title: string;
+	content: string;
+	category: string;
+	image: string | null;
+	hashtags: string;
+	status: "published";
 };

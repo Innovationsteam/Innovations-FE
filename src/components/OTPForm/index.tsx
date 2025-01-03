@@ -30,7 +30,7 @@ const OTPForm = () => {
 
 	return (
 		<form className="mt-16">
-			<div className="flex justify-center gap-x-4 xs:gap-x-10">
+			<div className="xs:gap-x-10 flex justify-center gap-x-4">
 				{otp.map((num, index) => (
 					<input
 						key={`input-${index}`}
