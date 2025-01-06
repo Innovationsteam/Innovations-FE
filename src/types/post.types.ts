@@ -1,5 +1,6 @@
 ///////Worked On
 import { IComment } from "./comment.type";
+import { INotes } from "./notes.types";
 export interface IPost {
 	id: string;
 	title: string;
@@ -10,6 +11,7 @@ export interface IPost {
 	comments: IComment[];
 	hashtags: string;
 	lastUpdated: string;
+	notes: INotes[];
 	status: "published" | "draft" | "archived";
 	views: number;
 	likes: number;
@@ -61,4 +63,12 @@ export type asDraft = {
 	title: string;
 	content: string[];
 	img?: string | File;
+};
+export type articleForm = {
+	title: string;
+	content: string;
+	category: string;
+	image: string | null;
+	hashtags: string;
+	status: "published";
 };

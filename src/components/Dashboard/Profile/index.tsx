@@ -1,12 +1,14 @@
+import { useUserStore } from "@/store/user";
 import { Link } from "react-router-dom";
-import { user } from "@/lib/userData";
+
 const Profile = () => {
+	const user = useUserStore((s) => s.user);
 	return (
 		<Link to={`/cw/${user?.username}`}>
 			<div className="mb-3 flex items-center gap-x-3 p-3">
 				<img
 					className="size-10 rounded-full rounded-full"
-					src={user?.img || ""}
+					src={user?.profileImg ?? "/assets/images/profile.png"}
 					alt=""
 				/>
 				<div className="font-roboto">

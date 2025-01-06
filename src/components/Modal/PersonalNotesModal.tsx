@@ -7,7 +7,7 @@ import ModalContainer from "./ModalContainer";
 
 const PersonalNotesModal = () => {
 	const isOpen = useActiveModal(ModalType.PersonalNote);
-	const { closeModal } = useModalActions()
+	const { closeModal } = useModalActions();
 	const [width] = useSize();
 
 	return (
@@ -24,7 +24,7 @@ const PersonalNotesModal = () => {
 						<span className="text-xl font-semibold">Personal Note</span>
 						<button
 							className="ml-auto rotate-90 transition-transform duration-200 ease-in-out hover:rotate-90"
-							onClick={closeModal}
+							onClick={() => closeModal()}
 						>
 							<img
 								className="size-8 object-cover"

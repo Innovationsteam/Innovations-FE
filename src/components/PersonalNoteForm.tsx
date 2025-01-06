@@ -3,17 +3,18 @@ import { cn } from "@/utils/helper";
 import Document from "@tiptap/extension-document";
 import Placeholder from "@tiptap/extension-placeholder";
 import Underline from "@tiptap/extension-underline";
-import { EditorContent, useEditor } from "@tiptap/react";
+import { Editor, EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useModalData } from "@/store/modal";
-import toast from "react-hot-toast";
 const CustomDocument = Document.extend({
 	content: "heading block*",
 });
 import { formatSplit } from "@/utils/helper";
-import { createNote } from "@/queries/article.queries";
+import { useNoteCreate, useNoteUpdate } from "@/hooks/posts/useNotes";
+
 const PersonalNoteForm = () => {
-	const { postID } = useModalData() || {};
+	const { postId, notes } = useModalData();
+
 	const editor = useEditor({
 		extensions: [
 			CustomDocument,
@@ -33,7 +34,7 @@ const PersonalNoteForm = () => {
 				},
 			}),
 		],
-		content: ``,
+		content: notes?.[0] ? `${notes?.[0]?.title} <p>${notes?.[0]?.content}</p>` : ``,
 		editorProps: {
 			attributes: {
 				class: cn("font-roboto h-[73vh] block placeholder:text-[#14141466] text-black focus:outline-none prose max-w-none [&_ol]:list-decimal [&_ul]:list-disc prose-h1:text-[30px] prose-p:text-xl"),
@@ -41,24 +42,43 @@ const PersonalNoteForm = () => {
 			},
 		},
 	});
-	const publish = async () => {
-		if (editor && postID) {
-			const { title, content } = formatSplit(editor.getHTML());
-			if (await createNote(title, content, postID)) editor.commands.clearContent();
-			toast.success("Note Saved 🎉");
-		}
+
+	const { mutate: createNote } = useNoteCreate();
+	const { mutate: editNote } = useNoteUpdate();
+
+	const publish = () => {
+		const { title, content } = formatSplit((editor as Editor).getHTML());
+		createNote({ title, content, postId });
 	};
+
+	const update = () => {
+		const { title, content } = formatSplit((editor as Editor).getHTML());
+		editNote({ title, content, noteId: notes?.[0]?.publicId });
+	};
+
+	if (!editor) return null;
+
 	return (
 		<div className="mt-6">
 			<EditorContent editor={editor} />
 			<div className="flex">
-				<button
-					type="button"
-					className="ml-auto w-full max-w-[100px] rounded-lg bg-[#04BF87] py-2 font-raleway text-sm font-semibold text-white md:py-[10px] md:text-base"
-					onClick={() => publish()}
-				>
-					Save
-				</button>
+				{notes?.[0] ? (
+					<button
+						type="button"
+						className="ml-auto w-full max-w-[100px] rounded-lg bg-[#04BF87] py-2 font-raleway text-sm font-semibold text-white md:py-[10px] md:text-base"
+						onClick={update}
+					>
+						Update
+					</button>
+				) : (
+					<button
+						type="button"
+						className="ml-auto w-full max-w-[100px] rounded-lg bg-[#04BF87] py-2 font-raleway text-sm font-semibold text-white md:py-[10px] md:text-base"
+						onClick={publish}
+					>
+						Save
+					</button>
+				)}
 			</div>
 		</div>
 	);

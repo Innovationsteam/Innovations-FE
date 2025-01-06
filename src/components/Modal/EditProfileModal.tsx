@@ -63,7 +63,7 @@ const EditProfileModal = () => {
 		const formData = new FormData();
 		formData.append("name", data.name || "");
 		formData.append("bio", data.bio || "");
-		formData.append("profile", profileImage);
+		formData.append("profileImg", profileImage);
 
 		updateProfile(formData);
 	};
@@ -77,7 +77,7 @@ const EditProfileModal = () => {
 							<p className="font-roboto text-base">Kindly fill in your information </p>
 						</header>
 						<CircleX
-							onClick={closeModal}
+							onClick={() => closeModal()}
 							className="ml-auto rotate-90 cursor-pointer transition-transform duration-200 ease-in-out hover:rotate-90"
 							size={24}
 						/>

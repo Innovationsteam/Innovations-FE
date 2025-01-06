@@ -1,4 +1,5 @@
 import { loginUser, signUpUser } from "@/actions/auth.actions";
+import { ModalType, useModalActions } from "@/store/modal";
 import { useMutation } from "@tanstack/react-query";
 import { useCookies } from "react-cookie";
 import toast from "react-hot-toast";
@@ -12,12 +13,8 @@ export const useLoginUser = () => {
 		mutationFn: loginUser,
 		onSuccess: ({ data }) => {
 			toast.success("Login Successful");
-			setCookie("access_token", data?.access_token, {
+			setCookie("access_token", data.access_token, {
 				expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
-			});
-			const dataString = JSON.stringify(data);
-			setCookie("userData", dataString, {
-				expires: new Date(Date.now() + 1000 * 60 * 60 * 24), 
 			});
 			navigate("/feed");
 		},
@@ -25,10 +22,9 @@ export const useLoginUser = () => {
 };
 
 export const useSignUpUser = () => {
+	const { openModal } = useModalActions();
 	return useMutation({
 		mutationFn: signUpUser,
-		onSuccess: () => {
-			toast.success("SignUp Successful");
-		},
+		onSuccess: () => openModal(ModalType.EMAIL_SENT),
 	});
 };

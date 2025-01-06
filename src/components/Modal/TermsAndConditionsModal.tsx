@@ -46,15 +46,15 @@ const TermsAndConditionsModal = () => {
 					<div className="mt-6 flex items-center justify-end gap-x-[42px]">
 						<button
 							type="button"
-							onClick={closeModal}
-							className="font-raleway w-full max-w-[167px] rounded-lg py-[10px] font-semibold transition-colors duration-150 hover:bg-[#04BF87] hover:text-white"
+							onClick={() => closeModal()}
+							className="w-full max-w-[167px] rounded-lg py-[10px] font-raleway font-semibold transition-colors duration-150 hover:bg-[#04BF87] hover:text-white"
 						>
 							Cancel
 						</button>
 						<button
 							type="button"
 							onClick={handleAgree}
-							className="font-raleway w-full max-w-[167px] rounded-lg bg-[#04BF87] py-[10px] font-semibold text-white"
+							className="w-full max-w-[167px] rounded-lg bg-[#04BF87] py-[10px] font-raleway font-semibold text-white"
 						>
 							Agree
 						</button>

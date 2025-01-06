@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 export const useDrafts = () => {
 	return useQuery({
 		queryFn: () => getDrafts(),
-		queryKey: ["drafts"],
+		queryKey: ["posts", "drafts"],
 		staleTime: 100 * 60 * 3,
 	});
 };

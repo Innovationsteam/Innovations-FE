@@ -3,10 +3,11 @@ import { ModalType, useModalActions } from "@/store/modal";
 import { extractH1Content, extractPContent } from "@/utils/helper";
 import { ChangeEvent, useRef, useState, useEffect } from "react";
 import toast from "react-hot-toast";
-import { setDrafts } from "@/hooks/posts/usePublish";
+import { useDraftArticle } from "@/hooks/posts/usePublish";
 import { useNavigate, useLocation } from "react-router-dom";
 import Container from "../components/Container";
 import TipTapEditor from "../components/Editor/TipTapEditor";
+import { asDraft } from "@/types/post.types";
 const CreateArticle = () => {
 	const { openModal } = useModalActions();
 	const [article, setArticle] = useState(``);
@@ -35,7 +36,7 @@ const CreateArticle = () => {
 		}
 	}, [location.state]);
 
-	const { mutate } = setDrafts();
+	const { mutate } = useDraftArticle();
 	const onFileChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const file = e.currentTarget.files![0];
 		if (file) {
@@ -70,7 +71,22 @@ const CreateArticle = () => {
 			} else toast.error("Please Select an Image");
 		} else toast.error("Article can't be empty");
 	};
-
+	const onSubmit = () => {
+		const draftForm: asDraft = {
+			title: article,
+			content: articlebody,
+			img: selectedFile ? selectedFile : file || "#",
+		};
+		const formData = new FormData();
+		formData.append("title", draftForm.title);
+		formData.append("content", draftForm.content.join(""));
+		formData.append("category", "#");
+		if (draftForm.img) {
+			formData.append("image", draftForm.img);
+		}
+		formData.append("hashtags", "#");
+		mutate(formData);
+	};
 	return (
 		<Container className="!max-w-6xl">
 			<header className="mt-6 flex flex-col items-center gap-y-5 sm:flex-row lg:mt-10">
@@ -90,9 +106,7 @@ const CreateArticle = () => {
 					<button
 						type="button"
 						className="rounded-lg px-3 py-2 font-roboto text-sm text-[#14141499] transition-colors duration-100 hover:bg-[#D9D9D952] hover:text-black sm:text-base"
-						onClick={() => {
-							mutate({ title: article, content: articlebody, img: selectedFile ? selectedFile : file });
-						}}
+						onClick={() => onSubmit()}
 					>
 						Save as Draft
 					</button>

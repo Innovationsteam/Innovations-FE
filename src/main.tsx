@@ -15,8 +15,7 @@ declare module "@tanstack/react-query" {
 	}
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const handleErrors = async (response: any) => {
+const handleErrors = async ({ response }: AxiosError<IError>) => {
 	console.log(response);
 
 	// Handle network errors
@@ -25,22 +24,14 @@ const handleErrors = async (response: any) => {
 		return;
 	}
 
-	// const errors = Array.isArray(response.data.error) ? response.data.error : [response.data.error];
+	const errors = Array.isArray(response.data.error) ? response.data.error.map((error) => error.message) : [response.data.error.message];
 
-	// // Display each error message with a delay
-	// for (const error of errors) {
-	// 	toast({
-	// 		title: error,
-	// 		variant: "destructive",
-	// 	});
-
-	// 	// Wait for 300ms before showing the next toast
-	// 	await new Promise((resolve) => setTimeout(resolve, 300));
-	// }
-
-	const error = response.data.error.message;
-
-	toast.error(error);
+	// Display each error message with a delay
+	for (const error of errors) {
+		toast.error(error);
+		// Wait for 300ms before showing the next toast
+		await new Promise((resolve) => setTimeout(resolve, 300));
+	}
 };
 
 const queryClient = new QueryClient({
@@ -50,7 +41,7 @@ const queryClient = new QueryClient({
 		},
 	},
 	mutationCache: new MutationCache({
-		onError: (error) => handleErrors(error.response),
+		onError: (error) => handleErrors(error),
 	}),
 });
 

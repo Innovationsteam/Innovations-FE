@@ -3,9 +3,18 @@ import { IResponse } from "@/types/auth.types";
 import { FollowResponse, IUser } from "@/types/user.types";
 import { AxiosError } from "axios";
 
-export const followUser = async (payload: { username: string }): Promise<FollowResponse> => {
+export const followUser = async (username: string): Promise<FollowResponse> => {
 	try {
-		const res = await client.post("/users/follow", payload);
+		const res = await client.post("/users/follow", { username });
+		return res.data;
+	} catch (error) {
+		throw error as AxiosError;
+	}
+};
+
+export const unfollowUser = async (username: string) => {
+	try {
+		const res = await client.post("/users/unfollow", { username });
 		return res.data;
 	} catch (error) {
 		throw error as AxiosError;
@@ -20,6 +29,24 @@ export const updateUserProfile = async (payload: FormData): Promise<IResponse<IU
 			},
 		});
 		return res.data;
+	} catch (error) {
+		throw error as AxiosError;
+	}
+};
+export const follow = async (username?: string) => {
+	try {
+		await client.post(`/users/follow`, {
+			username: username,
+		});
+	} catch (error) {
+		throw error as AxiosError;
+	}
+};
+export const unfollow = async (username?: string) => {
+	try {
+		await client.post(`/users/unfollow`, {
+			username: username,
+		});
 	} catch (error) {
 		throw error as AxiosError;
 	}

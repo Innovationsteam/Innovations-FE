@@ -52,11 +52,10 @@ export const getUserReadingList = async () => {
 };
 
 export const getDrafts = async () => {
-	const response = await client.get(`/posts/me/?status=draft`, {
-		headers: {
-			"Content-Type": "application/json",
-		},
-	});
-	const drafts = response.data.data.posts;
-	return drafts;
+	try {
+		const res = await client.get(`/posts/me/?status=draft`);
+		return res.data.data;
+	} catch (error) {
+		throw error as AxiosError;
+	}
 };

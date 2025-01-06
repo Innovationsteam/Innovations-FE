@@ -1,18 +1,21 @@
 import { useFollowUser } from "@/hooks/follow/useFollowUser";
+import { useUnfollowUser } from "@/hooks/follow/useUnfollowUser";
 import { cn } from "@/utils/helper";
-import { useCallback } from "react";
 import { Button } from "./ui/button";
 
-const FollowButton = ({ className, username, isFollowing }: { className?: string; username: string; isFollowing: boolean }) => {
-	const { mutate: followUser, isPending } = useFollowUser();
+interface Props {
+	className?: string;
+	username: string;
+	isFollowing: boolean;
+}
 
-	const unfollowUser = useCallback(() => {
-		console.log("User unfollowed:", username);
-	}, [username]);
+const FollowButton = ({ className, username, isFollowing }: Props) => {
+	const { mutate: followUser, isPending: isFollowingPending } = useFollowUser();
+	const { mutate: unfollowUser, isPending } = useUnfollowUser();
 
 	const handleFollow = () => {
-		if (isFollowing) unfollowUser();
-		else followUser({ username });
+		if (isFollowing) unfollowUser(username);
+		else followUser(username);
 	};
 
 	return (
@@ -21,7 +24,7 @@ const FollowButton = ({ className, username, isFollowing }: { className?: string
 			className={cn("md:text-base", className)}
 			onClick={handleFollow}
 		>
-			{isPending ? "Loading..." : isFollowing ? "Following" : "Follow"}
+			{isPending || isFollowingPending ? "Loading..." : isFollowing ? "Following" : "Follow"}
 		</Button>
 	);
 };

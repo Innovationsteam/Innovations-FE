@@ -1,7 +1,5 @@
 ///////Worked On
-import { userInfo } from "os";
 import { IResponse } from "./auth.types";
-import { IPost } from "./post.types";
 export interface IUser {
 	email: string;
 	name: string;
@@ -24,22 +22,15 @@ export type FollowResponse = IResponse<{
 	updatedAt: string;
 }>;
 
-export type userData = {
-	name: Promise<string>;
-	blogs?: Promise<IPost[]>;
-	followers: Promise<number>;
-	following: Promise<number>;
-};
-
-export interface User1 {
-	name: string;
-	profileImg: string | null;
-	username: string;
-}
-export type userInfo = {
-	access_token:string;
-	username: string;
-	isActive: boolean
-	img: string | null
-	name: string
-};
+// export interface User1 {
+// 	name: string;
+// 	profileImg: string | null;
+// 	username: string;
+// }
+// export type userInfo = {
+// 	access_token: string;
+// 	username: string;
+// 	isActive: boolean;
+// 	img: string | null;
+// 	name: string;
+// };
