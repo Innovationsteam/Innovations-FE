@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Container from "../Container";
 import { useUserStore } from "@/store/user";
+import { Home } from "lucide-react";
 
 const NavBar = () => {
 	const [scrolled, setScrolled] = useState(false);
@@ -42,6 +43,15 @@ const NavBar = () => {
 					<span className="text-[#04BF87]">Christian</span>Writes
 				</Link>
 				<div className="ml-auto flex items-center gap-x-3">
+					<Link
+						to="/feed"
+						className="font-roboto text-xl font-semibold uppercase leading-6 text-[#141414]"
+					>
+						<Home
+							size={28}
+							color="#04bf87"
+						/>{" "}
+					</Link>
 					<button
 						className=""
 						onClick={() => navigate("/article/new")}
@@ -52,11 +62,12 @@ const NavBar = () => {
 							alt="Write icon"
 						/>
 					</button>
-					<img
+
+					{/* <img
 						className="ml-auto size-6 object-cover"
 						src="/assets/icons/search.svg"
 						alt="search icon"
-					/>
+					/> */}
 					<img
 						className="size-6 object-cover"
 						src="/assets/icons/bell.svg"
@@ -66,7 +77,7 @@ const NavBar = () => {
 					<Link to={`/cw/${user?.username}`}>
 						<img
 							className="size-8 rounded-full object-cover"
-							src={user?.profileImg || ""}
+							src={user?.profileImg ?? "/assets/images/profile.png"}
 							alt=""
 						/>
 					</Link>

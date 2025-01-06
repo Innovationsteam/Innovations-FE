@@ -15,7 +15,7 @@ const EmailSentModal = () => {
 		>
 			<div className="flex h-[232px] w-full max-w-[min(647px_,_80vw)] flex-col items-center justify-center rounded-lg bg-white p-7 text-center font-roboto">
 				<h1 className="mb-3 text-4xl font-bold">Email Sent</h1>
-				<p className="text-subtitle text-lg">Kindly check your email to verify your account and begin your journey with ChristianWrites!</p>
+				<p className="text-lg text-subtitle">Kindly check your email to verify your account and begin your journey with ChristianWrites!</p>
 			</div>
 		</ModalContainer>
 	);

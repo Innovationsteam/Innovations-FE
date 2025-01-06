@@ -18,8 +18,6 @@ import PostSkeleton from "@/components/Dashboard/PostList/postskeleton";
 import { Post } from "@/components/Post";
 const Article = () => {
 	const { openModal } = useModalActions();
-	// const { data: posts, isPending: isPostsPending } = useUserPosts(username);
-
 	const { username, slug } = useParams<{ username: string; slug: string }>();
 
 	const { data: post, isPending } = usePostBySlug(username, slug);
@@ -29,8 +27,10 @@ const Article = () => {
 	const isFollowing = connectionsData?.following?.some((follower) => follower.username === username) || false;
 	const isLiked = post?.postLikes.some((likes) => likes.user.username === username) || false;
 
-	const labels = post?.category.split(/[\s,#]+/).map((tag: string) => tag.replace("#", ""));
-	labels?.splice(0, 1);
+	const labels = post?.hashtags
+		?.split(/[\s,#]+/)
+		.map((tag: string) => tag.replace("#", ""))
+		.filter((tag: string) => tag.trim() !== "");
 
 	if (isPending) return <ArticleSkeleton />;
 	if (!post) return <p className="text-center text-lg font-semibold">Post not found</p>;
@@ -108,7 +108,7 @@ const Article = () => {
 							</button>
 							<DropDown>
 								<button
-									onClick={() => openModal(ModalType.PersonalNote, { postID: post.id })}
+									onClick={() => openModal(ModalType.PersonalNote, { postId: post.id, notes: post.notes })}
 									className="pb-2 font-roboto text-sm text-[#141414CC] transition-colors hover:text-black"
 								>
 									Add a personal note
@@ -143,7 +143,6 @@ const Article = () => {
 							)}
 						</div>
 						<span className="mb-2 font-roboto text-2xl font-medium text-[#141414CC]">
-							{/* Written by Aghedo Jason */}
 							Written by {writer && writer[0]?.author?.name}{" "}
 							{isFetching ? (
 								<Skeleton

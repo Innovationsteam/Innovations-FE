@@ -4,7 +4,7 @@ import Italic from "@tiptap/extension-italic";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import classNames from "classnames";
-import { addComment } from "@/queries/article.queries";
+import { addComment } from "@/actions/post.actions";
 import { useModalData } from "@/store/modal";
 import toast from "react-hot-toast";
 import { useUserStore } from "@/store/user";
@@ -38,7 +38,7 @@ const AddCommentForm = () => {
 			<div className="mb-5 flex items-center gap-x-2 md:gap-x-3">
 				<img
 					className="size-8 rounded-full object-cover"
-					src={user?.profileImg || ""}
+					src={user?.profileImg ?? "/assets/images/profile.png"}
 					alt="user profile picture"
 				/>
 				<span className="font-roboto text-[15px] font-medium text-[#222222CC] md:text-base">{user?.username}</span>

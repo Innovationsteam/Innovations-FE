@@ -1,41 +1,36 @@
 ///////Worked On
 import { useMutation } from "@tanstack/react-query";
-import { publishArticle, saveAsDraft } from "@/queries/publish.queries";
+import { publishArticle, saveAsDraft } from "@/actions/article.actions";
 import toast from "react-hot-toast";
 import { useModalActions } from "@/store/modal";
 import { useNavigate } from "react-router-dom";
-import { asDraft } from "@/types/post.types";
-export const setArticle = () => {
+import { useUserStore } from "@/store/user";
+
+export const usePublishArticle = () => {
 	const { closeModal } = useModalActions();
 	const navigate = useNavigate();
+	const user = useUserStore((s) => s.user);
 
 	return useMutation({
-		mutationFn: ({ data, Hash }: { data: any; Hash: string }) => publishArticle(data, Hash),
+		mutationFn: (articleData: FormData) => publishArticle(articleData),
 		onSuccess: (data) => {
 			toast.success("Article published successfully! 🎉");
 			closeModal();
-			navigate(`/article/${data}`, {
+			navigate(`/article/${user?.username}/${data}`, {
 				state: data,
 			});
 		},
-		onError: (error) => {
-			toast.error("An Error occurred 🚫");
-			console.log(error);
-		},
 	});
 };
-export const setDrafts = () => {
+
+export const useDraftArticle = () => {
 	const navigate = useNavigate();
 
 	return useMutation({
-		mutationFn: ({ title, content, img }: asDraft) => saveAsDraft({ title, content, img }),
+		mutationFn: (draftForm: FormData) => saveAsDraft(draftForm),
 		onSuccess: () => {
 			toast.success("draft saved! 🎉");
 			navigate("/feed");
-		},
-		onError: (error) => {
-			toast.error("Failed to upload 🚫");
-			console.log(error);
 		},
 	});
 };

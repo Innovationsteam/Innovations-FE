@@ -13,7 +13,7 @@ export const useLoginUser = () => {
 		mutationFn: loginUser,
 		onSuccess: ({ data }) => {
 			toast.success("Login Successful");
-			setCookie("access_token", data?.access_token, {
+			setCookie("access_token", data.access_token, {
 				expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
 			});
 			navigate("/feed");

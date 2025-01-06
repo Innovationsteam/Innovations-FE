@@ -19,7 +19,7 @@ const Profile = () => {
 
 	const isFollowing = connectionsData?.followers?.some((follower) => follower.username === loggedInUser?.username) || false;
 
-	const tabs = isFollowing ? ["home", "about", "blogs", "reading-list", "followers", "following", "saved", "analytics", "drafts", "notes", "settings"] : ["home", "about", "blogs", "reading-list", "followers", "following"];
+	const tabs = loggedInUser?.username === username ? ["home", "about", "blogs", "reading-list", "followers", "following", "saved", "drafts", "notes", "settings"] : ["home", "about", "blogs", "reading-list", "followers", "following"];
 
 	return (
 		<Container>
@@ -37,7 +37,7 @@ const Profile = () => {
 				<div className="mb-10 h-full w-full border-y-0 md:px-5 lg:border-l-[1.5px]">
 					<img
 						className="size-8 rounded-full object-cover md:size-[80px]"
-						src={`${userData?.profileImg}`}
+						src={userData?.profileImg ?? "/assets/images/profile.png"}
 						alt="Profile"
 					/>
 					<div className="mt-6 flex items-center text-black">
