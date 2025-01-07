@@ -1,11 +1,12 @@
 import SectionContainer from "../../layouts/SectionContainer";
-
-const profileInfo = [
-	{ property: "Email Address", value: "somtochi@gmail.com" },
-	{ property: "User name", value: "Ikeokwu somtochi" },
-];
+import { useUserStore } from "@/store/user";
 
 const Settings = () => {
+	const user = useUserStore((s) => s.user);
+	const profileInfo = [
+		{ property: "Email Address", value: user?.email },
+		{ property: "User name", value: user?.username },
+	];
 	return (
 		<SectionContainer title="Settings">
 			<div className="mb-10 flex flex-col gap-y-5 font-roboto">

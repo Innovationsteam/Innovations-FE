@@ -19,7 +19,9 @@ const Profile = () => {
 
 	const isFollowing = connectionsData?.followers?.some((follower) => follower.username === loggedInUser?.username) || false;
 
-	const tabs = loggedInUser?.username === username ? ["home", "about", "blogs", "reading-list", "followers", "following", "saved", "drafts", "notes", "settings"] : ["home", "about", "blogs", "reading-list", "followers", "following"];
+	const tabs = loggedInUser?.username === username ? ["home", "about", "blogs", "reading-list", "followers", "following", 
+		// "saved",
+		 "drafts", "notes", "settings"] : ["home", "about", "blogs", "reading-list", "followers", "following"];
 
 	return (
 		<Container>
