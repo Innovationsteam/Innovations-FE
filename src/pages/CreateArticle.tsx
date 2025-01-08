@@ -64,10 +64,17 @@ const CreateArticle = () => {
 		if (e.target == uploadContainerRef.current) fileInputRef.current.click();
 	};
 
+	// const previewArticle = () => {
+	// 	if (article) {
+	// 		if (selectedFile) {
+	// 			openModal(ModalType.Preview, { article, url: URL.createObjectURL(selectedFile), backdrop: image, articlebody });
+	// 		} else toast.error("Please Select an Image");
+	// 	} else toast.error("Article can't be empty");
+	// };
 	const previewArticle = () => {
 		if (article) {
 			if (selectedFile) {
-				openModal(ModalType.Preview, { article, url: URL.createObjectURL(selectedFile), backdrop: image, articlebody });
+				openModal(ModalType.Preview, { article, url: selectedFile, backdrop: image, articlebody });
 			} else toast.error("Please Select an Image");
 		} else toast.error("Article can't be empty");
 	};

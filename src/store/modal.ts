@@ -19,7 +19,7 @@ interface ModalDataMap {
 	[ModalType.NONE]: null;
 	[ModalType.Comments]: { postId: string };
 	[ModalType.ADD_TO_READING_LIST]: { postId: string };
-	[ModalType.Preview]: { article: string; url: string; backdrop: string | null; articlebody: string[] };
+	[ModalType.Preview]: { article: string; url: File; backdrop: string | null; articlebody: string[] };
 	[ModalType.PersonalNote]: any;
 	[ModalType.TermsAndConditions]: any;
 	[ModalType.EDIT_PROFILE]: any;
