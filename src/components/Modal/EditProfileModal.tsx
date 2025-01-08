@@ -28,8 +28,15 @@ const EditProfileModal = () => {
 	const { closeModal } = useModalActions();
 
 	const { data, isPending: isPendingProfile } = useUserProfile();
-	const [profileImage, setProfileImage] = useState<string | null>(data?.profileImg ?? null);
+	const [profileImage, setProfileImage] = useState<string | null | File>(data?.profileImg ?? null);
 	const { mutate: updateProfile, isPending: isUpdatingProfile } = useUpdateProfile();
+
+	const getImageSrc = () => {
+		if (profileImage instanceof File) {
+			return URL.createObjectURL(profileImage); 
+		}
+		return profileImage || "/assets/images/writer.png";
+	};
 
 	const {
 		register,
@@ -48,7 +55,7 @@ const EditProfileModal = () => {
 		const files = e.target.files;
 		if (files && files.length > 0) {
 			const file = files[0];
-			file.type.startsWith("image/") ? setProfileImage(URL.createObjectURL(file)) : toast.error("Only image files are allowed.");
+			file.type.startsWith("image/") ? setProfileImage(file) : toast.error("Only image files are allowed.");
 		} else {
 			toast.error("Please select an image.");
 		}
@@ -63,7 +70,7 @@ const EditProfileModal = () => {
 		const formData = new FormData();
 		formData.append("name", data.name || "");
 		formData.append("bio", data.bio || "");
-		formData.append("profileImg", profileImage);
+		formData.append("profile", profileImage);
 
 		updateProfile(formData);
 	};
@@ -89,7 +96,7 @@ const EditProfileModal = () => {
 						>
 							<img
 								className="absolute inset-0 h-full w-full object-cover"
-								src={profileImage ?? "/assets/images/writer.png"}
+								src={getImageSrc()}
 								alt=""
 							/>
 							<div className="z-30 flex h-full w-full cursor-pointer	items-center justify-center bg-[#00000099] ">
