@@ -3,7 +3,7 @@ import About from "./components/Profile/About";
 import Blogs from "./components/Profile/Blogs";
 import { FollowersList, FollowingList } from "./components/Profile/FollowersList";
 import ProfileHome from "./components/Profile/Home";
-import ReadingList from "./components/Profile/ReadingList";
+// import ReadingList from "./components/Profile/ReadingList";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import Redirecting from "./components/Redirecting";
 import AppLayout from "./layouts/AppLayout";
@@ -29,7 +29,7 @@ const ProfileRoutes = ({ isLoggedIn }: any) => [
 	{ path: "", element: <ProfileHome /> },
 	{ path: "about", element: <About /> },
 	{ path: "blogs", element: <Blogs title="Blogs" /> },
-	{ path: "reading-list", element: <ReadingList /> },
+	// { path: "reading-list", element: <ReadingList /> },
 	{ path: "followers", element: <FollowersList /> },
 	{ path: "following", element: <FollowingList /> },
 	...(isLoggedIn

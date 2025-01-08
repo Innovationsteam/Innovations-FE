@@ -1,19 +1,21 @@
 ///////Worked On
-import { ModalType, useModal, useModalActions, useModalData } from "@/store/modal";
+import { usePublishArticle } from "@/hooks/posts/usePublish";
+import { ModalType, useActiveModal, useModalActions, useModalData } from "@/store/modal";
+import { articleForm } from "@/types/post.types";
+import { useState } from "react";
+import ClipLoader from "react-spinners/ClipLoader";
 import Container from "../Container";
 import ModalContainer from "./ModalContainer";
-import { useMemo, useState } from "react";
-import ClipLoader from "react-spinners/ClipLoader";
-import { usePublishArticle } from "@/hooks/posts/usePublish";
-import { articleForm } from "@/types/post.types";
 
 const PreviewArticleModal = () => {
 	const { closeModal } = useModalActions();
-	const modalData = useModalData();
-	const { modal, data } = useModal();
-	const isOpen = useMemo(() => modal === ModalType.Preview, [modal]);
+	const modalData = useModalData<ModalType.Preview>();
+	const isOpen = useActiveModal(ModalType.Preview);
+
 	const [Hash, setHash] = useState("");
 	const [category, setCategory] = useState("");
+
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const addHashtag = (event: any) => {
 		const hashtags = event.target.value
 			.split(" ")
@@ -21,14 +23,17 @@ const PreviewArticleModal = () => {
 			.filter(Boolean);
 		setHash(hashtags.join(","));
 	};
+
 	const { mutate, isPending } = usePublishArticle();
-	if (!data) return null;
+
+	// if (!data) return null;
+
 	function onSubmit() {
 		const articleData: articleForm = {
-			title: data?.article || "",
-			content: data?.articlebody.join("") || "",
+			title: modalData?.article || "",
+			content: modalData?.articlebody.join("") || "",
 			category: category,
-			image: data?.url || null,
+			image: modalData?.url || null,
 			hashtags: Hash,
 			status: "published",
 		};
@@ -43,6 +48,7 @@ const PreviewArticleModal = () => {
 		formData.append("status", articleData.status);
 		mutate(formData);
 	}
+
 	return (
 		<ModalContainer isOpen={isOpen}>
 			<Container className="relative flex items-center justify-center">
@@ -62,7 +68,7 @@ const PreviewArticleModal = () => {
 						<div className="relative my-6 flex h-[min(20vw,200px)] min-h-[140px] items-center justify-center overflow-hidden rounded">
 							<img
 								className="h-full w-full object-cover"
-								src={modalData?.backdrop}
+								src={modalData?.backdrop ?? "/assets/images/article1.png"}
 								alt=""
 							/>
 						</div>

@@ -31,8 +31,7 @@ const Redirecting = () => {
 	if (user) {
 		return (
 			<Navigate
-				to="/feed"
-				state={{ from: location }}
+				to={location.state?.from?.pathname || "/"}
 				replace
 			/>
 		);

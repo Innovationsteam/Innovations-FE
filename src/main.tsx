@@ -4,11 +4,11 @@ import { AxiosError } from "axios";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import toast, { Toaster } from "react-hot-toast";
-import { RouterProvider } from "react-router-dom";
 import "./index.css";
-import router  from "./router.tsx";
-import { IError } from "./types/auth.types.ts";
 import RouterPro from "./router.tsx";
+import { IError } from "./types/auth.types.ts";
+
+// CHANGE NAMING CONVENTION OF ARTICLE & POSTS => THEY ARE THE SAME THING
 
 declare module "@tanstack/react-query" {
 	interface Register {
