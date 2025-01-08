@@ -82,7 +82,7 @@ const LoginForm = () => {
 					to="/forgot-password"
 					className="group text-sm font-medium"
 				>
-					<p className="text-[#242424B2] group-hover:text-black">Forgot Password?</p>
+					{/* <p className="text-[#242424B2] group-hover:text-black">Forgot Password?</p> */}
 					<div className="h-[1.5px] w-0 bg-[#242424B2] transition-all duration-200 ease-in-out group-hover:w-full"></div>
 				</Link>
 			</div>
