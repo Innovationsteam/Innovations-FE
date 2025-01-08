@@ -22,20 +22,16 @@ export const createNote = async (payload: { title: string; content: string; post
 export const updateNote = async (payload: { title: string; content: string; noteId: string }) => {
 	try {
 		const noteEdited = await client.patch(`/notes/${payload.noteId}`, payload);
-
 		return noteEdited.data.success || false;
 	} catch (error) {
 		throw error as AxiosError;
 	}
 };
 
-export const addComment = async (comment: string, id: string): Promise<boolean> => {
+export const addComment = async (payload: { content: string; postId: string }) => {
 	try {
-		const commentAdded = await client.post(`/comments/`, {
-			content: comment,
-			postId: id,
-		});
-		return commentAdded?.data?.success || false;
+		const res = await client.post(`/comments/`, payload);
+		return res.data;
 	} catch (error) {
 		throw error as AxiosError;
 	}

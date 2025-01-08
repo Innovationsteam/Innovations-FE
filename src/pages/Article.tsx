@@ -87,8 +87,8 @@ const Article = () => {
 								isLiked={isLiked}
 							/>
 							<AddComment
-								id={post.id}
-								comment={post?.comments}
+								postId={post.id!}
+								comments={post.comments.length}
 							/>
 						</div>
 						<div className="relative flex items-center gap-x-3">
@@ -99,7 +99,7 @@ const Article = () => {
 									alt=""
 								/>
 							</button>
-							<button onClick={() => openModal(ModalType.ADD_TO_READING_LIST, post.id)}>
+							<button onClick={() => openModal(ModalType.ADD_TO_READING_LIST, { postId: post.id })}>
 								<img
 									className="inline-block size-6"
 									src="/assets/icons/bookmark.svg"

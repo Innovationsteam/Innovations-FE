@@ -3,12 +3,13 @@ import { Button } from "@/components/ui/button";
 import { useUserConnections } from "@/hooks/follow/useUserConnections";
 import { useUserProfile } from "@/hooks/useUserProfile";
 import { ModalType, useModalActions } from "@/store/modal";
+import { useUserStore } from "@/store/user";
+import { MY_PROFILE_PAGE, PUBLIC_PROFILE_PAGE } from "@/utils/constants";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { Outlet, useParams } from "react-router-dom";
 import Container from "../components/Container";
 import { MiniNav, MiniNavMobile } from "../components/MiniNav";
-import { useUserStore } from "@/store/user";
 
 const Profile = () => {
 	const { username } = useParams();
@@ -19,7 +20,7 @@ const Profile = () => {
 
 	const isFollowing = connectionsData?.followers?.some((follower) => follower.username === loggedInUser?.username) || false;
 
-	const tabs = loggedInUser?.username === username ? ["home", "about", "blogs", "reading-list", "followers", "following", "saved", "drafts", "notes", "settings"] : ["home", "about", "blogs", "reading-list", "followers", "following"];
+	const tabs = loggedInUser?.username === username ? MY_PROFILE_PAGE : PUBLIC_PROFILE_PAGE;
 
 	return (
 		<Container>

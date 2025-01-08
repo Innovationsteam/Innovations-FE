@@ -8,12 +8,14 @@ import { useDrafts } from "@/hooks/useProfile";
 import { draftSet } from "@/types/post.types";
 const DraftsList = () => {
 	const { data, isLoading } = useDrafts();
+
+	console.log(data);
 	return (
 		<SectionContainer title="Drafts">
 			<ul className="mt-4 grid gap-y-7">
 				{isLoading ? Array.from({ length: 5 }).map((_, i) => <DraftSkeleton key={i} />) : <></>}
-				{data ? data.map((item: PostItem) => <Draft {...item} />) : <></>}
-				{data?.length < 1 ? <p>No Drafts yet</p> : <></>}
+				{data ? data.posts.map((item: PostItem) => <Draft {...item} />) : <></>}
+				{data?.posts?.length < 1 ? <p>No Drafts yet</p> : <></>}
 			</ul>
 		</SectionContainer>
 	);

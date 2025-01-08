@@ -9,7 +9,7 @@ interface Props {
 	children: ReactNode;
 }
 
-const SectionContainer = ({ title, showIcon = false, modal = ModalType.None, children }: Props) => {
+const SectionContainer = ({ title, showIcon = false, modal = ModalType.NONE, children }: Props) => {
 	const { openModal } = useModalActions();
 
 	return (

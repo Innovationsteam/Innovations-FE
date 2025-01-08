@@ -1,12 +1,8 @@
 export interface ICommentsResponse {
-	data: {
-		comments: IComment[];
-		totalPages: number;
-		currentPage: number;
-		totalItems: number;
-	};
-	success: boolean;
-	message: string;
+	comments: IComment[];
+	totalPages: number;
+	currentPage: number;
+	totalItems: number;
 }
 export interface IComment {
 	content: string;

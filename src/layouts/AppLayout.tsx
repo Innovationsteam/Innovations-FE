@@ -4,7 +4,7 @@ import CreateReadingListModal from "@/components/Modal/CreateReadingListModal";
 import EditProfileModal from "@/components/Modal/EditProfileModal";
 import EmailSentModal from "@/components/Modal/EmailSentModal";
 import PersonalNotesModal from "@/components/Modal/PersonalNotesModal";
-import PreviewArticleModal from "@/components/Modal/PreviewArticleModal";
+// import PreviewArticleModal from "@/components/Modal/PreviewArticleModal";
 import TermsAndConditionsModal from "@/components/Modal/TermsAndConditionsModal";
 import PageContainer from "@/components/PageContainer";
 import { ModalType, useActiveModal } from "@/store/modal";
@@ -12,7 +12,7 @@ import { cn } from "@/utils/helper";
 import { Outlet } from "react-router-dom";
 
 const AppLayout = () => {
-	const isOpen = useActiveModal(ModalType.None);
+	const isOpen = useActiveModal(ModalType.NONE);
 	return (
 		<PageContainer
 			className={cn("relative", {
@@ -23,7 +23,7 @@ const AppLayout = () => {
 			<CommentsModal />
 			<PersonalNotesModal />
 			<TermsAndConditionsModal />
-			<PreviewArticleModal />
+			{/* <PreviewArticleModal /> */}
 			<EditProfileModal />
 			<CreateReadingListModal />
 			<AddToReadingListModal />

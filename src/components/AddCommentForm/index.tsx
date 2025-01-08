@@ -1,20 +1,20 @@
 ///////Worked On
+import { useAddComment } from "@/hooks/posts/useAddComment";
+import { useUserStore } from "@/store/user";
 import Bold from "@tiptap/extension-bold";
 import Italic from "@tiptap/extension-italic";
-import { EditorContent, useEditor } from "@tiptap/react";
+import { Editor, EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import classNames from "classnames";
-import { addComment } from "@/actions/post.actions";
-import { useModalData } from "@/store/modal";
-import toast from "react-hot-toast";
-import { useUserStore } from "@/store/user";
+import { Button } from "../ui/button";
 
 const content = ``;
 
-const AddCommentForm = () => {
-	const { postID } = useModalData();
-	const user = useUserStore((s) => s.user);
+interface Props {
+	postId: string;
+}
 
+const AddCommentForm = ({ postId }: Props) => {
 	const editor = useEditor({
 		extensions: [StarterKit, Bold, Italic],
 		content,
@@ -25,12 +25,13 @@ const AddCommentForm = () => {
 			},
 		},
 	});
-	const handleComment = async () => {
-		if (editor && postID.id) {
-			const htmlContent = editor.getHTML();
-			if (await addComment(htmlContent, postID.id)) toast.success("Comment Sent 🎉");
-			editor.commands.clearContent();
-		}
+
+	const user = useUserStore((s) => s.user);
+	const { mutate: addComment, isPending } = useAddComment();
+
+	const handleSubmit = () => {
+		const content = (editor as Editor).getHTML();
+		addComment({ content, postId }, { onSettled: () => (editor as Editor).commands.clearContent() });
 	};
 
 	return (
@@ -63,13 +64,13 @@ const AddCommentForm = () => {
 						I
 					</button>
 				</div>
-				<button
-					type="button"
-					onClick={handleComment}
-					className="ml-auto h-10 rounded-lg bg-[#0089FF] px-4 text-sm font-semibold leading-7 text-white"
+				<Button
+					onClick={handleSubmit}
+					disabled={isPending}
+					className="ml-auto w-fit"
 				>
 					Comment
-				</button>
+				</Button>
 			</div>
 		</div>
 	);

@@ -13,7 +13,7 @@ import { formatSplit } from "@/utils/helper";
 import { useNoteCreate, useNoteUpdate } from "@/hooks/posts/useNotes";
 
 const PersonalNoteForm = () => {
-	const { postId, notes } = useModalData();
+	const { postId, notes } = useModalData() || {};
 
 	const editor = useEditor({
 		extensions: [

@@ -1,5 +1,5 @@
 ///////Worked On
-import { IComment } from "./comment.type";
+import { IComment } from "./comment.types";
 import { INotes } from "./notes.types";
 export interface IPost {
 	id: string;
