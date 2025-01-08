@@ -68,7 +68,7 @@ export type articleForm = {
 	title: string;
 	content: string;
 	category: string;
-	image: string | null;
+	image: File | null;
 	hashtags: string;
 	status: "published";
 };

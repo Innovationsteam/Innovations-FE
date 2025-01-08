@@ -65,7 +65,7 @@ const CreateArticle = () => {
 	const previewArticle = () => {
 		if (article) {
 			if (selectedFile) {
-				openModal(ModalType.Preview, { article, url: URL.createObjectURL(selectedFile), backdrop: image, articlebody });
+				openModal(ModalType.Preview, { article, articleImg: selectedFile, backdrop: image, articlebody });
 			} else toast.error("Please Select an Image");
 		} else toast.error("Article can't be empty");
 	};

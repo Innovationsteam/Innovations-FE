@@ -33,7 +33,7 @@ const PreviewArticleModal = () => {
 			title: modalData?.article || "",
 			content: modalData?.articlebody.join("") || "",
 			category: category,
-			image: modalData?.url || null,
+			image: modalData?.articleImg || null,
 			hashtags: Hash,
 			status: "published",
 		};
