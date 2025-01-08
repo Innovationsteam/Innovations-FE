@@ -4,6 +4,7 @@ import CreateReadingListModal from "@/components/Modal/CreateReadingListModal";
 import EditProfileModal from "@/components/Modal/EditProfileModal";
 import EmailSentModal from "@/components/Modal/EmailSentModal";
 import PersonalNotesModal from "@/components/Modal/PersonalNotesModal";
+import PreviewArticleModal from "@/components/Modal/PreviewArticleModal";
 // import PreviewArticleModal from "@/components/Modal/PreviewArticleModal";
 import TermsAndConditionsModal from "@/components/Modal/TermsAndConditionsModal";
 import PageContainer from "@/components/PageContainer";
@@ -23,7 +24,7 @@ const AppLayout = () => {
 			<CommentsModal />
 			<PersonalNotesModal />
 			<TermsAndConditionsModal />
-			{/* <PreviewArticleModal /> */}
+			<PreviewArticleModal />
 			<EditProfileModal />
 			<CreateReadingListModal />
 			<AddToReadingListModal />

@@ -58,8 +58,6 @@ const CreateArticle = () => {
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const onUploadContainerClick = (e: any) => {
-		console.log(e.target.files);
-		console.log(e.target.files);
 		e.stopPropagation();
 		if (e.target == uploadContainerRef.current) fileInputRef.current.click();
 	};

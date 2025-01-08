@@ -127,7 +127,7 @@ const PreviewArticleModal = () => {
 										color="#fff"
 									/>
 								) : (
-									"publish"
+									"Publish"
 								)}
 							</button>
 						</div>
