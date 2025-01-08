@@ -68,7 +68,7 @@ const PreviewArticleModal = () => {
 						<div className="relative my-6 flex h-[min(20vw,200px)] min-h-[140px] items-center justify-center overflow-hidden rounded">
 							<img
 								className="h-full w-full object-cover"
-								src={modalData?.backdrop ?? "/assets/images/article1.png"}
+								src={modalData?.backdrop ?? "htm/assets/images/article1.png"}
 								alt=""
 							/>
 						</div>
