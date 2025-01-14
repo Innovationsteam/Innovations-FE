@@ -4,12 +4,14 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Container from "../Container";
 import { useUserStore } from "@/store/user";
-import { Home } from "lucide-react";
+import { Home, Bell, PencilLine } from "lucide-react";
+import { useUserAvatar } from "@/hooks/useUserAvatar";
 
 const NavBar = () => {
 	const [scrolled, setScrolled] = useState(false);
 	const navigate = useNavigate();
 	const user = useUserStore((s) => s.user);
+		const { data: userAvatar } = useUserAvatar(user?.username ?? "default User");
 
 	useEffect(() => {
 		const onScroll = () => {
@@ -48,7 +50,7 @@ const NavBar = () => {
 						className="font-roboto text-xl font-semibold uppercase leading-6 text-[#141414]"
 					>
 						<Home
-							size={28}
+							size={26}
 							color="#04bf87"
 						/>{" "}
 					</Link>
@@ -56,28 +58,29 @@ const NavBar = () => {
 						className=""
 						onClick={() => navigate("/article/new")}
 					>
-						<img
+						{/* <img
 							className="ml-auto size-6"
 							src="/assets/icons/pencil-icon.svg"
 							alt="Write icon"
+						/>{" "} */}
+						<PencilLine
+							size={26}
+							color="#04bf87"
 						/>
 					</button>
-
 					{/* <img
 						className="ml-auto size-6 object-cover"
 						src="/assets/icons/search.svg"
 						alt="search icon"
 					/> */}
-					<img
-						className="size-6 object-cover"
-						src="/assets/icons/bell.svg"
-						alt="notification"
-					/>
-
+					<Bell
+						size={26}
+						color="#04bf87"
+					/>{" "}
 					<Link to={`/cw/${user?.username}`}>
 						<img
 							className="size-8 rounded-full object-cover"
-							src={user?.profileImg ?? "/assets/images/profile.png"}
+							src={user?.profileImg ?? userAvatar}
 							alt=""
 						/>
 					</Link>

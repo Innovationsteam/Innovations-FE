@@ -5,13 +5,12 @@ import EditProfileModal from "@/components/Modal/EditProfileModal";
 import EmailSentModal from "@/components/Modal/EmailSentModal";
 import PersonalNotesModal from "@/components/Modal/PersonalNotesModal";
 import PreviewArticleModal from "@/components/Modal/PreviewArticleModal";
-// import PreviewArticleModal from "@/components/Modal/PreviewArticleModal";
 import TermsAndConditionsModal from "@/components/Modal/TermsAndConditionsModal";
 import PageContainer from "@/components/PageContainer";
 import { ModalType, useActiveModal } from "@/store/modal";
 import { cn } from "@/utils/helper";
 import { Outlet } from "react-router-dom";
-
+import ResetTokenSentModal from "@/components/Modal/ResetTokenSentModal";
 const AppLayout = () => {
 	const isOpen = useActiveModal(ModalType.NONE);
 	return (
@@ -29,6 +28,7 @@ const AppLayout = () => {
 			<CreateReadingListModal />
 			<AddToReadingListModal />
 			<EmailSentModal />
+			<ResetTokenSentModal />
 		</PageContainer>
 	);
 };

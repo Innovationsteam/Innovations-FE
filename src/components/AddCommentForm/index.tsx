@@ -7,6 +7,7 @@ import { Editor, EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import classNames from "classnames";
 import { Button } from "../ui/button";
+import { useUserAvatar } from "@/hooks/useUserAvatar";
 
 const content = ``;
 
@@ -28,6 +29,7 @@ const AddCommentForm = ({ postId }: Props) => {
 
 	const user = useUserStore((s) => s.user);
 	const { mutate: addComment, isPending } = useAddComment();
+	const { data: userAvatar } = useUserAvatar(user?.username ?? "default User");
 
 	const handleSubmit = () => {
 		const content = (editor as Editor).getHTML();
@@ -39,7 +41,7 @@ const AddCommentForm = ({ postId }: Props) => {
 			<div className="mb-5 flex items-center gap-x-2 md:gap-x-3">
 				<img
 					className="size-8 rounded-full object-cover"
-					src={user?.profileImg ?? "/assets/images/profile.png"}
+					src={user?.profileImg ?? userAvatar}
 					alt="user profile picture"
 				/>
 				<span className="font-roboto text-[15px] font-medium text-[#222222CC] md:text-base">{user?.username}</span>

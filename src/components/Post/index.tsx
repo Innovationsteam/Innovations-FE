@@ -8,12 +8,15 @@ import { FaRegComment, FaRegHeart, FaRegEye } from "react-icons/fa";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { Link } from "react-router-dom";
+import { useUserAvatar } from "@/hooks/useUserAvatar";
+
 interface PostProps extends PostItem {
 	className?: string;
 }
 
 export const Post = ({ id, author, publishedDate, content, image, likes, socialMediaShares, commentsCount, title, views, className, slug }: PostProps) => {
 	const [isImageLoaded, setIsImageLoaded] = useState(false);
+	const { data: userAvatar } = useUserAvatar(author.username ?? "default User");
 
 	const user = useUserStore((s) => s.user);
 
@@ -25,7 +28,7 @@ export const Post = ({ id, author, publishedDate, content, image, likes, socialM
 			>
 				<img
 					className="size-8 rounded-full object-cover lg:size-[35px]"
-					src={author?.profileImg ?? "/assets/images/profile3.png"}
+					src={author?.profileImg ?? userAvatar}
 					alt="user profile picture"
 				/>
 

@@ -20,6 +20,7 @@ import ResetPassword from "./pages/ResetPassword";
 import SignUp from "./pages/SignUp";
 import Stories from "./pages/Stories";
 import VerifyOTP from "./pages/VerifyOTP";
+import VerifyResetOTP from "./pages/VerifyResetOTP";
 import DraftsList from "./components/Profile/Drafts";
 import NotesList from "./components/Profile/Notes";
 import Settings from "./components/Profile/Settings";
@@ -106,6 +107,10 @@ const createRouter = (isLoggedIn: boolean) =>
 				{
 					path: "verify",
 					element: <VerifyOTP />,
+				},
+				{
+					path: "/reset-password",
+					element: <VerifyResetOTP />,
 				},
 				{
 					path: "/forgot-password",

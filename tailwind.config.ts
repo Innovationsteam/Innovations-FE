@@ -78,9 +78,26 @@ const config = {
 			animation: {
 				"caret-blink": "caret-blink 1.25s ease-out infinite",
 			},
+			scrollbar: {
+				hide: "scrollbar-width: none; -ms-overflow-style: none;",
+			},
 		},
 	},
-	plugins: [require("@tailwindcss/typography"), require("tailwindcss-animate")],
+	plugins: [
+		require("@tailwindcss/typography"),
+		require("tailwindcss-animate"),
+		function ({ addUtilities }) {
+			addUtilities({
+				".scrollbar-hide": {
+					"scrollbar-width": "none", 
+					"-ms-overflow-style": "none", 
+					"&::-webkit-scrollbar": {
+						display: "none",
+					},
+				},
+			});
+		},
+	],
 } satisfies Config;
 
 export default config;

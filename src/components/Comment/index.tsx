@@ -1,4 +1,6 @@
 import { convertComment, formatDate } from "@/utils/helper";
+import { useUserAvatar } from "@/hooks/useUserAvatar";
+
 interface CommentProps {
 	content: string;
 	createdAt: string;
@@ -6,11 +8,13 @@ interface CommentProps {
 	profile: string | null;
 }
 const Comment = ({ content, createdAt, username, profile }: CommentProps) => {
+	const { data: userAvatar } = useUserAvatar(username ?? "default User");
+
 	return (
 		<div className="border-b py-4 last:border-none">
 			<div className="mb-2 flex items-center gap-x-3">
 				<img
-					src={profile ?? "/assets/images/profile3.png"}
+					src={profile ?? userAvatar}
 					alt={`${username}'s profile`}
 					className="size-9 rounded-full object-cover"
 				/>
