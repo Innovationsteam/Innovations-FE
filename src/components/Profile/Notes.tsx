@@ -1,20 +1,19 @@
 import SectionContainer from "../../layouts/SectionContainer";
 import { useAllNotes } from "@/hooks/posts/useAllNotes";
-import { tinyNotes } from "@/types/notes.types";
+import { INotes, NoteProps } from "@/types/notes.types";
 import { convertComment } from "@/utils/helper";
 import DraftSkeleton from "./DraftsSkeleton";
-
 import { Link } from "react-router-dom";
 const NotesList = () => {
 	const { data: notes, isLoading } = useAllNotes();
 	return (
 		<SectionContainer title="Notes">
 			<ul className="mt-4 grid gap-y-7">
-				{notes?.map(({ title, content, postId }: tinyNotes) => (
+				{notes?.map(({ title, content, post }: INotes) => (
 					<Note
 						title={title}
 						content={content}
-						postId={postId}
+						post={post}
 					/>
 				))}
 				{isLoading ? Array.from({ length: 3 }).map((_, i) => <DraftSkeleton key={i} />) : <></>}
@@ -25,7 +24,8 @@ const NotesList = () => {
 
 export default NotesList;
 
-const Note = ({ title, content, postId }: tinyNotes) => {
+const Note = ({ title, content, post }: NoteProps) => {
+
 	return (
 		<button className="group block w-full text-start">
 			<div className="flex items-start gap-x-2 pb-2 font-roboto sm:gap-x-5">
@@ -35,7 +35,7 @@ const Note = ({ title, content, postId }: tinyNotes) => {
 						dangerouslySetInnerHTML={{ __html: convertComment(title) }}
 					/>
 					<p
-						className="mt-1 max-w-[273px] text-xs text-[#14141499]"
+						className="mt-1 line-clamp-3 max-w-[273px] text-xs text-[#14141499]"
 						dangerouslySetInnerHTML={{ __html: convertComment(content) }}
 					/>
 				</div>
@@ -46,7 +46,7 @@ const Note = ({ title, content, postId }: tinyNotes) => {
 					Delete Note
 				</button>
 				<Link
-					to={`/article/${postId}`}
+					to={`/article/${post?.author?.username}/${post?.slug}`}
 					type="button"
 					className="rounded-lg border border-[#22222299] bg-[#1C4532] px-3 py-1 font-roboto text-sm text-white  md:text-base"
 				>

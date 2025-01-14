@@ -10,24 +10,24 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { Outlet, useParams } from "react-router-dom";
 import Container from "../components/Container";
 import { MiniNav, MiniNavMobile } from "../components/MiniNav";
-
+import { useUserAvatar } from "@/hooks/useUserAvatar";
 const Profile = () => {
 	const { username } = useParams();
 	const { data: userData, isPending: isUserPending } = useUserProfile(username);
 	const { data: connectionsData, isPending: isConnectionsPending } = useUserConnections(username!);
 	const { openModal } = useModalActions();
 	const loggedInUser = useUserStore((s) => s.user);
+	const { data: userAvatar } = useUserAvatar(username ?? "default User");
 
 	const isFollowing = connectionsData?.followers?.some((follower) => follower.username === loggedInUser?.username) || false;
-
 	const tabs = loggedInUser?.username === username ? MY_PROFILE_PAGE : PUBLIC_PROFILE_PAGE;
 
 	return (
 		<Container>
-			<header className="mt-3 h-[183px] overflow-hidden rounded-md md:mt-9 md:h-[400px]">
+			<header className="mt-3 h-[183px] overflow-hidden rounded-xl md:mt-9 md:h-[400px]">
 				<img
 					className="h-full w-full object-cover object-bottom"
-					src="/assets/images/writerHeader.jpg"
+					src={loggedInUser?.username === username ? loggedInUser?.backdropImg : userData?.backdropImg ?? "/assets/images/writerHeader.jpg"}
 					alt="Header"
 				/>
 			</header>
@@ -38,7 +38,7 @@ const Profile = () => {
 				<div className="mb-10 h-full w-full border-y-0 md:px-5 lg:border-l-[1.5px]">
 					<img
 						className="size-8 rounded-full object-cover md:size-[80px]"
-						src={userData?.profileImg ?? "/assets/images/profile.png"}
+						src={userData?.profileImg ?? userAvatar}
 						alt="Profile"
 					/>
 					<div className="mt-6 flex items-center text-black">

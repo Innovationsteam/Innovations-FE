@@ -7,9 +7,24 @@ export interface INotes {
 	userId: number;
 	createdAt: string;
 	updatedAt: string;
+	post: {
+		slug: string;
+		title: string;
+		author: {
+			username: string;
+			profileImg: string | null;
+		};
+	};
 }
-export interface tinyNotes {
+export interface NoteProps {
 	title: string;
 	content: string;
-	postId: string;
+	post: {
+		slug: string;
+		title: string;
+		author: {
+			username: string;
+			profileImg: string | null;
+		};
+	};
 }

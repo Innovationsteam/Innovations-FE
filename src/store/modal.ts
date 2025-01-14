@@ -11,6 +11,7 @@ export enum ModalType {
 	CREATE_READING_LIST,
 	ADD_TO_READING_LIST,
 	EMAIL_SENT,
+	RESET_TOKEN_SENT,
 }
 
 // Typed Version of ModalStore
@@ -19,12 +20,13 @@ interface ModalDataMap {
 	[ModalType.NONE]: null;
 	[ModalType.Comments]: { postId: string };
 	[ModalType.ADD_TO_READING_LIST]: { postId: string };
-	[ModalType.Preview]: { article: string; url: File; backdrop: string | null; articlebody: string[] };
+	[ModalType.Preview]: { article: string; articleImg: File; backdrop: string | null; articlebody: string[] };
 	[ModalType.PersonalNote]: any;
 	[ModalType.TermsAndConditions]: any;
 	[ModalType.EDIT_PROFILE]: any;
 	[ModalType.CREATE_READING_LIST]: any;
 	[ModalType.EMAIL_SENT]: any;
+	[ModalType.RESET_TOKEN_SENT]: any;
 }
 
 interface ModalStoreProps {

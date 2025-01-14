@@ -9,7 +9,6 @@ interface UserStoreType {
 export const useUserStore = create<UserStoreType>((set) => ({
 	user: null,
 	setUser: (user) => {
-		console.log(user);
 		return set({ user });
 	},
 }));

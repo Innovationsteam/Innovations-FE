@@ -35,3 +35,9 @@ export interface IError {
 				message: string;
 		  }[];
 }
+
+export type ResetPassword = {
+	email: string;
+	token: string;
+	password: string;
+};
