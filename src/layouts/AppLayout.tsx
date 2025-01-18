@@ -11,7 +11,7 @@ import PageContainer from "@/components/PageContainer";
 import { ModalType, useActiveModal } from "@/store/modal";
 import { cn } from "@/utils/helper";
 import { Outlet } from "react-router-dom";
-
+import ResetTokenSentModal from "@/components/Modal/ResetTokenSentModal";
 const AppLayout = () => {
 	const isOpen = useActiveModal(ModalType.NONE);
 	return (
@@ -30,6 +30,7 @@ const AppLayout = () => {
 			<AddToReadingListModal />
 			<EmailSentModal />
 			<WarningLoginModal />
+			<ResetTokenSentModal />
 		</PageContainer>
 	);
 };

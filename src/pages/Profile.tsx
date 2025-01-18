@@ -1,6 +1,6 @@
 import FollowButton from "@/components/FollowButton";
-import UserProfileImage from "@/components/UserProfileImage";
 import UserProfileSkeleton from "@/components/Skeletons/UserProfileSkeleton";
+import UserProfileImage from "@/components/UserProfileImage";
 import { Button } from "@/components/ui/button";
 import { useUserConnections } from "@/hooks/follow/useUserConnections";
 import { useUserProfile } from "@/hooks/useUserProfile";
@@ -14,19 +14,20 @@ import { MiniNav, MiniNavMobile } from "../components/MiniNav";
 const Profile = () => {
 	const { username } = useParams();
 	const { openModal } = useModalActions();
-	const loggedInUsername = useUserStore((s) => s.user)?.username;
-	const { data: userData, isPending: isUserPending } = useUserProfile(loggedInUsername === username ? "me" : username);
+	const loggedInUser = useUserStore((s) => s.user);
+
+	const { data: userData, isPending: isUserPending } = useUserProfile(loggedInUser?.username === username ? "me" : username);
 	const { data: connectionsData, isPending: isConnectionsPending } = useUserConnections(username!);
 
-	const isFollowing = connectionsData?.followers?.some((follower) => follower.username === loggedInUsername) || false;
-	const tabs = loggedInUsername === username ? MY_PROFILE_PAGE : PUBLIC_PROFILE_PAGE;
+	const isFollowing = connectionsData?.followers?.some((follower) => follower.username === loggedInUser?.username) || false;
+	const tabs = loggedInUser?.username === username ? MY_PROFILE_PAGE : PUBLIC_PROFILE_PAGE;
 
 	return (
 		<Container>
-			<header className="mt-3 h-[183px] overflow-hidden rounded-md md:mt-9 md:h-[400px]">
+			<header className="mt-3 h-[183px] overflow-hidden rounded-xl md:mt-9 md:h-[400px]">
 				<img
 					className="h-full w-full object-cover object-bottom"
-					src="/assets/images/writerHeader.jpg"
+					src={loggedInUser?.username === username ? loggedInUser?.backdropImg : userData?.backdropImg ?? "/assets/images/writerHeader.jpg"}
 					alt="Header"
 				/>
 			</header>
@@ -53,7 +54,7 @@ const Profile = () => {
 									</div>
 								</div>
 								<div className="ml-auto flex items-center gap-x-2">
-									{loggedInUsername === username ? (
+									{loggedInUser?.username === username ? (
 										<Button
 											onClick={() => openModal(ModalType.EDIT_PROFILE)}
 											className="md:text-base"

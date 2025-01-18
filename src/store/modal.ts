@@ -13,6 +13,7 @@ export enum ModalType {
 	ADD_TO_READING_LIST,
 	EMAIL_SENT,
 	WARNING_LOGIN,
+	RESET_TOKEN_SENT,
 }
 
 // Typed Version of ModalStore
@@ -27,6 +28,7 @@ interface ModalDataMap {
 	[ModalType.CREATE_READING_LIST]: any;
 	[ModalType.EMAIL_SENT]: any;
 	[ModalType.WARNING_LOGIN]: any;
+	[ModalType.RESET_TOKEN_SENT]: any;
 }
 
 interface ModalStoreProps {

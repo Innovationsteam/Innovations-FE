@@ -9,7 +9,6 @@ import { draftSet } from "@/types/post.types";
 const DraftsList = () => {
 	const { data, isLoading } = useDrafts();
 
-	console.log(data);
 	return (
 		<SectionContainer title="Drafts">
 			<ul className="mt-4 grid gap-y-7">

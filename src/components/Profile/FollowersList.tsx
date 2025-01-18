@@ -1,8 +1,10 @@
 import SectionContainer from "../../layouts/SectionContainer";
 import { useUserConnections } from "@/hooks/follow/useUserConnections";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { useUserAvatar } from "@/hooks/useUserAvatar";
+
 export const FollowersList = () => {
 	const { username } = useParams();
 	const { data: connectionsData, isPending: isConnectionsPending } = useUserConnections(username!);
@@ -29,12 +31,14 @@ export const FollowingList = () => {
 };
 
 const Follower = ({ profileImg, username }: { profileImg: string | null; username: string }) => {
+	const { data: userAvatar } = useUserAvatar(username ?? "default User");
+
 	return (
-		<button className="group block w-full text-start">
+		<Link to={`/cw/${username}`} className="group block w-full text-start">
 			<div className="flex items-start gap-x-2 pb-2 font-roboto sm:gap-x-5">
 				<img
 					className="size-9 rounded-full object-cover"
-					src={profileImg ?? "/assets/images/profile.png"}
+					src={profileImg ?? userAvatar}
 					alt=""
 				/>
 				<div>
@@ -52,16 +56,18 @@ const Follower = ({ profileImg, username }: { profileImg: string | null; usernam
 				<div className="absolute top-0 w-full border-b border-[#EBEEF0BF] "></div>
 				<div className="absolute top-0 w-full origin-left scale-x-0 border-b border-black bg-black transition-transform duration-300 ease-linear group-hover:scale-x-100"></div>
 			</div>
-		</button>
+		</Link>
 	);
 };
 const Following = ({ profileImg, username }: { profileImg: string | null; username: string }) => {
+	const { data: userAvatar } = useUserAvatar(username ?? "default User");
+
 	return (
-		<button className="group block w-full text-start">
+		<Link to={`/cw/${username}`}className="group block w-full text-start">
 			<div className="flex items-start gap-x-2 pb-2 font-roboto sm:gap-x-5">
 				<img
 					className="size-9 rounded-full object-cover"
-					src={profileImg ?? "/assets/images/profile.png"}
+					src={profileImg ?? userAvatar}
 					alt=""
 				/>
 				<div>
@@ -79,13 +85,13 @@ const Following = ({ profileImg, username }: { profileImg: string | null; userna
 				<div className="absolute top-0 w-full border-b border-[#EBEEF0BF] "></div>
 				<div className="absolute top-0 w-full origin-left scale-x-0 border-b border-black bg-black transition-transform duration-300 ease-linear group-hover:scale-x-100"></div>
 			</div>
-		</button>
+		</Link>
 	);
 };
 
 const FollowSkeleton = () => {
 	return (
-		<button className="group block w-full text-start">
+		<div className="group block w-full text-start">
 			<div className="flex items-start gap-x-2 pb-2 font-roboto sm:gap-x-5">
 				<Skeleton
 					circle={true}
@@ -115,6 +121,6 @@ const FollowSkeleton = () => {
 				<div className="absolute top-0 w-full border-b border-[#EBEEF0BF] "></div>
 				<div className="absolute top-0 w-full origin-left scale-x-0 border-b border-black bg-black transition-transform duration-300 ease-linear group-hover:scale-x-100"></div>
 			</div>
-		</button>
+		</div>
 	);
 };

@@ -18,12 +18,13 @@ import Home from "./pages/Home";
 import Loader from "./pages/Loader";
 import Login from "./pages/Login";
 import NewStory from "./pages/NewStory";
-import Profile from "./pages/Profile";
 import ResetPassword from "./pages/ResetPassword";
 import SignUp from "./pages/SignUp";
 import Stories from "./pages/Stories";
 import VerifyOTP from "./pages/VerifyOTP";
+import VerifyResetOTP from "./pages/VerifyResetOTP";
 import { useUserStore } from "./store/user";
+import Profile from "./pages/Profile";
 
 const PRIVATE_ROUTES = [
 	{ path: "drafts", element: <DraftsList /> },
@@ -105,6 +106,10 @@ const createRouter = (isLoggedIn: boolean) =>
 				{
 					path: "verify",
 					element: <VerifyOTP />,
+				},
+				{
+					path: "/reset-password",
+					element: <VerifyResetOTP />,
 				},
 				{
 					path: "/forgot-password",

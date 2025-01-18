@@ -2,7 +2,7 @@ import { useUserProfile } from "@/hooks/useUserProfile";
 import { useUser } from "@/store/user";
 import classNames from "classnames";
 import { AnimatePresence, motion } from "framer-motion";
-import { Home } from "lucide-react";
+import { Home, PencilLine } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useOnClickOutside } from "usehooks-ts";
@@ -61,7 +61,7 @@ const NavBar = () => {
 						className="font-roboto text-xl font-semibold uppercase leading-6 text-[#141414]"
 					>
 						<Home
-							size={28}
+							size={26}
 							color="#04bf87"
 						/>
 					</Link>
@@ -69,13 +69,16 @@ const NavBar = () => {
 						className=""
 						onClick={() => navigate("/article/new")}
 					>
-						<img
+						{/* <img
 							className="ml-auto size-6"
 							src="/assets/icons/pencil-icon.svg"
 							alt="Write icon"
+						/>{" "} */}
+						<PencilLine
+							size={26}
+							color="#04bf87"
 						/>
 					</button>
-
 					{/* <img
 						className="ml-auto size-6 object-cover"
 						src="/assets/icons/search.svg"

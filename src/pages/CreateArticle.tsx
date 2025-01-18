@@ -177,7 +177,7 @@ const CreateArticle = () => {
 			<section className="min-h-[100vh]">
 				<TipTapEditor
 					titlePlaceholder={"What’s the title?"}
-					textPlaceholder={"Type your article here or click the plus icon for more options"}
+					textPlaceholder={"Type your article here"}
 					setContent={(content) => {
 						setArticle(extractH1Content(content));
 						setArticlebody(extractPContent(content));

@@ -16,16 +16,18 @@ import ArticleSkeleton from "./ArticleSkeleton";
 import { useUserPosts } from "@/hooks/posts/useUserPosts";
 import PostSkeleton from "@/components/Dashboard/PostList/postskeleton";
 import { Post } from "@/components/Post";
+import { useUserStore } from "@/store/user";
 const Article = () => {
 	const { openModal } = useModalActions();
+	const user = useUserStore((s) => s.user);
 	const { username, slug } = useParams<{ username: string; slug: string }>();
 
 	const { data: post, isPending } = usePostBySlug(username, slug);
 	const { data: writer, isFetching } = useUserPosts(username);
 	const { data: connectionsData, isPending: isConnectionsPending } = useUserConnections(username!);
 
-	const isFollowing = connectionsData?.following?.some((follower) => follower.username === username) || false;
-	const isLiked = post?.postLikes.some((likes) => likes.user.username === username) || false;
+	const isFollowing = connectionsData?.following?.some((follower) => follower.username === user?.username) || false;
+	const isLiked = post?.postLikes.some((likes) => likes.user.username === user?.username) || false;
 
 	const labels = post?.hashtags
 		?.split(/[\s,#]+/)
@@ -123,23 +125,26 @@ const Article = () => {
 				<Container className="max-w-[992px] py-6">
 					<div className="mb-10 flex flex-col">
 						<div className="mb-6 flex items-end">
-							<img
-								className="size-16 rounded-full object-cover lg:size-20"
-								src={writer && writer[0]?.author?.profileImg}
-								alt=""
-							/>
-
+							<Link to={`/cw/${username}`}>
+								<img
+									className="size-16 rounded-full object-cover lg:size-20"
+									src={writer && writer[0]?.author?.profileImg}
+									alt=""
+								/>
+							</Link>
 							{isConnectionsPending ? (
 								<Skeleton
 									width={107}
 									height={30}
 								/>
 							) : (
-								<FollowButton
-									className="ml-auto w-fit"
-									username={username!}
-									isFollowing={isFollowing}
-								/>
+								username !== user?.username && (
+									<FollowButton
+										className="ml-auto w-fit"
+										username={username!}
+										isFollowing={isFollowing}
+									/>
+								)
 							)}
 						</div>
 						<span className="mb-2 font-roboto text-2xl font-medium text-[#141414CC]">

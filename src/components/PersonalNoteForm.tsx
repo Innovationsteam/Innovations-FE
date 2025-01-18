@@ -30,7 +30,7 @@ const PersonalNoteForm = () => {
 						return "Title";
 					}
 
-					return "Type your note here or click the plus icon for more options";
+					return "Type your note here";
 				},
 			}),
 		],
@@ -59,8 +59,10 @@ const PersonalNoteForm = () => {
 	if (!editor) return null;
 
 	return (
-		<div className="mt-6">
-			<EditorContent editor={editor} />
+		<div className="mt-6 flex h-full flex-col">
+			<div className="scrollbar-hide flex-1 overflow-y-auto">
+				<EditorContent editor={editor} />
+			</div>
 			<div className="flex">
 				{notes?.[0] ? (
 					<button
