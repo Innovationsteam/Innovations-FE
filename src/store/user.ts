@@ -13,3 +13,5 @@ export const useUserStore = create<UserStoreType>((set) => ({
 		return set({ user });
 	},
 }));
+
+export const useUser = () => useUserStore((s) => s.user);

@@ -1,9 +1,8 @@
 ///////Worked On
 import { useUserProfile } from "@/hooks/useUserProfile";
 import SectionContainer from "../../layouts/SectionContainer";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
 import { useParams } from "react-router-dom";
+import { Skeleton } from "../ui/skeleton";
 
 const About = () => {
 	const { username } = useParams();

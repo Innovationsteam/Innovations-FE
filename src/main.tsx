@@ -5,10 +5,12 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import toast, { Toaster } from "react-hot-toast";
 import "./index.css";
-import RouterPro from "./router.tsx";
+import AppRouter from "./router.tsx";
 import { IError } from "./types/auth.types.ts";
 
-// CHANGE NAMING CONVENTION OF ARTICLE & POSTS => THEY ARE THE SAME THING
+// TODOS
+//  1. CHANGE NAMING CONVENTION OF ARTICLE & POSTS => THEY ARE THE SAME THING
+//  2. TRY USING SUSPENSE QUERY TO HANDLE LOADING STATES WHILE FETCHING
 
 declare module "@tanstack/react-query" {
 	interface Register {
@@ -38,6 +40,7 @@ const handleErrors = async ({ response }: AxiosError<IError>) => {
 const queryClient = new QueryClient({
 	defaultOptions: {
 		queries: {
+			retry: 0,
 			refetchOnWindowFocus: false,
 		},
 	},
@@ -50,7 +53,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 	<React.StrictMode>
 		<QueryClientProvider client={queryClient}>
 			<Toaster />
-			<RouterPro />
+			<AppRouter />
 			<ReactQueryDevtools />
 		</QueryClientProvider>
 	</React.StrictMode>

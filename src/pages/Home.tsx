@@ -12,10 +12,10 @@ const Home = () => {
 			{/* <StoryList /> */}
 			<PostList />
 			{/* </div> */}
-			<section className="hidden px-5 lg:block">
+			<section className="hidden space-y-3 px-5 pt-4 lg:block">
 				<Profile />
 				<CreateArticle />
-				<div className="sticky top-0 pt-5">
+				<div className="sticky top-0 pt-8">
 					{/* <ExploreTopics /> */}
 					<TrendingArticles />
 				</div>
