@@ -58,8 +58,6 @@ const CreateArticle = () => {
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const onUploadContainerClick = (e: any) => {
-		console.log(e.target.files);
-		console.log(e.target.files);
 		e.stopPropagation();
 		if (e.target == uploadContainerRef.current) fileInputRef.current.click();
 	};
@@ -74,7 +72,7 @@ const CreateArticle = () => {
 	const previewArticle = () => {
 		if (article) {
 			if (selectedFile) {
-				openModal(ModalType.Preview, { article, url: selectedFile, backdrop: image, articlebody });
+				openModal(ModalType.Preview, { article, articleImg: selectedFile, backdrop: image, articlebody });
 			} else toast.error("Please Select an Image");
 		} else toast.error("Article can't be empty");
 	};
