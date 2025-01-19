@@ -111,6 +111,7 @@ const LoginForm = () => {
 				type="submit"
 				disabled={isPending || !isValid}
 				className="bg-primary"
+				autoFocus
 			>
 				{isPending ? (
 					<img

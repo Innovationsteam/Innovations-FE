@@ -7,3 +7,5 @@ export const MY_PROFILE_PAGE = ["home", "about", "blogs", "followers", "followin
 // export const PUBLIC_PROFILE_PAGE = ["home", "about", "blogs", "reading-list", "followers", "following"];
 
 export const PUBLIC_PROFILE_PAGE = ["home", "about", "blogs", "followers", "following"];
+
+export const MAX_WORD_COUNT = 1000;

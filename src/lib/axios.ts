@@ -1,4 +1,5 @@
 import axios from "axios";
+import axiosThrottle from "axios-request-throttle";
 
 const client = axios.create({
 	baseURL: import.meta.env.VITE_API_URL,
@@ -20,6 +21,7 @@ const getCookie = (name: string): string | undefined => {
 	}
 	return undefined;
 };
+axiosThrottle.use(axios, { requestsPerSecond: 5 });
 
 client.interceptors.request.use(
 	(config) => {
