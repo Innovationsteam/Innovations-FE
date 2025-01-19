@@ -12,7 +12,7 @@ const schema = z.object({
 	password: z.string().min(4, { message: "Minimum of 4 characters" }),
 });
 export type LoginFormData = z.infer<typeof schema>;
-
+import { Link } from "react-router-dom";
 const LoginForm = () => {
 	const {
 		register,
@@ -83,13 +83,13 @@ const LoginForm = () => {
 				{errors.password && <p className="font-poppins mt-1 inline-block text-left text-sm text-red-500">{errors.password?.message}</p>}
 			</div>
 			<div className="mt-6 flex justify-between">
-				{/* <Link
+				<Link
 					to="/forgot-password"
 					className="group text-sm font-medium"
 				>
 					<p className="text-[#242424B2] group-hover:text-black">Forgot Password?</p>
 					<div className="h-[1.5px] w-0 bg-[#242424B2] transition-all duration-200 ease-in-out group-hover:w-full"></div>
-				</Link> */}
+				</Link>
 			</div>
 			<Button
 				type="submit"

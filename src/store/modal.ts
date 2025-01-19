@@ -65,7 +65,7 @@ export const useModalActions = () => {
 
 	return {
 		openModal: <T extends ModalType>(modal: T, payload?: ModalDataMap[T] | null) => {
-			if (isLoggedIn) actions.openModal(modal, payload);
+			if (isLoggedIn || window.location.pathname == "forgot-password" || "verify" || "signup") actions.openModal(modal, payload);
 			else actions.openModal(ModalType.WARNING_LOGIN, null);
 		},
 		closeModal: actions.closeModal,

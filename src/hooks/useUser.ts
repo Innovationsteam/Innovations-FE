@@ -17,7 +17,7 @@ export const useLoginUser = () => {
 				expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
 			});
 			// navigate("/feed");
-			window.location.replace("/feed") // navigate doesn't allow the user to be set until after refreshing 
+			window.location.replace("/redirecting") // navigate doesn't allow the user to be set until after refreshing 
 		},
 	});
 };
