@@ -1,15 +1,15 @@
 ///////Worked On
-import { useMutation } from "@tanstack/react-query";
 import { publishArticle, saveAsDraft } from "@/actions/article.actions";
-import toast from "react-hot-toast";
 import { useModalActions } from "@/store/modal";
+import { useUser } from "@/store/user";
+import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { useUserStore } from "@/store/user";
 
 export const usePublishArticle = () => {
 	const { closeModal } = useModalActions();
 	const navigate = useNavigate();
-	const user = useUserStore((s) => s.user);
+	const user = useUser();
 
 	return useMutation({
 		mutationFn: (articleData: FormData) => publishArticle(articleData),

@@ -1,13 +1,13 @@
 ///////Worked On
 import { useAddComment } from "@/hooks/posts/useAddComment";
-import { useUserStore } from "@/store/user";
+import { useUserAvatar } from "@/hooks/useUserAvatar";
+import { useUser } from "@/store/user";
 import Bold from "@tiptap/extension-bold";
 import Italic from "@tiptap/extension-italic";
 import { Editor, EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import classNames from "classnames";
 import { Button } from "../ui/button";
-import { useUserAvatar } from "@/hooks/useUserAvatar";
 
 const content = ``;
 
@@ -27,7 +27,7 @@ const AddCommentForm = ({ postId }: Props) => {
 		},
 	});
 
-	const user = useUserStore((s) => s.user);
+	const user = useUser();
 	const { mutate: addComment, isPending } = useAddComment();
 	const { data: userAvatar } = useUserAvatar(user?.username ?? "default User");
 

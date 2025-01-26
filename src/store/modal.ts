@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { create } from "zustand";
-import { useUserStore } from "./user";
+import { useUser } from "./user";
 
 export enum ModalType {
 	NONE,
@@ -14,6 +14,7 @@ export enum ModalType {
 	EMAIL_SENT,
 	WARNING_LOGIN,
 	RESET_TOKEN_SENT,
+	NOTIFICATION,
 }
 
 // Typed Version of ModalStore
@@ -29,7 +30,12 @@ interface ModalDataMap {
 	[ModalType.EMAIL_SENT]: any;
 	[ModalType.WARNING_LOGIN]: any;
 	[ModalType.RESET_TOKEN_SENT]: any;
+	[ModalType.NOTIFICATION]: { title: string; description: string };
 }
+
+const ALLOWED_MODALS = new Set([ModalType.TermsAndConditions, ModalType.EMAIL_SENT, ModalType.WARNING_LOGIN, ModalType.RESET_TOKEN_SENT, ModalType.NOTIFICATION]);
+
+const isModalTypeAllowed = (type: ModalType): boolean => ALLOWED_MODALS.has(type);
 
 interface ModalStoreProps {
 	activeModal: ModalType;
@@ -45,6 +51,7 @@ const useModalStore = create<ModalStoreProps>((set) => ({
 	modalData: null,
 	actions: {
 		openModal: (modal, payload = null) => {
+			console.log(payload);
 			set({ activeModal: modal, modalData: payload });
 		},
 		closeModal: (onClose) => {
@@ -61,11 +68,11 @@ export const useActiveModal = (modal: ModalType) => {
 
 export const useModalActions = () => {
 	const actions = useModalStore((s) => s.actions);
-	const isLoggedIn = useUserStore((s) => s.user);
+	const isLoggedIn = useUser();
 
 	return {
 		openModal: <T extends ModalType>(modal: T, payload?: ModalDataMap[T] | null) => {
-			if (isLoggedIn || window.location.pathname == "forgot-password" || "verify" || "signup") actions.openModal(modal, payload);
+			if (isLoggedIn || isModalTypeAllowed(modal)) actions.openModal(modal, payload);
 			else actions.openModal(ModalType.WARNING_LOGIN, null);
 		},
 		closeModal: actions.closeModal,

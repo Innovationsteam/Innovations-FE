@@ -1,3 +1,5 @@
+import { IUser } from "./user.types";
+
 /* eslint-disable no-mixed-spaces-and-tabs */
 export interface IResponse<T = null> {
 	data: T;
@@ -11,13 +13,11 @@ export type SignUpResponse = IResponse<{
 	name: string;
 }>;
 
-export type LoginResponse = IResponse<{
-	access_token: string;
-	username: string;
-	is_active: boolean;
-	img: string | null;
-	name: string;
-}>;
+export type LoginResponse = IResponse<
+	{
+		access_token: string;
+	} & IUser
+>;
 
 export interface IError {
 	statusCode: number;

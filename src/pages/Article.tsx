@@ -16,10 +16,11 @@ import ArticleSkeleton from "./ArticleSkeleton";
 import { useUserPosts } from "@/hooks/posts/useUserPosts";
 import PostSkeleton from "@/components/Dashboard/PostList/postskeleton";
 import { Post } from "@/components/Post";
-import { useUserStore } from "@/store/user";
+import { useUser } from "@/store/user";
+
 const Article = () => {
 	const { openModal } = useModalActions();
-	const user = useUserStore((s) => s.user);
+	const user = useUser();
 	const { username, slug } = useParams<{ username: string; slug: string }>();
 
 	const { data: post, isPending } = usePostBySlug(username, slug);
@@ -35,7 +36,12 @@ const Article = () => {
 		.filter((tag: string) => tag.trim() !== "");
 
 	if (isPending) return <ArticleSkeleton />;
-	if (!post) return <p className="text-center text-lg font-semibold">Post not found</p>;
+	if (!post)
+		return (
+			<div className="flex h-screen items-center">
+				<p className="text-center text-lg font-semibold">No Post Found</p>
+			</div>
+		);
 
 	return (
 		<div>

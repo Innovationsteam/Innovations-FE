@@ -1,14 +1,14 @@
 ///////Worked On
 import { IResponse } from "./auth.types";
 export interface IUser {
-	email: string;
 	name: string;
-	bio: string;
+	is_active: boolean;
 	username: string;
-	profileImg: string;
+	profileImg?: string;
+	bio: string;
+	email: string;
 	backdropImg: string;
 }
-
 export interface UserConnection {
 	username: string;
 	email: string;
@@ -21,16 +21,3 @@ export type FollowResponse = IResponse<{
 	createdAt: string;
 	updatedAt: string;
 }>;
-
-// export interface User1 {
-// 	name: string;
-// 	profileImg: string | null;
-// 	username: string;
-// }
-// export type userInfo = {
-// 	access_token: string;
-// 	username: string;
-// 	isActive: boolean;
-// 	img: string | null;
-// 	name: string;
-// };

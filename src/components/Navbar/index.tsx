@@ -9,7 +9,6 @@ import { useOnClickOutside } from "usehooks-ts";
 import Container from "../Container";
 import UserProfileImage from "../UserProfileImage";
 import { Button } from "../ui/button";
-import { Skeleton } from "../ui/skeleton";
 
 const NavBar = () => {
 	const [scrolled, setScrolled] = useState(false);
@@ -93,14 +92,11 @@ const NavBar = () => {
 
 					{isLoggedIn ? (
 						<Link to={`/cw/${user?.username}`}>
-							{isPending ? (
-								<Skeleton className="size-8 rounded-full object-cover" />
-							) : (
-								<UserProfileImage
-									fullName={user?.name}
-									image={user?.profileImg}
-								/>
-							)}
+							<UserProfileImage
+								fullName={user?.name}
+								image={user?.profileImg}
+								isLoading={isPending}
+							/>
 						</Link>
 					) : (
 						<div

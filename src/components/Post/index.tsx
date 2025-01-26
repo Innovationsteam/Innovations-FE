@@ -1,14 +1,14 @@
 ///////Worked On
-import { useUserStore } from "@/store/user";
+import { useUserAvatar } from "@/hooks/useUserAvatar";
+import { useUser } from "@/store/user";
 import { PostItem } from "@/types/post.types";
 import { cn, convertToOriginalFormat, formatDate } from "@/utils/helper";
 import { useState } from "react";
 import { BsShare } from "react-icons/bs";
-import { FaRegComment, FaRegHeart, FaRegEye } from "react-icons/fa";
+import { FaRegComment, FaRegEye, FaRegHeart } from "react-icons/fa";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { Link } from "react-router-dom";
-import { useUserAvatar } from "@/hooks/useUserAvatar";
 
 interface PostProps extends PostItem {
 	className?: string;
@@ -18,7 +18,7 @@ export const Post = ({ id, author, publishedDate, content, image, likes, socialM
 	const [isImageLoaded, setIsImageLoaded] = useState(false);
 	const { data: userAvatar } = useUserAvatar(author.username ?? "default User");
 
-	const user = useUserStore((s) => s.user);
+	const user = useUser();
 
 	return (
 		<li className={cn("mx-auto h-fit w-full !list-none rounded-xl border border-[#E6E6E6] p-4", className)}>
