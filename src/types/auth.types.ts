@@ -41,3 +41,9 @@ export type ResetPassword = {
 	token: string;
 	password: string;
 };
+export type SignUpFormData = {
+	name: string;
+	username: string;
+	email: string;
+	password: string;
+};

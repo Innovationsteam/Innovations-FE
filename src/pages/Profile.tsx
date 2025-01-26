@@ -25,11 +25,18 @@ const Profile = () => {
 	return (
 		<Container>
 			<header className="mt-3 h-[183px] overflow-hidden rounded-xl md:mt-9 md:h-[400px]">
-				<img
-					className="h-full w-full object-cover object-bottom"
-					src={loggedInUser?.username === username ? loggedInUser?.backdropImg : userData?.backdropImg ?? "/assets/images/writerHeader.jpg"}
-					alt="Header"
-				/>
+				{isUserPending ? (
+						<Skeleton
+							height="100%"
+							width="100%"
+						/>
+					) : (
+						<img
+							className="h-full w-full object-cover object-bottom"
+							src={loggedInUser?.username === username ? loggedInUser?.backdropImg : userData?.backdropImg ?? "/assets/images/writerHeader.jpg"}
+							alt="Header"
+						/>
+					)}
 			</header>
 			<div className="relative mt-6 h-full grid-cols-[140px_auto] items-start md:mt-12 md:px-8 lg:grid">
 				<div className="sticky top-0 hidden lg:block">
