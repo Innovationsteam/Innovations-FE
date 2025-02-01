@@ -8,10 +8,12 @@ export const useUpdateProfile = () => {
 	const { closeModal } = useModalActions();
 	return useMutation({
 		mutationFn: updateUserProfile,
-		onSuccess: () => toast.success("Update Successful"),
+		onSuccess: () => {
+			toast.success("Update Successful");
+		},
 		onSettled: () => {
 			queryClient.invalidateQueries({
-				queryKey: ["users"],
+				queryKey: ["users", "me"],
 			});
 			closeModal();
 		},

@@ -1,6 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
 import { z } from "zod";
 import { useLoginUser } from "../../hooks/useUser";
 import { Button } from "../ui/button";
@@ -13,7 +12,7 @@ const schema = z.object({
 	password: z.string().min(4, { message: "Minimum of 4 characters" }),
 });
 export type LoginFormData = z.infer<typeof schema>;
-
+import { Link } from "react-router-dom";
 const LoginForm = () => {
 	const {
 		register,
@@ -83,22 +82,7 @@ const LoginForm = () => {
 				</div>
 				{errors.password && <p className="font-poppins mt-1 inline-block text-left text-sm text-red-500">{errors.password?.message}</p>}
 			</div>
-
-			<div className="mt-4 flex justify-between">
-				{/* <div className="flex items-center">
-					<input
-						id="remember"
-						type="checkbox"
-						onChange={(e) => setSaveLogin(e.target.checked)}
-						className="size-[14px] rounded border border-[#CBD5E0]"
-					/>
-					<label
-						htmlFor="remember"
-						className="ml-2 text-sm text-black"
-					>
-						Remember me
-					</label>
-				</div> */}
+			<div className="mt-6 flex justify-between">
 				<Link
 					to="/forgot-password"
 					className="group text-sm font-medium"

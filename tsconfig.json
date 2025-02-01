@@ -29,6 +29,6 @@
 			"@store/*": ["./src/store/*"]
 		}
 	},
-	"include": ["src"],
+	"include": ["src/**/*", "src/generateSitemap.ts"],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }

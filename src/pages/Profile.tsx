@@ -1,23 +1,26 @@
 import FollowButton from "@/components/FollowButton";
+import UserProfileSkeleton from "@/components/Skeletons/UserProfileSkeleton";
+import UserProfileImage from "@/components/UserProfileImage";
 import { Button } from "@/components/ui/button";
 import { useUserConnections } from "@/hooks/follow/useUserConnections";
 import { useUserProfile } from "@/hooks/useUserProfile";
 import { ModalType, useModalActions } from "@/store/modal";
-import { useUserStore } from "@/store/user";
+import { useUser } from "@/store/user";
 import { MY_PROFILE_PAGE, PUBLIC_PROFILE_PAGE } from "@/utils/constants";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
 import { Outlet, useParams } from "react-router-dom";
 import Container from "../components/Container";
 import { MiniNav, MiniNavMobile } from "../components/MiniNav";
-import { useUserAvatar } from "@/hooks/useUserAvatar";
+import Skeleton from "react-loading-skeleton";
 const Profile = () => {
 	const { username } = useParams();
-	const { data: userData, isPending: isUserPending } = useUserProfile(username);
-	const { data: connectionsData, isPending: isConnectionsPending } = useUserConnections(username!);
 	const { openModal } = useModalActions();
-	const loggedInUser = useUserStore((s) => s.user);
-	const { data: userAvatar } = useUserAvatar(username ?? "default User");
+	const loggedInUser = useUser();
+
+	const { data: userData, isPending: isUserPending } = useUserProfile(loggedInUser?.username === username ? "me" : username);
+
+	console.log(userData?.name);
+
+	const { data: connectionsData, isPending: isConnectionsPending } = useUserConnections(username!);
 
 	const isFollowing = connectionsData?.followers?.some((follower) => follower.username === loggedInUser?.username) || false;
 	const tabs = loggedInUser?.username === username ? MY_PROFILE_PAGE : PUBLIC_PROFILE_PAGE;
@@ -43,57 +46,43 @@ const Profile = () => {
 					<MiniNav tabs={tabs} />
 				</div>
 				<div className="mb-10 h-full w-full border-y-0 md:px-5 lg:border-l-[1.5px]">
-					<img
-						className="size-8 rounded-full object-cover md:size-[80px]"
-						src={userData?.profileImg ?? userAvatar}
-						alt="Profile"
-					/>
-					<div className="mt-6 flex items-center text-black">
-						<div>
-							{isUserPending ? (
-								<h1 className="font-roboto text-[16px] text-xl font-semibold md:text-3xl">
-									<Skeleton width={120} />
-								</h1>
-							) : (
-								<h1 className="font-roboto text-[16px] text-xl font-semibold md:text-3xl">{userData?.name}</h1>
-							)}
-							{/* <h2 className="font-roboto text-sm md:text-xl">Content Creator</h2> */}
-
-							<div className="mt-1 flex items-center gap-x-2">
-								{isConnectionsPending ? (
-									<>
-										<Skeleton width={90} />
-										<Skeleton width={90} />
-									</>
-								) : (
-									<>
-										<p className="text-xs text-[#14141499] md:text-base">{connectionsData?.followers?.length || 0} followers</p>
-										<p className="text-xs text-[#14141499] md:text-base">{connectionsData?.following?.length || 0} following</p>
-									</>
-								)}
+					{isUserPending || isConnectionsPending ? (
+						<UserProfileSkeleton />
+					) : (
+						<>
+							<UserProfileImage
+								fullName={userData?.name}
+								image={userData?.profileImg}
+								className="md:size-[80px]"
+							/>
+							<div className="mt-6 flex items-center text-black">
+								<div>
+									<h1 className="font-roboto text-[16px] text-xl font-semibold md:text-3xl">{userData?.name}</h1>
+									{connectionsData?.followers && connectionsData?.following ? (
+										<div className="mt-1 flex items-center gap-x-2">
+											<p className="text-xs text-[#14141499] md:text-base">{connectionsData?.followers?.length || 0} followers</p>
+											<p className="text-xs text-[#14141499] md:text-base">{connectionsData?.following?.length || 0} following</p>
+										</div>
+									) : null}
+								</div>
+								<div className="ml-auto flex items-center gap-x-2">
+									{loggedInUser?.username === username ? (
+										<Button
+											onClick={() => openModal(ModalType.EDIT_PROFILE)}
+											className="md:text-base"
+										>
+											Edit Profile
+										</Button>
+									) : (
+										<FollowButton
+											username={username!}
+											isFollowing={isFollowing}
+										/>
+									)}
+								</div>
 							</div>
-						</div>
-						<div className="ml-auto flex items-center gap-x-2">
-							{isConnectionsPending ? (
-								<Skeleton
-									width={107}
-									height={30}
-								/>
-							) : loggedInUser?.username === username ? (
-								<Button
-									onClick={() => openModal(ModalType.EDIT_PROFILE)}
-									className="md:text-base"
-								>
-									Edit Profile
-								</Button>
-							) : (
-								<FollowButton
-									username={username!}
-									isFollowing={isFollowing}
-								/>
-							)}
-						</div>
-					</div>
+						</>
+					)}
 					<MiniNavMobile tabs={tabs} />
 					<Outlet />
 				</div>

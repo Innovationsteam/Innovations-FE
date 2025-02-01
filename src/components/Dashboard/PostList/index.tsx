@@ -15,7 +15,11 @@ const PostList = () => {
 					next={fetchNextPage}
 					hasMore={hasNextPage}
 					loader={<PostSkeleton />}
-					endMessage={<p className="text-center text-lg font-semibold">All Caught Up</p>}
+					endMessage={
+						<div className="item-center flex h-full max-h-screen">
+							<p className="text-center text-lg font-semibold">All Caught Up</p>
+						</div>
+					}
 				>
 					<ul className="grid h-full gap-y-4">
 						{posts?.pages.map(({ data }) => (

@@ -10,10 +10,10 @@ export const useFollowUser = () => {
 		onSuccess: () => toast.success(`Following User`),
 		onSettled: () => {
 			queryClient.invalidateQueries({
-				queryKey: ["userFollowing"],
+				queryKey: ["userFollowers"],
 			});
 			queryClient.invalidateQueries({
-				queryKey: ["userFollowers"],
+				queryKey: ["userFollowing"],
 			});
 		},
 	});

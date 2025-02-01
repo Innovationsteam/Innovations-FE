@@ -4,7 +4,7 @@ import { IResponse } from "@/types/auth.types";
 import { IPost } from "@/types/post.types";
 import { AxiosError } from "axios";
 
-interface PostsResponse {
+export interface PostsResponse {
 	currentPage: number;
 	posts: IPost[];
 	totalItems: number;

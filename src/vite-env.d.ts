@@ -2,7 +2,7 @@
 
 interface ImportMetaEnv {
 	readonly VITE_APP_TITLE: string;
-	readonly VITE_PRIVATE_API_KEY: string;
+	readonly VITE_API_KEY: string;
 }
 
 interface ImportMeta {
