@@ -1,37 +1,40 @@
 import axios from "axios";
 import axiosThrottle from "axios-request-throttle";
+const isBrowser = typeof window !== "undefined";
 
+const API_URL = isBrowser ? import.meta.env.VITE_API_URL : process.env.VITE_API_URL;
+
+const getAuthToken = () => {
+	if (isBrowser) {
+		return document.cookie
+			.split("; ")
+			.find((row) => row.startsWith("access_token="))
+			?.split("=")[1];
+	} else {
+		return process.env.ACCESS_TOKEN;
+	}
+};
+
+// Create axios instance
 const client = axios.create({
-	baseURL: import.meta.env.VITE_API_URL,
+	baseURL: API_URL,
 	headers: {
 		"Content-Type": "application/json",
 	},
-	// withCredentials: true,
+	timeout: 30000,
 });
 
-// Helper function to get a cookie by name
-const getCookie = (name: string): string | undefined => {
-	const cookieString = document.cookie;
-	const cookies = cookieString.split("; ");
-	for (const cookie of cookies) {
-		const [key, value] = cookie.split("=");
-		if (key === name) {
-			return decodeURIComponent(value);
-		}
-	}
-	return undefined;
-};
-axiosThrottle.use(axios, { requestsPerSecond: 5 });
-
+// Apply axios throttle to limit requests
+axiosThrottle.use(client, {
+	requestsPerSecond: 5,
+});
+// Add request interceptor for authentication
 client.interceptors.request.use(
 	(config) => {
-		// Retrieve the token from the cookie
-		const token = getCookie("access_token"); // Replace with your cookie name
-		// If the token exists, add it to the Authorization header
+		const token = getAuthToken();
 		if (token) {
 			config.headers.Authorization = `Bearer ${token}`;
 		}
-
 		return config;
 	},
 	(error) => {

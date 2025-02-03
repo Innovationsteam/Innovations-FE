@@ -16,8 +16,7 @@ interface PostProps extends PostItem {
 
 export const Post = ({ id, author, publishedDate, content, image, likes, socialMediaShares, commentsCount, title, views, className, slug }: PostProps) => {
 	const [isImageLoaded, setIsImageLoaded] = useState(false);
-	const { data: userAvatar } = useUserAvatar(author.username ?? "default User");
-
+	const { data: userAvatar } = useUserAvatar(author?.profileImg, author.username);
 	const user = useUser();
 
 	return (
@@ -66,7 +65,11 @@ export const Post = ({ id, author, publishedDate, content, image, likes, socialM
 					</div>
 				</div>
 				<div className="mb-6 font-roboto text-black">
-					<h3 className="mb-1 line-clamp-1 text-lg font-medium leading-8">{title}</h3>
+					<h3
+						className="mb-1 line-clamp-1 text-lg font-medium leading-8"
+						dangerouslySetInnerHTML={{ __html: convertToOriginalFormat(title) }}
+					/>
+
 					<p
 						className={`line-clamp-3 max-h-[125px] overflow-hidden overflow-ellipsis break-words text-sm leading-6 text-[#14141499]`}
 						dangerouslySetInnerHTML={{ __html: convertToOriginalFormat(content) }}

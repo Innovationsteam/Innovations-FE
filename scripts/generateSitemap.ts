@@ -1,18 +1,14 @@
+import "dotenv/config";
+import fs from "fs";
+import { SitemapStream, streamToPromise } from "sitemap";
 import client from "@/lib/axios";
-import { IResponse } from "@/types/auth.types";
 import { IPost } from "@/types/post.types";
-const { createSitemap } = require("sitemap");
-const fs = require("fs");
-import { PostsResponse } from "./queries/post.queries";
+
 const generateSitemap = async () => {
 	const dynamicRoutes = await fetchDynamicRoutes();
 
 	const staticRoutes = [
-		{ url: "/", changefreq: "daily", priority: 1.0 },
-		{ url: "/about", changefreq: "monthly", priority: 0.7 },
-		{ url: "/blogs", changefreq: "monthly", priority: 0.7 },
-		{ url: "/followers", changefreq: "monthly", priority: 0.7 },
-		{ url: "/following", changefreq: "monthly", priority: 0.7 },
+		{ url: "/", changefreq: "daily", priority: 1 },
 		{ url: "/feed", changefreq: "daily", priority: 0.8 },
 		{ url: "/stories", changefreq: "weekly", priority: 0.6 },
 		{ url: "/stories/new", changefreq: "monthly", priority: 0.5 },
@@ -22,30 +18,40 @@ const generateSitemap = async () => {
 		{ url: "/reset-password", changefreq: "monthly", priority: 0.5 },
 		{ url: "/forgot-password", changefreq: "monthly", priority: 0.5 },
 		{ url: "/change-password", changefreq: "monthly", priority: 0.5 },
+		// { url: "/about", changefreq: "monthly", priority: 0.7 },
+		// { url: "/blogs", changefreq: "monthly", priority: 0.7 },
+		// { url: "/followers", changefreq: "monthly", priority: 0.7 },
+		// { url: "/following", changefreq: "monthly", priority: 0.7 },
 	];
 
 	const routes = [...staticRoutes, ...dynamicRoutes];
 
-	const sitemap = createSitemap({
+	const sitemapStream = new SitemapStream({
 		hostname: "https://www.christianwrites.com",
-		cacheTime: 600000,
-		urls: routes,
 	});
 
+	routes.forEach((route) => {
+		sitemapStream.write(route);
+	});
+
+	sitemapStream.end();
+
+	const sitemap = await streamToPromise(sitemapStream);
+
 	fs.writeFileSync("./public/sitemap.xml", sitemap.toString());
-	console.log("Sitemap generated successfully!");
+	console.log("✅ Sitemap generated successfully!");
 };
 
 const fetchDynamicRoutes = async () => {
 	try {
-		const response = await client.get<IResponse<PostsResponse>>(`/posts/?page=${1}`);
+		const response = await client.get(`/posts/?page=1&limit=99999999999`);
 		return response.data.data.posts.map((article: IPost) => ({
-			url: `/article/${article.id}`,
+			url: `/article/${article?.author.username}/${article?.slug}`,
 			changefreq: "weekly",
-			priority: 0.8,
+			priority: 0.9,
 		}));
 	} catch (error) {
-		console.error("Error fetching dynamic routes:", error);
+		console.error("❌ Error fetching dynamic routes:", error);
 		return [];
 	}
 };

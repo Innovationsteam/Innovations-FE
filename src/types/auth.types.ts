@@ -14,9 +14,13 @@ export type SignUpResponse = IResponse<{
 export type LoginResponse = IResponse<{
 	access_token: string;
 	username: string;
-	is_active: boolean;
-	img: string | null;
+	isActive: boolean;
+	img: string;
 	name: string;
+	bio: string;
+	email: string;
+	backdropImg?: string;
+	profileImg?: string;
 }>;
 
 export interface IError {

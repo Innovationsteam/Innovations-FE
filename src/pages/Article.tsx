@@ -65,7 +65,11 @@ const Article = () => {
 							<span>{new Date(post.publishedDate).toLocaleDateString()}</span>
 							<span>·</span>
 						</p>
-						<h1 className="my-1 font-roboto text-3xl text-[32px] font-bold capitalize text-[#141414] md:text-[42px] md:leading-[52px]">{post.title}</h1>
+						<h1
+							className="my-1 font-roboto text-3xl text-[32px] font-bold capitalize text-[#141414] md:text-[42px] md:leading-[52px]"
+							dangerouslySetInnerHTML={{ __html: convertToOriginalFormat(post.title) }}
+						/>
+						
 						{/* <h2 className="font-roboto text-sm md:text-base lg:text-lg">101 ways on how to build your faith</h2> */}
 					</header>
 					<div className="relative my-10 h-[238px] md:h-[400px]">
