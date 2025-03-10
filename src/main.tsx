@@ -7,6 +7,7 @@ import toast, { Toaster } from "react-hot-toast";
 import "./index.css";
 import AppRouter from "./router.tsx";
 import { IError } from "./types/auth.types.ts";
+import SocketProvider from "./components/SocketProvider.tsx";
 
 // TODOS
 //  1. CHANGE NAMING CONVENTION OF ARTICLE & POSTS => THEY ARE THE SAME THING
@@ -52,9 +53,11 @@ const queryClient = new QueryClient({
 ReactDOM.createRoot(document.getElementById("root")!).render(
 	<React.StrictMode>
 		<QueryClientProvider client={queryClient}>
-			<Toaster />
-			<AppRouter />
-			<ReactQueryDevtools />
+			<SocketProvider>
+				<Toaster />
+				<AppRouter />
+				<ReactQueryDevtools />
+			</SocketProvider>
 		</QueryClientProvider>
 	</React.StrictMode>
 );

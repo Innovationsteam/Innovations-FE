@@ -2,13 +2,14 @@ import { useUserProfile } from "@/hooks/useUserProfile";
 import { useUser } from "@/store/user";
 import classNames from "classnames";
 import { AnimatePresence, motion } from "framer-motion";
-import { Home, PencilLine } from "lucide-react";
+import { Bell, Home, PencilLine } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useOnClickOutside } from "usehooks-ts";
 import Container from "../Container";
 import UserProfileImage from "../UserProfileImage";
 import { Button } from "../ui/button";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
 
 const NavBar = () => {
 	const [scrolled, setScrolled] = useState(false);
@@ -55,41 +56,40 @@ const NavBar = () => {
 					<span className="text-[#04BF87]">Christian</span>Writes
 				</Link>
 				<div className="ml-auto flex items-center gap-x-3">
-					<Link
-						to="/feed"
-						className="font-roboto text-xl font-semibold uppercase leading-6 text-[#141414]"
-					>
+					<Link to="/feed">
 						<Home
 							size={26}
 							color="#04bf87"
 						/>
 					</Link>
-					<button
-						className=""
-						onClick={() => navigate("/article/new")}
-					>
-						{/* <img
-							className="ml-auto size-6"
-							src="/assets/icons/pencil-icon.svg"
-							alt="Write icon"
-						/>{" "} */}
+					<Link to="/article/new">
 						<PencilLine
 							size={26}
 							color="#04bf87"
 						/>
-					</button>
-					{/* <img
-						className="ml-auto size-6 object-cover"
-						src="/assets/icons/search.svg"
-						alt="search icon"
-					/> */}
-
-					<img
-						className="size-6 object-cover"
-						src="/assets/icons/bell.svg"
-						alt="notification"
-					/>
-
+					</Link>
+					<DropdownMenu>
+						<DropdownMenuTrigger asChild>
+							<Bell
+								size={26}
+								color="#04bf87"
+								className="hidden cursor-pointer md:block"
+							/>
+						</DropdownMenuTrigger>
+						<DropdownMenuContent
+							id="testing"
+							className="w-56"
+							side="top"
+							sideOffset={10}
+							align="center"
+						>
+							<DropdownMenuLabel>Notifications (4)</DropdownMenuLabel>
+							<DropdownMenuSeparator />
+							<DropdownMenuGroup>
+								<DropdownMenuItem>Profile</DropdownMenuItem>
+							</DropdownMenuGroup>
+						</DropdownMenuContent>
+					</DropdownMenu>
 					{isLoggedIn ? (
 						<Link to={`/cw/${user?.username}`}>
 							<UserProfileImage
