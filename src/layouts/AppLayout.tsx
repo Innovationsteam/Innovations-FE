@@ -12,6 +12,7 @@ import { ModalType, useActiveModal } from "@/store/modal";
 import { cn } from "@/utils/helper";
 import { Outlet } from "react-router-dom";
 import ResetTokenSentModal from "@/components/Modal/ResetTokenSentModal";
+import NotificationModal from "@/components/Modal/NotificationModal";
 const AppLayout = () => {
 	const isOpen = useActiveModal(ModalType.NONE);
 	return (
@@ -31,6 +32,7 @@ const AppLayout = () => {
 			<EmailSentModal />
 			<WarningLoginModal />
 			<ResetTokenSentModal />
+			<NotificationModal />
 		</PageContainer>
 	);
 };

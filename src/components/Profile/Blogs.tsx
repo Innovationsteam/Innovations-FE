@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import SectionContainer from "../../layouts/SectionContainer";
 import PostSkeleton from "../Dashboard/PostList/postskeleton";
 import { Post } from "../Post";
-
 const Blogs = ({ title }: { title: string }) => {
 	const { username } = useParams();
 	const { data: userPosts, isPending } = useUserPosts(username!);

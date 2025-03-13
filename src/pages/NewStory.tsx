@@ -1,12 +1,19 @@
 import { useNavigate } from "react-router-dom";
 import PageContainer from "../components/PageContainer";
 import UploadStory from "../components/UploadStory";
-
+import { Helmet } from "react-helmet";
 const NewStory = () => {
 	const navigate = useNavigate();
 
 	return (
 		<PageContainer className="flex h-screen items-center justify-center md:bg-[#F5F5F5]">
+			<Helmet>
+				<title>Stories-New</title>
+				<meta
+					name="robots"
+					content="noindex"
+				/>{" "}
+			</Helmet>
 			<div className="w-full max-w-[693px] bg-white p-6 md:rounded-xl md:shadow-lg">
 				<div className="mb-4 flex items-center">
 					<div>

@@ -72,7 +72,7 @@ const PreviewArticleModal = () => {
 								alt=""
 							/>
 						</div>
-						<h1 className="font-roboto text-2xl font-semibold text-black">{modalData?.article}</h1>
+						<h1 className="font-roboto text-2xl font-semibold text-black" dangerouslySetInnerHTML={{ __html: modalData?.article }}/>
 						<div className="mt-6 flex flex-col">
 							<h3 className="mb-2 font-bold text-[#141414]">Add Hashtags</h3>
 							<textarea

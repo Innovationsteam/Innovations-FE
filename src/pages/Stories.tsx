@@ -3,7 +3,7 @@ import { useState } from "react";
 import PageContainer from "../components/PageContainer";
 import StoriesNav from "../components/Stories/Nav";
 import { useNavigate } from "react-router-dom";
-
+import { Helmet } from "react-helmet";
 const data = ["/assets/images/story-bg.jpg", "/assets/images/story3.jpg", "/assets/images/story-bg.jpg", "/assets/images/story3.jpg"];
 
 const Stories = () => {
@@ -26,6 +26,13 @@ const Stories = () => {
 
 	return (
 		<PageContainer>
+			<Helmet>
+				<title>Stories</title>
+				<meta
+					name="robots"
+					content="noindex"
+				/>{" "}
+			</Helmet>
 			<div className="grid h-[100dvh] grid-rows-[auto_1fr] overflow-hidden bg-black px-5 pb-5 pt-3 lg:px-7 lg:pt-5">
 				<StoriesNav
 					totalStories={data.length}

@@ -1,11 +1,11 @@
 ///////Worked On
 import client from "@/lib/axios";
-import { AxiosError } from "axios";
-import { IPost } from "@/types/post.types";
 import { IResponse } from "@/types/auth.types";
+import { IPost } from "@/types/post.types";
 import { ReadingList } from "@/types/readng-list.types";
-import { UserConnection, IUser } from "@/types/user.types";
-import axios from "axios";
+import { IUser, UserConnection } from "@/types/user.types";
+import axios, { AxiosError } from "axios";
+
 export const getPostsbyUser = async (username: string): Promise<IPost[]> => {
 	try {
 		const blogs = await client.get(`/posts/author/${username}`);
@@ -59,11 +59,12 @@ export const getDrafts = async () => {
 		throw error as AxiosError;
 	}
 };
+
 export const getAvatar = async (username: string): Promise<string | undefined> => {
 	try {
 		const url = `https://ui-avatars.com/api/?name=${encodeURIComponent(username)}&bold=true`;
-        await axios.get(url);
-        return url;
+		await axios.get(url);
+		return url;
 	} catch (error) {
 		throw error as AxiosError;
 	}

@@ -1,4 +1,4 @@
-import { getPostById, getPostBySlug } from "@/queries/post.queries";
+import { getPostById, getPostBySlug, getPostByHashtag } from "@/queries/post.queries";
 import { useQuery } from "@tanstack/react-query";
 
 export const usePost = (postId?: string) =>
@@ -14,3 +14,10 @@ export const usePostBySlug = (username?: string, slug?: string) =>
 		queryFn: () => getPostBySlug(username!, slug!),
 		enabled: !!(username && slug),
 	});
+export const usePostByHashtag = (hashtag?: string) =>{
+	return useQuery({
+		queryKey: ["hashtags", hashtag],
+		queryFn: () => getPostByHashtag(hashtag!),
+		enabled: !!hashtag,
+	});
+}

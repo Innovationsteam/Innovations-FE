@@ -16,10 +16,13 @@ import ArticleSkeleton from "./ArticleSkeleton";
 import { useUserPosts } from "@/hooks/posts/useUserPosts";
 import PostSkeleton from "@/components/Dashboard/PostList/postskeleton";
 import { Post } from "@/components/Post";
-import { useUserStore } from "@/store/user";
+import { useUser } from "@/store/user";
+import { generateDescription } from "@/lib/keywords";
+import { Helmet } from "react-helmet";
+
 const Article = () => {
 	const { openModal } = useModalActions();
-	const user = useUserStore((s) => s.user);
+	const user = useUser();
 	const { username, slug } = useParams<{ username: string; slug: string }>();
 
 	const { data: post, isPending } = usePostBySlug(username, slug);
@@ -33,14 +36,36 @@ const Article = () => {
 		?.split(/[\s,#]+/)
 		.map((tag: string) => tag.replace("#", ""))
 		.filter((tag: string) => tag.trim() !== "");
+	function convertHashtags(input: string) {
+		const items = input.split(",");
 
+		const cleanedItems = items.map((item) => item.replace("#", "").trim());
+
+		return cleanedItems.map((item) => `"${item}"`).join(", ");
+	}
 	if (isPending) return <ArticleSkeleton />;
-	if (!post) return <p className="text-center text-lg font-semibold">Post not found</p>;
+	if (!post)
+		return (
+			<div className="flex h-screen items-center">
+				<p className="text-center text-lg font-semibold">No Post Found</p>
+			</div>
+		);
 
 	return (
 		<div>
 			<section className="py-10">
 				<Container className="max-w-[992px]">
+					<Helmet>
+						<title>{post?.title}</title>
+						<meta
+							name="description"
+							content={generateDescription(post?.content)}
+						/>
+						<meta
+							name="keywords"
+							content={convertHashtags(post?.hashtags)}
+						/>
+					</Helmet>
 					<Link
 						to="/feed"
 						className="mr-auto flex items-center gap-x-2"
@@ -59,7 +84,10 @@ const Article = () => {
 							<span>{new Date(post.publishedDate).toLocaleDateString()}</span>
 							<span>·</span>
 						</p>
-						<h1 className="my-1 font-roboto text-3xl text-[32px] font-bold capitalize text-[#141414] md:text-[42px] md:leading-[52px]">{post.title}</h1>
+						<h1
+							className="my-1 font-roboto text-3xl text-[32px] font-bold capitalize text-[#141414] md:text-[42px] md:leading-[52px]"
+							dangerouslySetInnerHTML={{ __html: convertToOriginalFormat(post.title) }}
+						/>
 						{/* <h2 className="font-roboto text-sm md:text-base lg:text-lg">101 ways on how to build your faith</h2> */}
 					</header>
 					<div className="relative my-10 h-[238px] md:h-[400px]">

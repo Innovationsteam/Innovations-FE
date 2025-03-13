@@ -31,7 +31,11 @@ export const MiniPost = ({ content, title, author, slug }: MiniPostProps) => {
 					</div>
 				</div> */}
 			<div>
-				<span className="font-semibold text-[#141414CC]">{title}</span>
+				<span
+					className="font-semibold text-[#141414CC]"
+					dangerouslySetInnerHTML={{ __html: convertToOriginalFormat(title) }}
+				/>
+
 				<p
 					className="line-clamp-4 max-w-[273px] text-xs leading-5 text-[#14141499]"
 					dangerouslySetInnerHTML={{ __html: convertToOriginalFormat(content) }}

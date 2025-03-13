@@ -1,5 +1,5 @@
 import { LoginFormData } from "@/components/LoginForm";
-import { SignUpFormData } from "@/components/SignUpForm";
+import { SignUpFormData } from "@/types/auth.types";
 import client from "@/lib/axios";
 import { OTPFormData } from "@/pages/VerifyOTP";
 import { LoginResponse, SignUpResponse, ResetPassword } from "@/types/auth.types";

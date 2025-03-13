@@ -1,5 +1,7 @@
 ///////Worked On
 import { useLikePost } from "@/hooks/posts/useLikePost";
+import { ModalType, useModalActions } from "@/store/modal";
+import { useUser } from "@/store/user";
 import { motion } from "framer-motion";
 
 interface Props {
@@ -10,11 +12,22 @@ interface Props {
 
 export const Like = ({ postId, isLiked, likes }: Props) => {
 	const { mutate: likePost, isPending } = useLikePost();
+	const user = useUser();
+	const { openModal } = useModalActions();
+
+	const handleLike = () => {
+		if (!user) {
+			openModal(ModalType.WARNING_LOGIN);
+			return;
+		}
+
+		likePost(postId);
+	};
 
 	return (
 		<button
 			disabled={isPending}
-			onClick={() => likePost(postId)}
+			onClick={handleLike}
 			className="flex items-center gap-x-1"
 		>
 			{isLiked ? (

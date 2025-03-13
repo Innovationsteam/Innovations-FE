@@ -1,4 +1,4 @@
-///////Worked On
+import { useState } from "react"; // Import useState
 import { cn } from "@/utils/helper";
 import Document from "@tiptap/extension-document";
 import Placeholder from "@tiptap/extension-placeholder";
@@ -6,14 +6,17 @@ import Underline from "@tiptap/extension-underline";
 import { Editor, EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useModalData } from "@/store/modal";
+import { formatSplit } from "@/utils/helper";
+import { useNoteCreate, useNoteUpdate } from "@/hooks/posts/useNotes";
+import { WordCountExtension } from "@/lib/wordCount";
+
 const CustomDocument = Document.extend({
 	content: "heading block*",
 });
-import { formatSplit } from "@/utils/helper";
-import { useNoteCreate, useNoteUpdate } from "@/hooks/posts/useNotes";
 
 const PersonalNoteForm = () => {
 	const { postId, notes } = useModalData() || {};
+	const [isWordCountExceeded, setIsWordCountExceeded] = useState(false); // State to track word count
 
 	const editor = useEditor({
 		extensions: [
@@ -29,10 +32,10 @@ const PersonalNoteForm = () => {
 					if (node.type.name === "heading") {
 						return "Title";
 					}
-
 					return "Type your note here";
 				},
 			}),
+			WordCountExtension(setIsWordCountExceeded), 
 		],
 		content: notes?.[0] ? `${notes?.[0]?.title} <p>${notes?.[0]?.content}</p>` : ``,
 		editorProps: {
@@ -60,23 +63,25 @@ const PersonalNoteForm = () => {
 
 	return (
 		<div className="mt-6 flex h-full flex-col">
-			<div className="scrollbar-hide flex-1 overflow-y-auto">
+			<div className="flex-1 overflow-y-auto scrollbar-hide">
 				<EditorContent editor={editor} />
 			</div>
 			<div className="flex">
 				{notes?.[0] ? (
 					<button
 						type="button"
-						className="ml-auto w-full max-w-[100px] rounded-lg bg-[#04BF87] py-2 font-raleway text-sm font-semibold text-white md:py-[10px] md:text-base"
+						className={`ml-auto w-full max-w-[100px] rounded-lg  ${isWordCountExceeded ? "bg-gray-700" : "bg-[#04BF87]"} py-2 font-raleway text-sm font-semibold text-white text-white md:py-[10px] md:text-base`}
 						onClick={update}
+						disabled={isWordCountExceeded}
 					>
 						Update
 					</button>
 				) : (
 					<button
 						type="button"
-						className="ml-auto w-full max-w-[100px] rounded-lg bg-[#04BF87] py-2 font-raleway text-sm font-semibold text-white md:py-[10px] md:text-base"
+						className={`ml-auto w-full max-w-[100px] rounded-lg  ${isWordCountExceeded ? "bg-gray-700" : "bg-[#04BF87]"} py-2 font-raleway text-sm font-semibold text-white text-white md:py-[10px] md:text-base`}
 						onClick={publish}
+						disabled={isWordCountExceeded}
 					>
 						Save
 					</button>
