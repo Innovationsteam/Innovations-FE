@@ -17,6 +17,8 @@ import { useUserPosts } from "@/hooks/posts/useUserPosts";
 import PostSkeleton from "@/components/Dashboard/PostList/postskeleton";
 import { Post } from "@/components/Post";
 import { useUser } from "@/store/user";
+import { generateDescription } from "@/lib/keywords";
+import { Helmet } from "react-helmet";
 
 const Article = () => {
 	const { openModal } = useModalActions();
@@ -34,7 +36,13 @@ const Article = () => {
 		?.split(/[\s,#]+/)
 		.map((tag: string) => tag.replace("#", ""))
 		.filter((tag: string) => tag.trim() !== "");
+	function convertHashtags(input: string) {
+		const items = input.split(",");
 
+		const cleanedItems = items.map((item) => item.replace("#", "").trim());
+
+		return cleanedItems.map((item) => `"${item}"`).join(", ");
+	}
 	if (isPending) return <ArticleSkeleton />;
 	if (!post)
 		return (
@@ -47,6 +55,17 @@ const Article = () => {
 		<div>
 			<section className="py-10">
 				<Container className="max-w-[992px]">
+					<Helmet>
+						<title>{post?.title}</title>
+						<meta
+							name="description"
+							content={generateDescription(post?.content)}
+						/>
+						<meta
+							name="keywords"
+							content={convertHashtags(post?.hashtags)}
+						/>
+					</Helmet>
 					<Link
 						to="/feed"
 						className="mr-auto flex items-center gap-x-2"
@@ -69,7 +88,6 @@ const Article = () => {
 							className="my-1 font-roboto text-3xl text-[32px] font-bold capitalize text-[#141414] md:text-[42px] md:leading-[52px]"
 							dangerouslySetInnerHTML={{ __html: convertToOriginalFormat(post.title) }}
 						/>
-						
 						{/* <h2 className="font-roboto text-sm md:text-base lg:text-lg">101 ways on how to build your faith</h2> */}
 					</header>
 					<div className="relative my-10 h-[238px] md:h-[400px]">

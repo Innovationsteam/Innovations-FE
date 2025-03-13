@@ -104,7 +104,7 @@ const SignUpForm = () => {
 					<Input
 						{...register("password")}
 						id="password"
-						type="password"
+						type={showPassword ? "text" : "password"}
 						placeholder="Enter your password"
 					/>
 					<div className="absolute inset-y-0 right-0 flex items-center pr-3">

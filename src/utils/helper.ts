@@ -39,6 +39,27 @@ export function formatDate(timestamp: string): string {
 	return date.toLocaleDateString("en-US", options);
 }
 
+export function formatTime(inputDate: string): string {
+	const date = new Date(inputDate);
+	const now = new Date();
+
+	const diffInMs = now.getTime() - date.getTime();
+
+	const diffInMinutes = Math.floor(diffInMs / (1000 * 60));
+	const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+
+	if (diffInMinutes < 1) {
+		return "Just now";
+	} else if (diffInMinutes < 60) {
+		return `${diffInMinutes} min${diffInMinutes > 1 ? "s" : ""} ago`;
+	} else if (diffInDays >= 1 && diffInDays <= 3) {
+		return `${diffInDays} day${diffInDays > 1 ? "s" : ""} ago`;
+	} else {
+		const options: Intl.DateTimeFormatOptions = { year: "numeric", month: "long", day: "numeric" };
+		return date.toLocaleDateString("en-US", options);
+	}
+}
+
 export function convertToOriginalFormat(htmlString: string) {
 	const tempDiv = document.createElement("div");
 	tempDiv.innerHTML = htmlString;

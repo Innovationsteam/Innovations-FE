@@ -11,14 +11,15 @@ import { Outlet, useParams } from "react-router-dom";
 import Container from "../components/Container";
 import { MiniNav, MiniNavMobile } from "../components/MiniNav";
 import Skeleton from "react-loading-skeleton";
+import NumberFlow from "@number-flow/react";
+import FadeIn from "@/utils/fadeIn";
+
 const Profile = () => {
 	const { username } = useParams();
 	const { openModal } = useModalActions();
 	const loggedInUser = useUser();
 
 	const { data: userData, isPending: isUserPending } = useUserProfile(loggedInUser?.username === username ? "me" : username);
-
-	console.log(userData?.name);
 
 	const { data: connectionsData, isPending: isConnectionsPending } = useUserConnections(username!);
 
@@ -29,17 +30,19 @@ const Profile = () => {
 		<Container>
 			<header className="mt-3 h-[183px] overflow-hidden rounded-xl md:mt-9 md:h-[400px]">
 				{isUserPending ? (
-						<Skeleton
-							height="100%"
-							width="100%"
-						/>
-					) : (
+					<Skeleton
+						height="100%"
+						width="100%"
+					/>
+				) : (
+					<FadeIn duration={150}>
 						<img
 							className="h-full w-full object-cover object-bottom"
-							src={loggedInUser?.username === username ? loggedInUser?.backdropImg : userData?.backdropImg ?? "/assets/images/writerHeader.jpg"}
+							src={loggedInUser?.username === username ? loggedInUser?.backdropImg ?? "/assets/images/writerHeader.jpg" : userData?.backdropImg ?? "/assets/images/writerHeader.jpg"}
 							alt="Header"
 						/>
-					)}
+					</FadeIn>
+				)}
 			</header>
 			<div className="relative mt-6 h-full grid-cols-[140px_auto] items-start md:mt-12 md:px-8 lg:grid">
 				<div className="sticky top-0 hidden lg:block">
@@ -60,8 +63,14 @@ const Profile = () => {
 									<h1 className="font-roboto text-[16px] text-xl font-semibold md:text-3xl">{userData?.name}</h1>
 									{connectionsData?.followers && connectionsData?.following ? (
 										<div className="mt-1 flex items-center gap-x-2">
-											<p className="text-xs text-[#14141499] md:text-base">{connectionsData?.followers?.length || 0} followers</p>
-											<p className="text-xs text-[#14141499] md:text-base">{connectionsData?.following?.length || 0} following</p>
+											<p className="text-xs text-[#14141499] md:text-base">
+												{" "}
+												<NumberFlow value={connectionsData?.followers?.length || 0} /> followers{" "}
+											</p>
+											<p className="text-xs text-[#14141499] md:text-base">
+												{" "}
+												<NumberFlow value={connectionsData?.following?.length || 0} /> following{" "}
+											</p>
 										</div>
 									) : null}
 								</div>

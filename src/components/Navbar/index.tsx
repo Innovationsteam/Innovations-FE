@@ -1,8 +1,8 @@
 import { useUserProfile } from "@/hooks/useUserProfile";
-import { useUser } from "@/store/user";
+import { useUser  } from "@/store/user";
 import classNames from "classnames";
 import { AnimatePresence, motion } from "framer-motion";
-import { Home, PencilLine } from "lucide-react";
+import { Home, PencilLine, Search, Bell } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useOnClickOutside } from "usehooks-ts";
@@ -14,7 +14,7 @@ const NavBar = () => {
 	const [scrolled, setScrolled] = useState(false);
 	const navigate = useNavigate();
 	const { data: user, isPending } = useUserProfile();
-	const isLoggedIn = useUser();
+	const isLoggedIn = useUser ();
 
 	const [showSignUp, setShowSignUp] = useState(false);
 	const guestDropDownRef = useRef(null);
@@ -22,7 +22,29 @@ const NavBar = () => {
 	const hanldeClickOutside = () => setShowSignUp(false);
 
 	useOnClickOutside(guestDropDownRef, hanldeClickOutside);
+	const [size, setSize] = useState(26);
 
+	useEffect(() => {
+		const handleResize = () => {
+			if (window.innerWidth < 640) {
+				setSize(18);
+			} else if (window.innerWidth < 768) {
+				setSize(20);
+			} else if (window.innerWidth < 1024) {
+				setSize(24);
+			} else {
+				setSize(26);
+			}
+		};
+
+		handleResize();
+
+		window.addEventListener("resize", handleResize);
+
+		return () => {
+			window.removeEventListener("resize", handleResize);
+		};
+	}, []);
 	useEffect(() => {
 		const onScroll = () => {
 			if (window.scrollY > 40) {
@@ -50,45 +72,27 @@ const NavBar = () => {
 			<Container className="flex items-center py-5">
 				<Link
 					to="/feed"
-					className="font-roboto text-xl font-semibold uppercase leading-6 text-[#141414]"
+					className="font-roboto text-lg md:text-xl lg:text-2xl font-semibold uppercase leading-6 text-[#141414]"
 				>
 					<span className="text-[#04BF87]">Christian</span>Writes
 				</Link>
 				<div className="ml-auto flex items-center gap-x-3">
+					<Link to={"/search"}>
+						<Search size={size} color="#04bf87" />
+					</Link>
 					<Link
 						to="/feed"
-						className="font-roboto text-xl font-semibold uppercase leading-6 text-[#141414]"
+						className="font-roboto text-xl md:text-2xl lg:text-3xl font-semibold uppercase leading-6 text-[#141414]"
 					>
-						<Home
-							size={26}
-							color="#04bf87"
-						/>
+						<Home size={size} color="#04bf87" />
 					</Link>
 					<button
 						className=""
 						onClick={() => navigate("/article/new")}
 					>
-						{/* <img
-							className="ml-auto size-6"
-							src="/assets/icons/pencil-icon.svg"
-							alt="Write icon"
-						/>{" "} */}
-						<PencilLine
-							size={26}
-							color="#04bf87"
-						/>
+						<PencilLine size={size} color="#04bf87" />
 					</button>
-					{/* <img
-						className="ml-auto size-6 object-cover"
-						src="/assets/icons/search.svg"
-						alt="search icon"
-					/> */}
-
-					<img
-						className="size-6 object-cover"
-						src="/assets/icons/bell.svg"
-						alt="notification"
-					/>
+					<Bell size={size} color="#04bf87" />
 
 					{isLoggedIn ? (
 						<Link to={`/cw/${user?.username}`}>
@@ -96,8 +100,9 @@ const NavBar = () => {
 								fullName={user?.name}
 								image={user?.profileImg}
 								isLoading={isPending}
+								className="w-6 h-6 md:w-8 md:h-8 lg:w-8 lg:h-8" // Responsive size for profile image
 							/>
-						</Link>
+					 </Link>
 					) : (
 						<div
 							ref={guestDropDownRef}
@@ -108,7 +113,7 @@ const NavBar = () => {
 								className="size-8 shrink-0 rounded-full object-cover"
 							>
 								<img
-									className="w-full object-cover"
+									className="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 object-cover"
 									src="/assets/images/guest.png"
 									alt="Guest user image"
 								/>
@@ -124,7 +129,7 @@ const NavBar = () => {
 										<div className="flex items-center gap-x-3">
 											<div className="size-10 shrink-0 rounded-full object-cover md:size-[55px]">
 												<img
-													className="w-full object-cover"
+													className="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 object-cover"
 													src="/assets/images/guest.png"
 													alt="Guest user image"
 												/>
