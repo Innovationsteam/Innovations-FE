@@ -1,5 +1,5 @@
 import { useUserProfile } from "@/hooks/useUserProfile";
-import { useUser  } from "@/store/user";
+import { useUser } from "@/store/user";
 import classNames from "classnames";
 import { AnimatePresence, motion } from "framer-motion";
 import { Home, PencilLine, Search, Bell } from "lucide-react";
@@ -14,7 +14,7 @@ const NavBar = () => {
 	const [scrolled, setScrolled] = useState(false);
 	const navigate = useNavigate();
 	const { data: user, isPending } = useUserProfile();
-	const isLoggedIn = useUser ();
+	const isLoggedIn = useUser();
 
 	const [showSignUp, setShowSignUp] = useState(false);
 	const guestDropDownRef = useRef(null);
@@ -72,27 +72,39 @@ const NavBar = () => {
 			<Container className="flex items-center py-5">
 				<Link
 					to="/feed"
-					className="font-roboto text-lg md:text-xl lg:text-2xl font-semibold uppercase leading-6 text-[#141414]"
+					className="font-roboto text-lg font-semibold uppercase leading-6 text-[#141414] md:text-xl lg:text-2xl"
 				>
 					<span className="text-[#04BF87]">Christian</span>Writes
 				</Link>
 				<div className="ml-auto flex items-center gap-x-3">
 					<Link to={"/search"}>
-						<Search size={size} color="#04bf87" />
+						<Search
+							size={size}
+							color="#04bf87"
+						/>
 					</Link>
 					<Link
 						to="/feed"
-						className="font-roboto text-xl md:text-2xl lg:text-3xl font-semibold uppercase leading-6 text-[#141414]"
+						className="font-roboto text-xl font-semibold uppercase leading-6 text-[#141414] md:text-2xl lg:text-3xl"
 					>
-						<Home size={size} color="#04bf87" />
+						<Home
+							size={size}
+							color="#04bf87"
+						/>
 					</Link>
 					<button
 						className=""
 						onClick={() => navigate("/article/new")}
 					>
-						<PencilLine size={size} color="#04bf87" />
+						<PencilLine
+							size={size}
+							color="#04bf87"
+						/>
 					</button>
-					<Bell size={size} color="#04bf87" />
+					<Bell
+						size={size}
+						color="#04bf87"
+					/>
 
 					{isLoggedIn ? (
 						<Link to={`/cw/${user?.username}`}>
@@ -100,9 +112,9 @@ const NavBar = () => {
 								fullName={user?.name}
 								image={user?.profileImg}
 								isLoading={isPending}
-								className="w-6 h-6 md:w-8 md:h-8 lg:w-8 lg:h-8" // Responsive size for profile image
+								className="h-6 w-6 md:h-8 md:w-8 lg:h-8 lg:w-8" // Responsive size for profile image
 							/>
-					 </Link>
+						</Link>
 					) : (
 						<div
 							ref={guestDropDownRef}
@@ -113,7 +125,7 @@ const NavBar = () => {
 								className="size-8 shrink-0 rounded-full object-cover"
 							>
 								<img
-									className="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 object-cover"
+									className="h-8 w-8 object-cover md:h-10 md:w-10 lg:h-12 lg:w-12"
 									src="/assets/images/guest.png"
 									alt="Guest user image"
 								/>
@@ -129,7 +141,7 @@ const NavBar = () => {
 										<div className="flex items-center gap-x-3">
 											<div className="size-10 shrink-0 rounded-full object-cover md:size-[55px]">
 												<img
-													className="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 object-cover"
+													className="h-8 w-8 object-cover md:h-10 md:w-10 lg:h-12 lg:w-12"
 													src="/assets/images/guest.png"
 													alt="Guest user image"
 												/>

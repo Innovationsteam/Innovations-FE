@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useUpdateProfile } from "@/hooks/useUpdateProfile";
 import { useUserProfile } from "@/hooks/useUserProfile";
 import { ModalType, useActiveModal, useModalActions } from "@/store/modal";

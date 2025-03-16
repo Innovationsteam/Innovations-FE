@@ -10,7 +10,7 @@ const Settings = () => {
 		{ property: "Email Address", value: user?.email },
 		{ property: "User name", value: user?.username },
 	];
-	const [_, , removeCookie] = useCookies(["access_token"]);
+	const [, , removeCookie] = useCookies(["access_token"]);
 
 	const navigate = useNavigate();
 

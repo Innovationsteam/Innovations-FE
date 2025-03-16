@@ -8,6 +8,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Container from "../components/Container";
 import TipTapEditor from "../components/Editor/TipTapEditor";
 import { asDraft } from "@/types/post.types";
+
 const CreateArticle = () => {
 	const { openModal } = useModalActions();
 	const [article, setArticle] = useState(``);
@@ -18,7 +19,6 @@ const CreateArticle = () => {
 	const uploadContainerRef = useRef(null);
 	const fileInputRef = useRef<HTMLInputElement>(null!);
 	const [selectedFile, setSelectedFile] = useState<File | null>(null);
-	//////////////////////
 
 	const location = useLocation();
 	const { title, body, imageUrl } = location.state || {};
@@ -34,7 +34,7 @@ const CreateArticle = () => {
 				setFile(imageUrl);
 			}
 		}
-	}, [location.state]);
+	}, [body, imageUrl, location.state, title]);
 
 	const { mutate } = useDraftArticle();
 	const onFileChange = (e: ChangeEvent<HTMLInputElement>) => {

@@ -1,3 +1,4 @@
+import FadeIn from "@/components/FadeIn";
 import FollowButton from "@/components/FollowButton";
 import UserProfileSkeleton from "@/components/Skeletons/UserProfileSkeleton";
 import UserProfileImage from "@/components/UserProfileImage";
@@ -7,12 +8,11 @@ import { useUserProfile } from "@/hooks/useUserProfile";
 import { ModalType, useModalActions } from "@/store/modal";
 import { useUser } from "@/store/user";
 import { MY_PROFILE_PAGE, PUBLIC_PROFILE_PAGE } from "@/utils/constants";
+import NumberFlow from "@number-flow/react";
+import Skeleton from "react-loading-skeleton";
 import { Outlet, useParams } from "react-router-dom";
 import Container from "../components/Container";
 import { MiniNav, MiniNavMobile } from "../components/MiniNav";
-import Skeleton from "react-loading-skeleton";
-import NumberFlow from "@number-flow/react";
-import FadeIn from "@/utils/fadeIn";
 
 const Profile = () => {
 	const { username } = useParams();

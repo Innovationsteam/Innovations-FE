@@ -9,7 +9,7 @@ import { FaRegComment, FaRegEye, FaRegHeart } from "react-icons/fa";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { Link } from "react-router-dom";
-import FadeIn from "@/utils/fadeIn";
+import FadeIn from "../FadeIn";
 
 interface PostProps extends PostItem {
 	className?: string;
