@@ -19,7 +19,6 @@ const CreateArticle = () => {
 	const uploadContainerRef = useRef(null);
 	const fileInputRef = useRef<HTMLInputElement>(null!);
 	const [selectedFile, setSelectedFile] = useState<File | null>(null);
-	//////////////////////
 
 	const location = useLocation();
 	const { title, body, imageUrl } = location.state || {};
@@ -35,7 +34,7 @@ const CreateArticle = () => {
 				setFile(imageUrl);
 			}
 		}
-	}, [location.state]);
+	}, [body, imageUrl, location.state, title]);
 
 	const { mutate } = useDraftArticle();
 	const onFileChange = (e: ChangeEvent<HTMLInputElement>) => {

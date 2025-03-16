@@ -28,6 +28,14 @@ export const getPostBySlug = async (username: string, slug: string) => {
 		throw error as AxiosError;
 	}
 };
+export const getPostByHashtag = async (hashtag: string) => {
+	try {
+		const res = await client.get<IResponse<PostsResponse>>(`/posts/?hashtags=${hashtag}`);
+		return res.data.data;
+	} catch (error) {
+		throw error as AxiosError;
+	}
+};
 
 export const getPostById = async (postId: string) => {
 	try {

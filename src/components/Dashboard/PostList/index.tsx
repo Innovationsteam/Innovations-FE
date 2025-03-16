@@ -21,7 +21,7 @@ const PostList = () => {
 						</div>
 					}
 				>
-					<ul className="grid h-full gap-y-4">
+					<ul className="grid h-full">
 						{posts?.pages.map(({ data }) => (
 							<>
 								{data.posts.map((item: IPost) => (

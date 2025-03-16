@@ -74,7 +74,7 @@ const fetchDynamicRoutes = async () => {
   }
 
   return posts.map((article) => ({
-    url: `/article/${article?.author.username}/${article?.slug}`,
+    url: `/cw/${article?.author.username}/${article?.slug}`,
     changefreq: "weekly",
     priority: 0.9,
   }));

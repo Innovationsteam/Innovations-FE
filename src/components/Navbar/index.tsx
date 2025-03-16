@@ -1,8 +1,8 @@
 import { useUserProfile } from "@/hooks/useUserProfile";
-import { useUser } from "@/store/user";
 import { cn } from "@/lib/utils";
+import { useUser } from "@/store/user";
 import { AnimatePresence, motion } from "framer-motion";
-import { Home, PencilLine } from "lucide-react";
+import { Home, PencilLine, Search } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useOnClickOutside } from "usehooks-ts";
@@ -21,7 +21,29 @@ const NavBar = () => {
 	const hanldeClickOutside = () => setShowSignUp(false);
 
 	useOnClickOutside(guestDropDownRef, hanldeClickOutside);
+	const [size, setSize] = useState(26);
 
+	useEffect(() => {
+		const handleResize = () => {
+			if (window.innerWidth < 640) {
+				setSize(18);
+			} else if (window.innerWidth < 768) {
+				setSize(20);
+			} else if (window.innerWidth < 1024) {
+				setSize(24);
+			} else {
+				setSize(26);
+			}
+		};
+
+		handleResize();
+
+		window.addEventListener("resize", handleResize);
+
+		return () => {
+			window.removeEventListener("resize", handleResize);
+		};
+	}, []);
 	useEffect(() => {
 		const onScroll = () => {
 			if (window.scrollY > 40) {
@@ -49,17 +71,23 @@ const NavBar = () => {
 			<Container className="flex items-center py-5">
 				<Link
 					to="/feed"
-					className="font-roboto text-xl font-semibold uppercase leading-6 text-[#141414]"
+					className="font-roboto text-lg font-semibold uppercase leading-6 text-[#141414] md:text-xl lg:text-2xl"
 				>
 					<span className="text-[#04BF87]">Christian</span>Writes
 				</Link>
 				<div className="ml-auto flex items-center gap-x-3">
+					<Link to={"/search"}>
+						<Search
+							size={size}
+							color="#04bf87"
+						/>
+					</Link>
 					<Link
 						to="/feed"
 						className="hidden sm:block"
 					>
 						<Home
-							size={26}
+							size={size}
 							color="#04bf87"
 						/>
 					</Link>
@@ -68,7 +96,7 @@ const NavBar = () => {
 						className="hidden sm:block"
 					>
 						<PencilLine
-							size={26}
+							size={size}
 							color="#04bf87"
 						/>
 					</Link>
@@ -84,6 +112,7 @@ const NavBar = () => {
 								fullName={user?.name}
 								image={user?.profileImg}
 								isLoading={isPending}
+								className="h-6 w-6 md:h-8 md:w-8 lg:h-8 lg:w-8" // Responsive size for profile image
 							/>
 						</Link>
 					) : (
@@ -96,7 +125,7 @@ const NavBar = () => {
 								className="size-8 shrink-0 rounded-full object-cover"
 							>
 								<img
-									className="w-full object-cover"
+									className="h-8 w-8 object-cover md:h-10 md:w-10 lg:h-12 lg:w-12"
 									src="/assets/images/guest.png"
 									alt="Guest user image"
 								/>
@@ -112,7 +141,7 @@ const NavBar = () => {
 										<div className="flex items-center gap-x-3">
 											<div className="size-10 shrink-0 rounded-full object-cover md:size-[55px]">
 												<img
-													className="w-full object-cover"
+													className="h-8 w-8 object-cover md:h-10 md:w-10 lg:h-12 lg:w-12"
 													src="/assets/images/guest.png"
 													alt="Guest user image"
 												/>

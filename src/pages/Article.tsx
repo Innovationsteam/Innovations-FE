@@ -17,6 +17,8 @@ import { useUserPosts } from "@/hooks/posts/useUserPosts";
 import PostSkeleton from "@/components/Dashboard/PostList/postskeleton";
 import { Post } from "@/components/Post";
 import { useUser } from "@/store/user";
+import { generateDescription } from "@/lib/keywords";
+import { Helmet } from "react-helmet";
 
 const Article = () => {
 	const { openModal } = useModalActions();
@@ -27,15 +29,30 @@ const Article = () => {
 	const { data: writer, isFetching } = useUserPosts(username);
 	const { data: connectionsData, isPending: isConnectionsPending } = useUserConnections(username!);
 
+	console.log(post);
+
 	const isFollowing = connectionsData?.following?.some((follower) => follower.username === user?.username) || false;
 	const isLiked = post?.postLikes.some((likes) => likes.user.username === user?.username) || false;
 
 	const labels = post?.hashtags
-		?.split(/[\s,#]+/)
-		.map((tag: string) => tag.replace("#", ""))
-		.filter((tag: string) => tag.trim() !== "");
+		? post.hashtags
+				.split(/[\s,#]+/)
+				.map((tag: string) => tag.replace("#", ""))
+				.filter((tag: string) => tag.trim() !== "")
+		: null;
+
+	function convertHashtags(input?: string) {
+		if (!input) return "";
+
+		const items = input.split(",");
+
+		const cleanedItems = items.map((item) => item.replace("#", "").trim());
+
+		return cleanedItems.map((item) => `"${item}"`).join(", ");
+	}
 
 	if (isPending) return <ArticleSkeleton />;
+
 	if (!post)
 		return (
 			<div className="flex h-screen items-center">
@@ -47,6 +64,17 @@ const Article = () => {
 		<div>
 			<section className="py-10">
 				<Container className="max-w-[992px]">
+					<Helmet>
+						<title>{post?.title}</title>
+						<meta
+							name="description"
+							content={generateDescription(post?.content)}
+						/>
+						<meta
+							name="keywords"
+							content={convertHashtags(post?.hashtags)}
+						/>
+					</Helmet>
 					<Link
 						to="/feed"
 						className="mr-auto flex items-center gap-x-2"
@@ -84,12 +112,14 @@ const Article = () => {
 						dangerouslySetInnerHTML={{ __html: convertToOriginalFormat(post.content) }}
 					/>
 					<div className="my-4 flex flex-wrap justify-center gap-2">
-						{labels?.map((text: string) => (
-							<Tag
-								key={text}
-								text={text}
-							/>
-						))}
+						{labels
+							? labels.map((text: string) => (
+									<Tag
+										key={text}
+										text={text}
+									/>
+								))
+							: null}
 					</div>
 					<div className="mt-5 flex items-center justify-between">
 						<div className="flex items-center gap-x-5">

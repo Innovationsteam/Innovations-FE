@@ -59,6 +59,10 @@ const createRouter = (isLoggedIn: boolean) =>
 							element: <Home />,
 						},
 						{
+							path: "search",
+							element: <Home />,
+						},
+						{
 							path: "cw/:postId",
 							element: <Article />,
 						},
