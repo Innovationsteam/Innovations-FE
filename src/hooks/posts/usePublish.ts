@@ -16,7 +16,7 @@ export const usePublishArticle = () => {
 		onSuccess: (data) => {
 			toast.success("Article published successfully! 🎉");
 			closeModal();
-			navigate(`/article/${user?.username}/${data}`, {
+			navigate(`/cw/${user?.username}/${data}`, {
 				state: data,
 			});
 		},

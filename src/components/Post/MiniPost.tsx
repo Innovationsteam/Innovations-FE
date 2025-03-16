@@ -1,4 +1,4 @@
-import { convertToOriginalFormat } from "@/utils/helper";
+import { convertToOriginalFormat } from "@/lib/utils";
 import { Link } from "react-router-dom";
 interface MiniPostProps {
 	image: string;
@@ -16,7 +16,7 @@ interface MiniPostProps {
 export const MiniPost = ({ content, title, author, slug }: MiniPostProps) => {
 	return (
 		<Link
-			to={`/article/${author?.username}/${slug}`}
+			to={`/cw/${author?.username}/${slug}`}
 			className="font-roboto"
 		>
 			{/* <div className="mb-1 flex items-center gap-x-2">

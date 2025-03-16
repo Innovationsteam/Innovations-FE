@@ -2,7 +2,7 @@
 import { useUserAvatar } from "@/hooks/useUserAvatar";
 import { useUser } from "@/store/user";
 import { PostItem } from "@/types/post.types";
-import { cn, convertToOriginalFormat, formatDate } from "@/utils/helper";
+import { cn, convertToOriginalFormat, formatDate } from "@/lib/utils";
 import { useState } from "react";
 import { BsShare } from "react-icons/bs";
 import { FaRegComment, FaRegEye, FaRegHeart } from "react-icons/fa";
@@ -45,7 +45,7 @@ export const Post = ({ id, author, publishedDate, content, image, likes, socialM
 				/>
 			</Link>
 			<Link
-				to={`/article/${author?.username ? author.username : user?.username}/${slug}`}
+				to={`/cw/${author?.username ? author.username : user?.username}/${slug}`}
 				state={{ postId: id }}
 			>
 				<div className="my-5 max-h-[202px] overflow-hidden rounded-lg">

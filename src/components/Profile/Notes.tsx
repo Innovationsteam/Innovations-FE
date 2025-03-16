@@ -1,7 +1,7 @@
 import SectionContainer from "../../layouts/SectionContainer";
 import { useAllNotes } from "@/hooks/posts/useAllNotes";
 import { INotes, NoteProps } from "@/types/notes.types";
-import { convertComment } from "@/utils/helper";
+import { convertComment } from "@/lib/utils";
 import DraftSkeleton from "./DraftsSkeleton";
 import { Link } from "react-router-dom";
 const NotesList = () => {
@@ -25,7 +25,6 @@ const NotesList = () => {
 export default NotesList;
 
 const Note = ({ title, content, post }: NoteProps) => {
-
 	return (
 		<button className="group block w-full text-start">
 			<div className="flex items-start gap-x-2 pb-2 font-roboto sm:gap-x-5">
@@ -46,7 +45,7 @@ const Note = ({ title, content, post }: NoteProps) => {
 					Delete Note
 				</button>
 				<Link
-					to={`/article/${post?.author?.username}/${post?.slug}`}
+					to={`/cw/${post?.author?.username}/${post?.slug}`}
 					type="button"
 					className="rounded-lg border border-[#22222299] bg-[#1C4532] px-3 py-1 font-roboto text-sm text-white  md:text-base"
 				>

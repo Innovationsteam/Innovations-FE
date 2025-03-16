@@ -2,9 +2,9 @@ import { ModalType, useActiveModal, useModalActions, useModalData } from "@/stor
 import ModalContainer from "./ModalContainer";
 import { CircleX } from "lucide-react";
 
-const NotificationModal = () => {
-	const isOpen = useActiveModal(ModalType.NOTIFICATION);
-	const { title, description } = useModalData<ModalType.NOTIFICATION>();
+const AlertMessageModal = () => {
+	const isOpen = useActiveModal(ModalType.ALERT_MESSAGE);
+	const { title, description } = useModalData<ModalType.ALERT_MESSAGE>();
 	const { closeModal } = useModalActions();
 
 	return (
@@ -26,4 +26,4 @@ const NotificationModal = () => {
 	);
 };
 
-export default NotificationModal;
+export default AlertMessageModal;

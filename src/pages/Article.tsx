@@ -3,7 +3,7 @@
 import FollowButton from "@/components/FollowButton";
 import { useUserConnections } from "@/hooks/follow/useUserConnections";
 import { usePostBySlug } from "@/hooks/posts/usePost";
-import { convertToOriginalFormat } from "@/utils/helper";
+import { convertToOriginalFormat } from "@/lib/utils";
 import Skeleton from "react-loading-skeleton";
 import { Link, useParams } from "react-router-dom";
 import { ModalType, useModalActions } from "src/store/modal";
@@ -69,7 +69,7 @@ const Article = () => {
 							className="my-1 font-roboto text-3xl text-[32px] font-bold capitalize text-[#141414] md:text-[42px] md:leading-[52px]"
 							dangerouslySetInnerHTML={{ __html: convertToOriginalFormat(post.title) }}
 						/>
-						
+
 						{/* <h2 className="font-roboto text-sm md:text-base lg:text-lg">101 ways on how to build your faith</h2> */}
 					</header>
 					<div className="relative my-10 h-[238px] md:h-[400px]">
@@ -94,8 +94,12 @@ const Article = () => {
 					<div className="mt-5 flex items-center justify-between">
 						<div className="flex items-center gap-x-5">
 							<Like
-								likes={post.postLikes.length}
 								postId={post.id}
+								queryInfo={{
+									username,
+									slug,
+								}}
+								likes={post.likes}
 								isLiked={isLiked}
 							/>
 							<AddComment

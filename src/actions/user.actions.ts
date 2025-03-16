@@ -51,3 +51,12 @@ export const unfollow = async (username?: string) => {
 		throw error as AxiosError;
 	}
 };
+
+// export async function connectToPushService(subscription: PushSubscription) {
+// 	try {
+// 		const res = await client.post("/reminders/subscribe", subscription);
+// 		return res.data;
+// 	} catch (error) {
+// 		console.log((error as AxiosError).message);
+// 	}
+// }

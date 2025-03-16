@@ -1,6 +1,6 @@
 import { useFollowUser } from "@/hooks/follow/useFollowUser";
 import { useUnfollowUser } from "@/hooks/follow/useUnfollowUser";
-import { cn } from "@/utils/helper";
+import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 import { useUser } from "@/store/user";
 import { ModalType, useModalActions } from "@/store/modal";

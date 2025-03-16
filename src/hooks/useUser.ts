@@ -16,7 +16,7 @@ export const useLoginUser = () => {
 	return useMutation({
 		mutationFn: loginUser,
 		onSuccess: ({ data }) => {
-			if (!data.isActive) openModal(ModalType.NOTIFICATION, { title: "Email Verification", description: "Kindly check your email to verify your account" });
+			if (!data.isActive) openModal(ModalType.ALERT_MESSAGE, { title: "Email Verification", description: "Kindly check your email to verify your account" });
 			setUser(data);
 			toast.success("Login Successful");
 			setCookie("access_token", data.access_token, {

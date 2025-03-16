@@ -1,13 +1,14 @@
 ///////Worked On
-import { ModalType, useModalActions } from "@/store/modal";
-import { extractH1Content, extractPContent } from "@/utils/helper";
-import { ChangeEvent, useRef, useState, useEffect } from "react";
-import toast from "react-hot-toast";
 import { useDraftArticle } from "@/hooks/posts/usePublish";
-import { useNavigate, useLocation } from "react-router-dom";
+import { extractH1Content, extractPContent } from "@/lib/utils";
+import { ModalType, useModalActions } from "@/store/modal";
+import { asDraft } from "@/types/post.types";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
+import { useLocation, useNavigate } from "react-router-dom";
 import Container from "../components/Container";
 import TipTapEditor from "../components/Editor/TipTapEditor";
-import { asDraft } from "@/types/post.types";
+
 const CreateArticle = () => {
 	const { openModal } = useModalActions();
 	const [article, setArticle] = useState(``);

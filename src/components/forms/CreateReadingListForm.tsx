@@ -1,5 +1,4 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { READING_LIST_VISIBILITY } from "@/utils/constants";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -7,6 +6,7 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { useCreateReadingList } from "@/hooks/readingList/useCreateReadingList";
+import { READING_LIST_VISIBILITY } from "@/lib/constants";
 
 const schema = z.object({
 	name: z.string().min(2, { message: "Must be at least 2 characters" }).max(50, { message: "Cannot exceed 50 characters" }),

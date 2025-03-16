@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useUpdateProfile } from "@/hooks/useUpdateProfile";
 import { useUserProfile } from "@/hooks/useUserProfile";
 import { ModalType, useActiveModal, useModalActions } from "@/store/modal";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { CircleX } from "lucide-react";
 import { ChangeEvent, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -12,7 +12,6 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
 import ModalContainer from "./ModalContainer";
-import { CircleX } from "lucide-react";
 
 const schema = z.object({
 	name: z.string().min(2, { message: "Must be at least 2 characters" }).max(50, { message: "Cannot exceed 50 characters" }).optional(),

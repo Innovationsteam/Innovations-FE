@@ -9,16 +9,18 @@ import TermsAndConditionsModal from "@/components/Modal/TermsAndConditionsModal"
 import WarningLoginModal from "@/components/Modal/WarningLoginModal";
 import PageContainer from "@/components/PageContainer";
 import { ModalType, useActiveModal } from "@/store/modal";
-import { cn } from "@/utils/helper";
+import { cn } from "@/lib/utils";
 import { Outlet } from "react-router-dom";
 import ResetTokenSentModal from "@/components/Modal/ResetTokenSentModal";
-import NotificationModal from "@/components/Modal/NotificationModal";
+import AlertMessageModal from "@/components/Modal/AlertMessageModal";
+import NotificationsModal from "@/components/Modal/NotificationsModal";
+
 const AppLayout = () => {
 	const isOpen = useActiveModal(ModalType.NONE);
 	return (
 		<PageContainer
 			className={cn("relative", {
-				"h-screen overflow-hidden": !isOpen,
+				"h-screen w-[calc(100%_-_15px)] overflow-hidden": !isOpen,
 			})}
 		>
 			<Outlet />
@@ -32,7 +34,8 @@ const AppLayout = () => {
 			<EmailSentModal />
 			<WarningLoginModal />
 			<ResetTokenSentModal />
-			<NotificationModal />
+			<AlertMessageModal />
+			<NotificationsModal />
 		</PageContainer>
 	);
 };

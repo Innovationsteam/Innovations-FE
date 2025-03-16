@@ -1,14 +1,13 @@
 import { useState } from "react"; // Import useState
-import { cn } from "@/utils/helper";
+import { WordCountExtension, cn } from "@/lib/utils";
 import Document from "@tiptap/extension-document";
 import Placeholder from "@tiptap/extension-placeholder";
 import Underline from "@tiptap/extension-underline";
 import { Editor, EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useModalData } from "@/store/modal";
-import { formatSplit } from "@/utils/helper";
+import { formatSplit } from "@/lib/utils";
 import { useNoteCreate, useNoteUpdate } from "@/hooks/posts/useNotes";
-import { WordCountExtension } from "@/lib/wordCount";
 
 const CustomDocument = Document.extend({
 	content: "heading block*",
@@ -35,7 +34,7 @@ const PersonalNoteForm = () => {
 					return "Type your note here";
 				},
 			}),
-			WordCountExtension(setIsWordCountExceeded), 
+			WordCountExtension(setIsWordCountExceeded),
 		],
 		content: notes?.[0] ? `${notes?.[0]?.title} <p>${notes?.[0]?.content}</p>` : ``,
 		editorProps: {

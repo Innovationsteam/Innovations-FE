@@ -1,5 +1,5 @@
+import { pageTransition } from "@/lib/framer-default-animations";
 import { motion } from "framer-motion";
-import { pageTransition } from "../../utils/framer-default-animations";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 

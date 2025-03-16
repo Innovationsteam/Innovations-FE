@@ -1,4 +1,4 @@
-import { convertComment, formatDate } from "@/utils/helper";
+import { convertComment, formatDate } from "@/lib/utils";
 import { useUserAvatar } from "@/hooks/useUserAvatar";
 
 interface CommentProps {

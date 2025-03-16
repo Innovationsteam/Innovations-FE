@@ -6,12 +6,16 @@ import { motion } from "framer-motion";
 
 interface Props {
 	postId: string;
+	queryInfo: {
+		username?: string;
+		slug?: string;
+	};
 	likes: number;
 	isLiked: boolean;
 }
 
-export const Like = ({ postId, isLiked, likes }: Props) => {
-	const { mutate: likePost, isPending } = useLikePost();
+export const Like = ({ postId, queryInfo, isLiked, likes }: Props) => {
+	const { mutate: likePost, isPending } = useLikePost(queryInfo);
 	const user = useUser();
 	const { openModal } = useModalActions();
 

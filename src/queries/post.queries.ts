@@ -1,5 +1,5 @@
-import { PAGE_LIMIT } from "@/utils/constants";
 import client from "@/lib/axios";
+import { PAGE_LIMIT } from "@/lib/constants";
 import { IResponse } from "@/types/auth.types";
 import { IPost } from "@/types/post.types";
 import { AxiosError } from "axios";

@@ -14,7 +14,8 @@ export enum ModalType {
 	EMAIL_SENT,
 	WARNING_LOGIN,
 	RESET_TOKEN_SENT,
-	NOTIFICATION,
+	ALERT_MESSAGE,
+	NOTIFICATIONS,
 }
 
 // Typed Version of ModalStore
@@ -30,10 +31,11 @@ interface ModalDataMap {
 	[ModalType.EMAIL_SENT]: any;
 	[ModalType.WARNING_LOGIN]: any;
 	[ModalType.RESET_TOKEN_SENT]: any;
-	[ModalType.NOTIFICATION]: { title: string; description: string };
+	[ModalType.ALERT_MESSAGE]: { title: string; description: string };
+	[ModalType.NOTIFICATIONS]: any;
 }
 
-const ALLOWED_MODALS = new Set([ModalType.TermsAndConditions, ModalType.EMAIL_SENT, ModalType.WARNING_LOGIN, ModalType.RESET_TOKEN_SENT, ModalType.NOTIFICATION]);
+const ALLOWED_MODALS = new Set([ModalType.TermsAndConditions, ModalType.EMAIL_SENT, ModalType.WARNING_LOGIN, ModalType.RESET_TOKEN_SENT, ModalType.ALERT_MESSAGE, ModalType.NOTIFICATIONS]);
 
 const isModalTypeAllowed = (type: ModalType): boolean => ALLOWED_MODALS.has(type);
 

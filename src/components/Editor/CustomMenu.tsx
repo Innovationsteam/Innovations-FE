@@ -1,5 +1,5 @@
+import { cn } from "@/lib/utils";
 import { BubbleMenu, Editor } from "@tiptap/react";
-import classNames from "classnames";
 
 const CustomMenu = ({ editor }: { editor: Editor | null }) => {
 	if (!editor) return null;
@@ -12,7 +12,7 @@ const CustomMenu = ({ editor }: { editor: Editor | null }) => {
 		>
 			<button
 				onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-				className={classNames("flex size-8 items-center justify-center rounded-md p-1 hover:bg-slate-300", {
+				className={cn("flex size-8 items-center justify-center rounded-md p-1 hover:bg-slate-300", {
 					"bg-[#349869] text-white hover:!bg-[#1C4532]": editor.isActive("heading", { level: 1 }),
 				})}
 			>
@@ -20,7 +20,7 @@ const CustomMenu = ({ editor }: { editor: Editor | null }) => {
 			</button>
 			<button
 				onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-				className={classNames("flex size-8 items-center justify-center rounded-md p-1 hover:bg-slate-300", {
+				className={cn("flex size-8 items-center justify-center rounded-md p-1 hover:bg-slate-300", {
 					"bg-[#349869] text-white hover:!bg-[#1C4532]": editor.isActive("heading", { level: 2 }),
 				})}
 			>
@@ -28,7 +28,7 @@ const CustomMenu = ({ editor }: { editor: Editor | null }) => {
 			</button>
 			<button
 				onClick={() => editor.chain().focus().toggleBulletList().run()}
-				className={classNames("flex size-8 items-center justify-center rounded-md p-1 hover:bg-slate-300 [&>svg]:stroke-black", {
+				className={cn("flex size-8 items-center justify-center rounded-md p-1 hover:bg-slate-300 [&>svg]:stroke-black", {
 					"bg-[#349869] hover:!bg-[#1C4532] [&>svg]:stroke-white": editor.isActive("bulletList"),
 				})}
 			>
@@ -47,7 +47,7 @@ const CustomMenu = ({ editor }: { editor: Editor | null }) => {
 			</button>
 			<button
 				onClick={() => editor.chain().focus().toggleOrderedList().run()}
-				className={classNames("flex size-8 items-center justify-center rounded-md p-1 hover:bg-slate-300 [&>svg]:fill-black", {
+				className={cn("flex size-8 items-center justify-center rounded-md p-1 hover:bg-slate-300 [&>svg]:fill-black", {
 					"bg-[#349869] hover:!bg-[#1C4532] [&>svg]:fill-white": editor.isActive("orderedList"),
 				})}
 			>
@@ -72,7 +72,7 @@ const CustomMenu = ({ editor }: { editor: Editor | null }) => {
 			</button>
 			<button
 				onClick={() => editor.chain().focus().toggleBold().run()}
-				className={classNames("flex size-8 items-center justify-center rounded-md p-1 hover:bg-slate-300 [&>svg]:stroke-black", {
+				className={cn("flex size-8 items-center justify-center rounded-md p-1 hover:bg-slate-300 [&>svg]:stroke-black", {
 					"bg-[#349869] hover:!bg-[#1C4532] [&>svg]:stroke-white": editor.isActive("bold"),
 				})}
 			>
@@ -99,7 +99,7 @@ const CustomMenu = ({ editor }: { editor: Editor | null }) => {
 			</button>
 			<button
 				onClick={() => editor.chain().focus().toggleItalic().run()}
-				className={classNames("flex size-8 items-center justify-center rounded-md p-1 hover:bg-slate-300 [&>svg]:stroke-black", {
+				className={cn("flex size-8 items-center justify-center rounded-md p-1 hover:bg-slate-300 [&>svg]:stroke-black", {
 					"bg-[#349869] hover:!bg-[#1C4532] [&>svg]:stroke-white": editor.isActive("italic"),
 				})}
 			>
@@ -120,7 +120,7 @@ const CustomMenu = ({ editor }: { editor: Editor | null }) => {
 			</button>
 			<button
 				onClick={() => editor.chain().focus().toggleStrike().run()}
-				className={classNames("flex size-8 items-center justify-center rounded-md p-1 hover:bg-slate-300 [&>svg]:stroke-black", {
+				className={cn("flex size-8 items-center justify-center rounded-md p-1 hover:bg-slate-300 [&>svg]:stroke-black", {
 					"bg-[#349869] hover:!bg-[#1C4532] [&>svg]:stroke-white": editor.isActive("strike"),
 				})}
 			>
@@ -141,7 +141,7 @@ const CustomMenu = ({ editor }: { editor: Editor | null }) => {
 			</button>
 			<button
 				onClick={() => editor.chain().focus().toggleUnderline().run()}
-				className={classNames("flex size-8 items-center justify-center rounded-md p-1 hover:bg-slate-300 [&>svg]:stroke-black", {
+				className={cn("flex size-8 items-center justify-center rounded-md p-1 hover:bg-slate-300 [&>svg]:stroke-black", {
 					"bg-[#349869] hover:!bg-[#1C4532] [&>svg]:stroke-white": editor.isActive("underline"),
 				})}
 			>

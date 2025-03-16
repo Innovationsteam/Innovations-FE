@@ -24,6 +24,7 @@ import Stories from "./pages/Stories";
 import VerifyOTP from "./pages/VerifyOTP";
 import VerifyResetOTP from "./pages/VerifyResetOTP";
 import { useUser } from "./store/user";
+import useServiceWorker from "./hooks/useServiceWorker";
 
 const PRIVATE_ROUTES = [
 	{ path: "drafts", element: <DraftsList /> },
@@ -58,11 +59,11 @@ const createRouter = (isLoggedIn: boolean) =>
 							element: <Home />,
 						},
 						{
-							path: "article/:postId",
+							path: "cw/:postId",
 							element: <Article />,
 						},
 						{
-							path: "article/:username/:slug",
+							path: "cw/:username/:slug",
 							element: <Article />,
 						},
 						{
@@ -82,7 +83,7 @@ const createRouter = (isLoggedIn: boolean) =>
 							element: <ProtectedRoutes />,
 							children: [
 								{
-									path: "article/new",
+									path: "cw/new",
 									element: <CreateArticle />,
 								},
 							],
@@ -124,6 +125,7 @@ const createRouter = (isLoggedIn: boolean) =>
 const AppRouter = () => {
 	const user = useUser();
 	const router = createRouter(!!user);
+	useServiceWorker(!!user);
 	return <RouterProvider router={router} />;
 };
 

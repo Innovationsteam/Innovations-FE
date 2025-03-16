@@ -1,19 +1,17 @@
 import { useUserProfile } from "@/hooks/useUserProfile";
 import { useUser } from "@/store/user";
-import classNames from "classnames";
+import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
-import { Bell, Home, PencilLine } from "lucide-react";
+import { Home, PencilLine } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useOnClickOutside } from "usehooks-ts";
 import Container from "../Container";
 import UserProfileImage from "../UserProfileImage";
 import { Button } from "../ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
 
 const NavBar = () => {
 	const [scrolled, setScrolled] = useState(false);
-	const navigate = useNavigate();
 	const { data: user, isPending } = useUserProfile();
 	const isLoggedIn = useUser();
 
@@ -43,7 +41,7 @@ const NavBar = () => {
 		<motion.nav
 			animate={{ opacity: scrolled ? 0 : 1 }}
 			transition={{ duration: 0.2, ease: "linear" }}
-			className={classNames("z-20 w-full bg-white", {
+			className={cn("z-20 w-full bg-white", {
 				"shadow-none": scrolled,
 				"shadow-sm shadow-[#E4E4EF]": !scrolled,
 			})}
@@ -56,40 +54,30 @@ const NavBar = () => {
 					<span className="text-[#04BF87]">Christian</span>Writes
 				</Link>
 				<div className="ml-auto flex items-center gap-x-3">
-					<Link to="/feed">
+					<Link
+						to="/feed"
+						className="hidden sm:block"
+					>
 						<Home
 							size={26}
 							color="#04bf87"
 						/>
 					</Link>
-					<Link to="/article/new">
+					<Link
+						to="/cw/new"
+						className="hidden sm:block"
+					>
 						<PencilLine
 							size={26}
 							color="#04bf87"
 						/>
 					</Link>
-					<DropdownMenu>
-						<DropdownMenuTrigger asChild>
-							<Bell
-								size={26}
-								color="#04bf87"
-								className="hidden cursor-pointer md:block"
-							/>
-						</DropdownMenuTrigger>
-						<DropdownMenuContent
-							id="testing"
-							className="w-56"
-							side="top"
-							sideOffset={10}
-							align="center"
-						>
-							<DropdownMenuLabel>Notifications (4)</DropdownMenuLabel>
-							<DropdownMenuSeparator />
-							<DropdownMenuGroup>
-								<DropdownMenuItem>Profile</DropdownMenuItem>
-							</DropdownMenuGroup>
-						</DropdownMenuContent>
-					</DropdownMenu>
+					{/* <Bell
+						size={26}
+						color="#04bf87"
+						className="cursor-pointer"
+						onClick={() => openModal(ModalType.NOTIFICATIONS)}
+					/> */}
 					{isLoggedIn ? (
 						<Link to={`/cw/${user?.username}`}>
 							<UserProfileImage

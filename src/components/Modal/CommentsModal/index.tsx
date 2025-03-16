@@ -23,7 +23,7 @@ const CommentsModal = () => {
 				animate={width >= 1024 ? { x: "0%" } : { y: "0%" }}
 				transition={{ duration: 0.3, ease: "easeOut", delay: 0.2 }}
 				onClick={(e) => e.stopPropagation()}
-				className="absolute bottom-0 h-[90vh] w-full overflow-y-auto rounded-t-3xl bg-white lg:right-0 lg:h-screen lg:max-w-[480px] lg:rounded-none lg:rounded-tl-3xl"
+				className="absolute bottom-0 h-[90vh] w-full overflow-hidden overflow-y-auto rounded-t-3xl bg-white lg:right-0 lg:h-screen lg:max-w-[480px] lg:rounded-none lg:rounded-tl-3xl"
 			>
 				<Container className="pb-5 pt-8">
 					<header className="flex items-center">

@@ -35,7 +35,7 @@ export const SignUpWithFaceBook = () => {
 export const CreateArticle = () => {
 	return (
 		<Link
-			to="/article/new"
+			to="/cw/new"
 			className="flex w-full max-w-[239px] justify-center gap-x-[10px] rounded-lg bg-[#01543B] py-5 font-roboto"
 		>
 			<img
