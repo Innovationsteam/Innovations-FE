@@ -1,7 +1,7 @@
 import axios from "axios";
 import axiosThrottle from "axios-request-throttle";
 const isBrowser = typeof window !== "undefined";
-
+process.env.VITE_API_URL = "https://christianwritesbe.onrender.com/api";
 const API_URL = isBrowser ? import.meta.env.VITE_API_URL : process.env.VITE_API_URL;
 
 const getAuthToken = () => {
@@ -14,7 +14,7 @@ const getAuthToken = () => {
 		return process.env.ACCESS_TOKEN;
 	}
 };
-
+console.log(API_URL);
 // Create axios instance
 const client = axios.create({
 	baseURL: API_URL,
