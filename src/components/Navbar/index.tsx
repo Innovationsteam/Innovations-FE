@@ -26,13 +26,13 @@ const NavBar = () => {
 	useEffect(() => {
 		const handleResize = () => {
 			if (window.innerWidth < 640) {
-				setSize(18);
+				setSize(22);
 			} else if (window.innerWidth < 768) {
-				setSize(20);
+				setSize(23);
 			} else if (window.innerWidth < 1024) {
-				setSize(24);
+				setSize(23);
 			} else {
-				setSize(26);
+				setSize(24);
 			}
 		};
 
@@ -71,12 +71,15 @@ const NavBar = () => {
 			<Container className="flex items-center py-5">
 				<Link
 					to="/feed"
-					className="font-roboto text-lg font-semibold uppercase leading-6 text-[#141414] md:text-xl lg:text-2xl"
+					className="text-md font-roboto font-semibold uppercase leading-6 text-[#141414] md:text-lg lg:text-xl"
 				>
 					<span className="text-[#04BF87]">Christian</span>Writes
 				</Link>
 				<div className="ml-auto flex items-center gap-x-3">
-					<Link to={"/search"}>
+					<Link
+						to={"/search"}
+						className="sm:m-0 me-1"
+					>
 						<Search
 							size={size}
 							color="#04bf87"
@@ -122,10 +125,10 @@ const NavBar = () => {
 						>
 							<button
 								onClick={() => setShowSignUp(true)}
-								className="size-8 shrink-0 rounded-full object-cover"
+								className="size-6 shrink-0 rounded-full object-cover"
 							>
 								<img
-									className="h-8 w-8 object-cover md:h-10 md:w-10 lg:h-12 lg:w-12"
+									className="h-8 w-8 object-cover"
 									src="/assets/images/guest.png"
 									alt="Guest user image"
 								/>
@@ -139,9 +142,9 @@ const NavBar = () => {
 										className="absolute right-0 top-12 z-20 w-[305px] space-y-3 rounded-lg bg-white p-5 drop-shadow-2xl"
 									>
 										<div className="flex items-center gap-x-3">
-											<div className="size-10 shrink-0 rounded-full object-cover md:size-[55px]">
+											<div className="size-6 shrink-0 rounded-full object-cover md:size-[55px]">
 												<img
-													className="h-8 w-8 object-cover md:h-10 md:w-10 lg:h-12 lg:w-12"
+													className="h-8 w-8 object-cover"
 													src="/assets/images/guest.png"
 													alt="Guest user image"
 												/>
