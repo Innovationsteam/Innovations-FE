@@ -14,7 +14,6 @@ const getAuthToken = () => {
 		return process.env.ACCESS_TOKEN;
 	}
 };
-console.log(API_URL);
 // Create axios instance
 const client = axios.create({
 	baseURL: API_URL,
