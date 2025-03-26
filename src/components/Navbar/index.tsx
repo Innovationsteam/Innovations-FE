@@ -2,7 +2,7 @@ import { useUserProfile } from "@/hooks/useUserProfile";
 import { cn } from "@/lib/utils";
 import { useUser } from "@/store/user";
 import { AnimatePresence, motion } from "framer-motion";
-import { Home, PencilLine, Search } from "lucide-react";
+import { PencilLine, Search } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useOnClickOutside } from "usehooks-ts";
@@ -21,29 +21,7 @@ const NavBar = () => {
 	const hanldeClickOutside = () => setShowSignUp(false);
 
 	useOnClickOutside(guestDropDownRef, hanldeClickOutside);
-	const [size, setSize] = useState(26);
 
-	useEffect(() => {
-		const handleResize = () => {
-			if (window.innerWidth < 640) {
-				setSize(18);
-			} else if (window.innerWidth < 768) {
-				setSize(20);
-			} else if (window.innerWidth < 1024) {
-				setSize(24);
-			} else {
-				setSize(26);
-			}
-		};
-
-		handleResize();
-
-		window.addEventListener("resize", handleResize);
-
-		return () => {
-			window.removeEventListener("resize", handleResize);
-		};
-	}, []);
 	useEffect(() => {
 		const onScroll = () => {
 			if (window.scrollY > 40) {
@@ -68,26 +46,21 @@ const NavBar = () => {
 				"shadow-sm shadow-[#E4E4EF]": !scrolled,
 			})}
 		>
-			<Container className="flex items-center py-5">
+			<Container className="relative flex h-[60px] items-center py-3">
 				<Link
 					to="/feed"
-					className="font-roboto text-lg font-semibold uppercase leading-6 text-[#141414] md:text-xl lg:text-2xl"
+					className="size-[60px]"
 				>
-					<span className="text-[#04BF87]">Christian</span>Writes
+					<img
+						className="h-full w-full object-cover object-center"
+						src="/assets/images/logo.ico"
+						alt="Christain Writes Logo"
+					/>
 				</Link>
 				<div className="ml-auto flex items-center gap-x-3">
 					<Link to={"/search"}>
 						<Search
-							size={size}
-							color="#04bf87"
-						/>
-					</Link>
-					<Link
-						to="/feed"
-						className="hidden sm:block"
-					>
-						<Home
-							size={size}
+							className="size-6"
 							color="#04bf87"
 						/>
 					</Link>
@@ -96,14 +69,13 @@ const NavBar = () => {
 						className="hidden sm:block"
 					>
 						<PencilLine
-							size={size}
+							className="size-6"
 							color="#04bf87"
 						/>
 					</Link>
 					{/* <Bell
-						size={26}
+						className="size-6 cursor-pointer"
 						color="#04bf87"
-						className="cursor-pointer"
 						onClick={() => openModal(ModalType.NOTIFICATIONS)}
 					/> */}
 					{isLoggedIn ? (
@@ -112,20 +84,18 @@ const NavBar = () => {
 								fullName={user?.name}
 								image={user?.profileImg}
 								isLoading={isPending}
-								className="h-6 w-6 md:h-8 md:w-8 lg:h-8 lg:w-8" // Responsive size for profile image
+								// className="size-[60px]"
 							/>
 						</Link>
 					) : (
-						<div
-							ref={guestDropDownRef}
-							className="relative"
-						>
+						<>
 							<button
+								ref={guestDropDownRef}
 								onClick={() => setShowSignUp(true)}
-								className="size-8 shrink-0 rounded-full object-cover"
+								className="size-6 shrink-0 overflow-hidden rounded-full md:size-8"
 							>
 								<img
-									className="h-8 w-8 object-cover md:h-10 md:w-10 lg:h-12 lg:w-12"
+									className="h-full w-full object-contain"
 									src="/assets/images/guest.png"
 									alt="Guest user image"
 								/>
@@ -157,7 +127,7 @@ const NavBar = () => {
 									</motion.div>
 								) : null}
 							</AnimatePresence>
-						</div>
+						</>
 					)}
 				</div>
 			</Container>

@@ -68,12 +68,12 @@ const LoginForm = () => {
 					/>
 					<div className="absolute inset-y-0 right-0 flex items-center pr-3">
 						{showPassword ? (
-							<EyeOff
+							<Eye
 								className="cursor-pointer"
 								onClick={togglePasswordVisibility}
 							/>
 						) : (
-							<Eye
+							<EyeOff
 								className="cursor-pointer"
 								onClick={togglePasswordVisibility}
 							/>
