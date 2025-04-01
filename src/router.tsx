@@ -7,7 +7,7 @@ import ProfileHome from "./components/Profile/Home";
 import NotesList from "./components/Profile/Notes";
 import Settings from "./components/Profile/Settings";
 import ProtectedRoutes from "./components/ProtectedRoutes";
-import Redirecting from "./components/Redirecting";
+import useServiceWorker from "./hooks/useServiceWorker";
 import AppLayout from "./layouts/AppLayout";
 import MainLayout from "./layouts/MainLayout";
 import Article from "./pages/Article";
@@ -26,7 +26,6 @@ import Stories from "./pages/Stories";
 import VerifyOTP from "./pages/VerifyOTP";
 import VerifyResetOTP from "./pages/VerifyResetOTP";
 import { useUser } from "./store/user";
-import useServiceWorker from "./hooks/useServiceWorker";
 
 const PRIVATE_ROUTES = [
 	{ path: "drafts", element: <DraftsList /> },
@@ -95,10 +94,6 @@ const createRouter = (isLoggedIn: boolean) =>
 							],
 						},
 					],
-				},
-				{
-					path: "redirecting",
-					element: <Redirecting />,
 				},
 				{
 					path: "login",
