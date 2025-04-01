@@ -14,6 +14,7 @@ import { Outlet } from "react-router-dom";
 import ResetTokenSentModal from "@/components/Modal/ResetTokenSentModal";
 import AlertMessageModal from "@/components/Modal/AlertMessageModal";
 import NotificationsModal from "@/components/Modal/NotificationsModal";
+import ReportPostModal from "@/components/Modal/ReportPostModal";
 
 const AppLayout = () => {
 	const isOpen = useActiveModal(ModalType.NONE);
@@ -32,6 +33,7 @@ const AppLayout = () => {
 			<CreateReadingListModal />
 			<AddToReadingListModal />
 			<EmailSentModal />
+			<ReportPostModal />
 			<WarningLoginModal />
 			<ResetTokenSentModal />
 			<AlertMessageModal />

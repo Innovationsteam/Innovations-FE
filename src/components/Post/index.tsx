@@ -40,11 +40,11 @@ export const Post = ({ id, author, publishedDate, content, image, likes, socialM
 							<span>·</span>
 						</p>
 					</div>
-					<img
+					{/* <img
 						className="ml-auto"
 						src={"/assets/icons/ellipsis.svg"}
 						alt=""
-					/>
+					/> */}
 				</Link>
 				<Link
 					to={`/cw/${author?.username ? author.username : user?.username}/${slug}`}

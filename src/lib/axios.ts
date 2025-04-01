@@ -23,9 +23,10 @@ const client = axios.create({
 	timeout: 30000,
 });
 
+
 // Apply axios throttle to limit requests
 axiosThrottle.use(client, {
-	requestsPerSecond: 5,
+	requestsPerSecond: 2,
 });
 // Add request interceptor for authentication
 client.interceptors.request.use(

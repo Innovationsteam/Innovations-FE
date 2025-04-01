@@ -15,7 +15,9 @@ import ChangePassword from "./pages/ChangePassword";
 import CreateArticle from "./pages/CreateArticle";
 import Home from "./pages/Home";
 import Loader from "./pages/Loader";
-import Login from "./pages/Login";
+// import Login from "./pages/Login_old";
+import Login2 from "./pages/Login";
+// import LoginForm2 from "@/components/LoginForm";
 import NewStory from "./pages/NewStory";
 import Profile from "./pages/Profile";
 import ResetPassword from "./pages/ResetPassword";
@@ -100,7 +102,8 @@ const createRouter = (isLoggedIn: boolean) =>
 				},
 				{
 					path: "login",
-					element: <Login />,
+					// element: <Login />,
+					element: <Login2 />,
 				},
 				{
 					path: "signup",

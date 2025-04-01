@@ -1,5 +1,7 @@
 ///////Worked On
 import { Link } from "react-router-dom";
+import guest from "/assets/images/guest.png";
+
 export const SignUpWithGoogle = () => {
 	return (
 		<button
@@ -28,6 +30,18 @@ export const SignUpWithFaceBook = () => {
 				alt="google icon"
 			/>
 			<span className="text-sm font-medium text-[#718096]">Continue with Google</span>
+		</button>
+	);
+};
+export const SignUpAsGuest = () => {
+	return (
+		<button className="flex w-full items-center justify-center rounded border p-2">
+			<img
+				src={guest}
+				alt="Facebook icon"
+				className="mr-2 h-5 w-5"
+			/>
+			Sign up as a guest
 		</button>
 	);
 };
