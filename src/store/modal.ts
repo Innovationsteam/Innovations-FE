@@ -16,6 +16,7 @@ export enum ModalType {
 	RESET_TOKEN_SENT,
 	ALERT_MESSAGE,
 	NOTIFICATIONS,
+	REPORT_POST,
 }
 
 // Typed Version of ModalStore
@@ -33,6 +34,7 @@ interface ModalDataMap {
 	[ModalType.RESET_TOKEN_SENT]: any;
 	[ModalType.ALERT_MESSAGE]: { title: string; description: string };
 	[ModalType.NOTIFICATIONS]: any;
+	[ModalType.REPORT_POST]: any;
 }
 
 const ALLOWED_MODALS = new Set([ModalType.TermsAndConditions, ModalType.EMAIL_SENT, ModalType.WARNING_LOGIN, ModalType.RESET_TOKEN_SENT, ModalType.ALERT_MESSAGE, ModalType.NOTIFICATIONS]);
@@ -53,7 +55,7 @@ const useModalStore = create<ModalStoreProps>((set) => ({
 	modalData: null,
 	actions: {
 		openModal: (modal, payload = null) => {
-			console.log(payload);
+			console.log(payload, modal);
 			set({ activeModal: modal, modalData: payload });
 		},
 		closeModal: (onClose) => {

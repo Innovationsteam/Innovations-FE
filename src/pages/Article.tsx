@@ -28,9 +28,6 @@ const Article = () => {
 	const { data: post, isPending } = usePostBySlug(username, slug);
 	const { data: writer, isFetching } = useUserPosts(username);
 	const { data: connectionsData, isPending: isConnectionsPending } = useUserConnections(username!);
-
-	console.log(post);
-
 	const isFollowing = connectionsData?.following?.some((follower) => follower.username === user?.username) || false;
 	const isLiked = post?.postLikes.some((likes) => likes.user.username === user?.username) || false;
 
@@ -155,11 +152,16 @@ const Article = () => {
 							<DropDown>
 								<button
 									onClick={() => openModal(ModalType.PersonalNote, { postId: post.id, notes: post.notes })}
-									className="pb-2 font-roboto text-sm text-[#141414CC] transition-colors hover:text-black"
+									className="block pb-2 font-roboto text-sm text-[#141414CC] transition-colors hover:text-black"
 								>
 									Add a personal note
 								</button>
-								<p className="font-roboto text-sm text-[#BF2828]">Report Article</p>
+								<button
+									onClick={() => openModal(ModalType.REPORT_POST)}
+									className="block pb-2 font-roboto text-sm text-[#BF2828] transition-colors hover:text-black"
+								>
+									Report Article
+								</button>
 							</DropDown>
 						</div>
 					</div>

@@ -1,4 +1,4 @@
-import { LoginFormData } from "@/components/LoginForm";
+import { LoginFormData } from "@/components/LoginForm/index_old";
 import { SignUpFormData } from "@/types/auth.types";
 import client from "@/lib/axios";
 import { OTPFormData } from "@/pages/VerifyOTP";

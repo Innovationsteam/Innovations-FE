@@ -3,13 +3,15 @@ import { IPost } from "@/types/post.types";
 import { Post } from "@/components/Post";
 import PostSkeleton from "../PostList/postskeleton";
 import { usePostByHashtag } from "@/hooks/posts/usePost";
+import FadeIn from "@/components/FadeIn";
 
 const hashtags = [
-	{ key: 0, value: "Growth", text: "#Growth" },
-	{ key: 1, value: "productivity", text: "#productivity" },
-	{ key: 2, value: "spirituality", text: "#spirituality" },
-	{ key: 3, value: "Meditation", text: "#Meditation" },
-	{ key: 4, value: "Sports", text: "#Sports" },
+	{ key: 0, value: "Christian", text: "#Christian" },
+	{ key: 1, value: "pray", text: "#pray" },
+	{ key: 2, value: "Holy", text: "#Holy" },
+	{ key: 3, value: "honest", text: "#honest" },
+	{ key: 4, value: "Narrow", text: "#Narrow" },
+
 ];
 interface SearchInputProps {
 	hashtag: string;
@@ -29,6 +31,11 @@ const SearchInput = ({ hashtag, setHashtag, onSearch }: SearchInputProps) => (
 			onChange={(e) => setHashtag(e.target.value)}
 			placeholder="Search"
 			autoFocus
+			onKeyDown={(e) => {
+				if (e.key === "Enter") {
+					onSearch(); 
+				}
+			}}
 		/>
 		<button onClick={onSearch}>
 			<img
@@ -88,14 +95,21 @@ const SearchBar = () => {
 						))}
 					</ul>
 				) : postsData ? (
-					<ul className="grid h-full gap-x-5 gap-y-9 lg:grid-cols-2">
-						{postsData.posts.map((item: IPost) => (
-							<Post
-								key={item.id}
-								{...item}
-							/>
-						))}
-					</ul>
+					postsData.posts.length > 0 ? (
+						<ul className="grid h-full gap-x-5 gap-y-9 lg:grid-cols-2">
+							{postsData.posts.map((item: IPost) => (
+								<Post
+									key={item.id}
+									{...item}
+								/>
+							))}
+						</ul>
+					) : (
+								<FadeIn duration={150}>
+						
+						<p className="text-center">Search not found</p>
+					</FadeIn>
+					)
 				) : (
 					<TrendingHashtags
 						hashtags={hashtags}
