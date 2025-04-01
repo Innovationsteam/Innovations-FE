@@ -45,8 +45,8 @@ const Login = () => {
 
 			<motion.div
 				className="relative grid hidden h-screen w-1/2 place-items-center overflow-hidden md:block"
-				initial={{ opacity: 0 }}
-				animate={{ opacity: 1 }}
+				initial={{ opacity: 0, scale: 0 }}
+				animate={{ opacity: 1, scale: 1 }}
 				transition={{ duration: 0.5, delay: 0.3 }}
 			>
 				<img
