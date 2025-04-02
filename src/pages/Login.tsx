@@ -22,7 +22,7 @@ const Login = () => {
 						/>
 					</div>
 					<h1 className="mb-4 font-roboto text-3xl font-bold">Welcome Back</h1>
-					<p className="mb-6 font-roboto text-gray-600">Sign in and see what we have install for you</p>
+					<p className="mb-6 font-roboto text-gray-600">Share your Christian write ups with the world</p>
 					<div className="mt-[30px] flex flex-col gap-y-4">
 						<LoginForm2 />
 						{/* <SignUpWithGoogle />
