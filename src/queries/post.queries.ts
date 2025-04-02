@@ -1,10 +1,10 @@
-import { PAGE_LIMIT } from "@/utils/constants";
 import client from "@/lib/axios";
+import { PAGE_LIMIT } from "@/lib/constants";
 import { IResponse } from "@/types/auth.types";
 import { IPost } from "@/types/post.types";
 import { AxiosError } from "axios";
 
-interface PostsResponse {
+export interface PostsResponse {
 	currentPage: number;
 	posts: IPost[];
 	totalItems: number;
@@ -23,6 +23,14 @@ export const getAllPosts = async ({ pageParam = 1 }: { pageParam: number }) => {
 export const getPostBySlug = async (username: string, slug: string) => {
 	try {
 		const res = await client.get<IResponse<IPost>>(`/posts/${username}/${slug}`);
+		return res.data.data;
+	} catch (error) {
+		throw error as AxiosError;
+	}
+};
+export const getPostByHashtag = async (hashtag: string) => {
+	try {
+		const res = await client.get<IResponse<PostsResponse>>(`/posts/?hashtags=${hashtag}`);
 		return res.data.data;
 	} catch (error) {
 		throw error as AxiosError;

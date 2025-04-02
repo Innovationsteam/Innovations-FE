@@ -1,7 +1,7 @@
 ///////Worked On
 import SectionContainer from "../../layouts/SectionContainer";
 import { PostItem } from "@/types/post.types";
-import { convertToOriginalFormat } from "@/utils/helper";
+import { convertToOriginalFormat } from "@/lib/utils";
 import DraftSkeleton from "./DraftsSkeleton";
 import { useNavigate } from "react-router-dom";
 import { useDrafts } from "@/hooks/useProfile";
@@ -26,7 +26,7 @@ const Draft = ({ title, content, image }: draftSet) => {
 	const navigate = useNavigate();
 
 	const toEdit = () => {
-		navigate("/article/new", {
+		navigate("/cw/new", {
 			state: {
 				title: title,
 				body: content,

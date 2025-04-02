@@ -3,7 +3,7 @@
 import FollowButton from "@/components/FollowButton";
 import { useUserConnections } from "@/hooks/follow/useUserConnections";
 import { usePostBySlug } from "@/hooks/posts/usePost";
-import { convertToOriginalFormat } from "@/utils/helper";
+import { convertToOriginalFormat } from "@/lib/utils";
 import Skeleton from "react-loading-skeleton";
 import { Link, useParams } from "react-router-dom";
 import { ModalType, useModalActions } from "src/store/modal";
@@ -16,31 +16,62 @@ import ArticleSkeleton from "./ArticleSkeleton";
 import { useUserPosts } from "@/hooks/posts/useUserPosts";
 import PostSkeleton from "@/components/Dashboard/PostList/postskeleton";
 import { Post } from "@/components/Post";
-import { useUserStore } from "@/store/user";
+import { useUser } from "@/store/user";
+import { generateDescription } from "@/lib/keywords";
+import { Helmet } from "react-helmet";
+
 const Article = () => {
 	const { openModal } = useModalActions();
-	const user = useUserStore((s) => s.user);
+	const user = useUser();
 	const { username, slug } = useParams<{ username: string; slug: string }>();
 
 	const { data: post, isPending } = usePostBySlug(username, slug);
 	const { data: writer, isFetching } = useUserPosts(username);
 	const { data: connectionsData, isPending: isConnectionsPending } = useUserConnections(username!);
-
 	const isFollowing = connectionsData?.following?.some((follower) => follower.username === user?.username) || false;
 	const isLiked = post?.postLikes.some((likes) => likes.user.username === user?.username) || false;
 
 	const labels = post?.hashtags
-		?.split(/[\s,#]+/)
-		.map((tag: string) => tag.replace("#", ""))
-		.filter((tag: string) => tag.trim() !== "");
+		? post.hashtags
+				.split(/[\s,#]+/)
+				.map((tag: string) => tag.replace("#", ""))
+				.filter((tag: string) => tag.trim() !== "")
+		: null;
+
+	function convertHashtags(input?: string) {
+		if (!input) return "";
+
+		const items = input.split(",");
+
+		const cleanedItems = items.map((item) => item.replace("#", "").trim());
+
+		return cleanedItems.map((item) => `"${item}"`).join(", ");
+	}
 
 	if (isPending) return <ArticleSkeleton />;
-	if (!post) return <p className="text-center text-lg font-semibold">Post not found</p>;
+
+	if (!post)
+		return (
+			<div className="flex h-screen items-center">
+				<p className="text-center text-lg font-semibold">No Post Found</p>
+			</div>
+		);
 
 	return (
 		<div>
 			<section className="py-10">
 				<Container className="max-w-[992px]">
+					<Helmet>
+						<title>{post?.title}</title>
+						<meta
+							name="description"
+							content={generateDescription(post?.content)}
+						/>
+						<meta
+							name="keywords"
+							content={convertHashtags(post?.hashtags)}
+						/>
+					</Helmet>
 					<Link
 						to="/feed"
 						className="mr-auto flex items-center gap-x-2"
@@ -59,7 +90,11 @@ const Article = () => {
 							<span>{new Date(post.publishedDate).toLocaleDateString()}</span>
 							<span>·</span>
 						</p>
-						<h1 className="my-1 font-roboto text-3xl text-[32px] font-bold capitalize text-[#141414] md:text-[42px] md:leading-[52px]">{post.title}</h1>
+						<h1
+							className="my-1 font-roboto text-3xl text-[32px] font-bold capitalize text-[#141414] md:text-[42px] md:leading-[52px]"
+							dangerouslySetInnerHTML={{ __html: convertToOriginalFormat(post.title) }}
+						/>
+
 						{/* <h2 className="font-roboto text-sm md:text-base lg:text-lg">101 ways on how to build your faith</h2> */}
 					</header>
 					<div className="relative my-10 h-[238px] md:h-[400px]">
@@ -74,18 +109,24 @@ const Article = () => {
 						dangerouslySetInnerHTML={{ __html: convertToOriginalFormat(post.content) }}
 					/>
 					<div className="my-4 flex flex-wrap justify-center gap-2">
-						{labels?.map((text: string) => (
-							<Tag
-								key={text}
-								text={text}
-							/>
-						))}
+						{labels
+							? labels.map((text: string) => (
+									<Tag
+										key={text}
+										text={text}
+									/>
+								))
+							: null}
 					</div>
 					<div className="mt-5 flex items-center justify-between">
 						<div className="flex items-center gap-x-5">
 							<Like
-								likes={post.postLikes.length}
 								postId={post.id}
+								queryInfo={{
+									username,
+									slug,
+								}}
+								likes={post.likes}
 								isLiked={isLiked}
 							/>
 							<AddComment
@@ -111,11 +152,16 @@ const Article = () => {
 							<DropDown>
 								<button
 									onClick={() => openModal(ModalType.PersonalNote, { postId: post.id, notes: post.notes })}
-									className="pb-2 font-roboto text-sm text-[#141414CC] transition-colors hover:text-black"
+									className="block pb-2 font-roboto text-sm text-[#141414CC] transition-colors hover:text-black"
 								>
 									Add a personal note
 								</button>
-								<p className="font-roboto text-sm text-[#BF2828]">Report Article</p>
+								<button
+									onClick={() => openModal(ModalType.REPORT_POST)}
+									className="block pb-2 font-roboto text-sm text-[#BF2828] transition-colors hover:text-black"
+								>
+									Report Article
+								</button>
 							</DropDown>
 						</div>
 					</div>

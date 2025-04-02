@@ -1,14 +1,13 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import About from "./components/Profile/About";
 import Blogs from "./components/Profile/Blogs";
-import { FollowersList, FollowingList } from "./components/Profile/FollowersList";
-import ProfileHome from "./components/Profile/Home";
-// import ReadingList from "./components/Profile/ReadingList";
 import DraftsList from "./components/Profile/Drafts";
+import { FollowList } from "./components/Profile/FollowList";
+import ProfileHome from "./components/Profile/Home";
 import NotesList from "./components/Profile/Notes";
 import Settings from "./components/Profile/Settings";
 import ProtectedRoutes from "./components/ProtectedRoutes";
-import Redirecting from "./components/Redirecting";
+import useServiceWorker from "./hooks/useServiceWorker";
 import AppLayout from "./layouts/AppLayout";
 import MainLayout from "./layouts/MainLayout";
 import Article from "./pages/Article";
@@ -16,15 +15,17 @@ import ChangePassword from "./pages/ChangePassword";
 import CreateArticle from "./pages/CreateArticle";
 import Home from "./pages/Home";
 import Loader from "./pages/Loader";
-import Login from "./pages/Login";
+// import Login from "./pages/Login_old";
+import Login2 from "./pages/Login";
+// import LoginForm2 from "@/components/LoginForm";
 import NewStory from "./pages/NewStory";
+import Profile from "./pages/Profile";
 import ResetPassword from "./pages/ResetPassword";
 import SignUp from "./pages/SignUp";
 import Stories from "./pages/Stories";
 import VerifyOTP from "./pages/VerifyOTP";
 import VerifyResetOTP from "./pages/VerifyResetOTP";
-import { useUserStore } from "./store/user";
-import Profile from "./pages/Profile";
+import { useUser } from "./store/user";
 
 const PRIVATE_ROUTES = [
 	{ path: "drafts", element: <DraftsList /> },
@@ -36,9 +37,8 @@ const PUBLIC_ROUTES = [
 	{ path: "", element: <ProfileHome /> },
 	{ path: "about", element: <About /> },
 	{ path: "blogs", element: <Blogs title="Blogs" /> },
-	// { path: "reading-list", element: <ReadingList /> },
-	{ path: "followers", element: <FollowersList /> },
-	{ path: "following", element: <FollowingList /> },
+	{ path: "followers", element: <FollowList type="followers" /> },
+	{ path: "following", element: <FollowList type="following" /> },
 ];
 
 const createRouter = (isLoggedIn: boolean) =>
@@ -60,11 +60,15 @@ const createRouter = (isLoggedIn: boolean) =>
 							element: <Home />,
 						},
 						{
-							path: "article/:postId",
+							path: "search",
+							element: <Home />,
+						},
+						{
+							path: "cw/:postId",
 							element: <Article />,
 						},
 						{
-							path: "article/:username/:slug",
+							path: "cw/:username/:slug",
 							element: <Article />,
 						},
 						{
@@ -84,7 +88,7 @@ const createRouter = (isLoggedIn: boolean) =>
 							element: <ProtectedRoutes />,
 							children: [
 								{
-									path: "article/new",
+									path: "cw/new",
 									element: <CreateArticle />,
 								},
 							],
@@ -92,12 +96,9 @@ const createRouter = (isLoggedIn: boolean) =>
 					],
 				},
 				{
-					path: "redirecting",
-					element: <Redirecting />,
-				},
-				{
 					path: "login",
-					element: <Login />,
+					// element: <Login />,
+					element: <Login2 />,
 				},
 				{
 					path: "signup",
@@ -124,8 +125,9 @@ const createRouter = (isLoggedIn: boolean) =>
 	]);
 
 const AppRouter = () => {
-	const user = useUserStore((s) => s.user);
+	const user = useUser();
 	const router = createRouter(!!user);
+	useServiceWorker(!!user);
 	return <RouterProvider router={router} />;
 };
 

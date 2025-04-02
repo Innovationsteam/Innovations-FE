@@ -1,8 +1,8 @@
+import { convertBytes } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChangeEvent, FormEvent, MouseEvent, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { convertBytes } from "../../utils/helper";
 
 const UploadStory = () => {
 	const uploadContainerRef = useRef(null);

@@ -1,19 +1,17 @@
 import { useUserProfile } from "@/hooks/useUserProfile";
+import { cn } from "@/lib/utils";
 import { useUser } from "@/store/user";
-import classNames from "classnames";
 import { AnimatePresence, motion } from "framer-motion";
-import { Home, PencilLine } from "lucide-react";
+import { PencilLine, Search } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useOnClickOutside } from "usehooks-ts";
 import Container from "../Container";
 import UserProfileImage from "../UserProfileImage";
 import { Button } from "../ui/button";
-import { Skeleton } from "../ui/skeleton";
 
 const NavBar = () => {
 	const [scrolled, setScrolled] = useState(false);
-	const navigate = useNavigate();
 	const { data: user, isPending } = useUserProfile();
 	const isLoggedIn = useUser();
 
@@ -43,76 +41,61 @@ const NavBar = () => {
 		<motion.nav
 			animate={{ opacity: scrolled ? 0 : 1 }}
 			transition={{ duration: 0.2, ease: "linear" }}
-			className={classNames("z-20 w-full bg-white", {
+			className={cn("z-20 w-full bg-white", {
 				"shadow-none": scrolled,
 				"shadow-sm shadow-[#E4E4EF]": !scrolled,
 			})}
 		>
-			<Container className="flex items-center py-5">
+			<Container className="relative flex h-[60px] items-center py-3">
 				<Link
 					to="/feed"
-					className="font-roboto text-xl font-semibold uppercase leading-6 text-[#141414]"
+					className="size-[60px]"
 				>
-					<span className="text-[#04BF87]">Christian</span>Writes
+					<img
+						className="h-full w-full object-cover object-center"
+						src="/assets/images/logo.ico"
+						alt="Christain Writes Logo"
+					/>
 				</Link>
 				<div className="ml-auto flex items-center gap-x-3">
-					<Link
-						to="/feed"
-						className="font-roboto text-xl font-semibold uppercase leading-6 text-[#141414]"
-					>
-						<Home
-							size={26}
+					<Link to={"/search"}>
+						<Search
+							className="size-6"
 							color="#04bf87"
 						/>
 					</Link>
-					<button
-						className=""
-						onClick={() => navigate("/article/new")}
+					<Link
+						to="/cw/new"
+						className="hidden sm:block"
 					>
-						{/* <img
-							className="ml-auto size-6"
-							src="/assets/icons/pencil-icon.svg"
-							alt="Write icon"
-						/>{" "} */}
 						<PencilLine
-							size={26}
+							className="size-6"
 							color="#04bf87"
 						/>
-					</button>
-					{/* <img
-						className="ml-auto size-6 object-cover"
-						src="/assets/icons/search.svg"
-						alt="search icon"
+					</Link>
+					{/* <Bell
+						className="size-6 cursor-pointer"
+						color="#04bf87"
+						onClick={() => openModal(ModalType.NOTIFICATIONS)}
 					/> */}
-
-					<img
-						className="size-6 object-cover"
-						src="/assets/icons/bell.svg"
-						alt="notification"
-					/>
-
 					{isLoggedIn ? (
 						<Link to={`/cw/${user?.username}`}>
-							{isPending ? (
-								<Skeleton className="size-8 rounded-full object-cover" />
-							) : (
-								<UserProfileImage
-									fullName={user?.name}
-									image={user?.profileImg}
-								/>
-							)}
+							<UserProfileImage
+								fullName={user?.name}
+								image={user?.profileImg}
+								isLoading={isPending}
+								// className="size-[60px]"
+							/>
 						</Link>
 					) : (
-						<div
-							ref={guestDropDownRef}
-							className="relative"
-						>
+						<>
 							<button
+								ref={guestDropDownRef}
 								onClick={() => setShowSignUp(true)}
-								className="size-8 shrink-0 rounded-full object-cover"
+								className="size-6 shrink-0 overflow-hidden rounded-full md:size-8"
 							>
 								<img
-									className="w-full object-cover"
+									className="h-full w-full object-contain"
 									src="/assets/images/guest.png"
 									alt="Guest user image"
 								/>
@@ -126,9 +109,9 @@ const NavBar = () => {
 										className="absolute right-0 top-12 z-20 w-[305px] space-y-3 rounded-lg bg-white p-5 drop-shadow-2xl"
 									>
 										<div className="flex items-center gap-x-3">
-											<div className="size-10 shrink-0 rounded-full object-cover md:size-[55px]">
+											<div className="size-6 shrink-0 rounded-full object-cover md:size-[55px]">
 												<img
-													className="w-full object-cover"
+													className="h-8 w-8 object-cover"
 													src="/assets/images/guest.png"
 													alt="Guest user image"
 												/>
@@ -144,7 +127,7 @@ const NavBar = () => {
 									</motion.div>
 								) : null}
 							</AnimatePresence>
-						</div>
+						</>
 					)}
 				</div>
 			</Container>

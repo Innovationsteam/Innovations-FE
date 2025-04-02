@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { ReactNode, useState } from "react";
 import { Tooltip } from "react-tooltip";
@@ -27,7 +27,7 @@ const DropDown = ({ children, position = "bottom" }: { children: ReactNode[]; po
 					<path
 						fill-rule="evenodd"
 						clip-rule="evenodd"
-						className={classNames("group-hover:fill-black", {
+						className={cn("group-hover:fill-black", {
 							"fill-[#5B7083]": !isOpen,
 							"fill-black": isOpen,
 						})}

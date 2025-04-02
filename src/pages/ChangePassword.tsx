@@ -118,7 +118,7 @@ const ChangePassword = () => {
 							htmlFor="confirm-password"
 							className="text-base"
 						>
-							Re-Enter Password
+							Confirm Password
 						</Label>
 						<div className="relative">
 							<Input

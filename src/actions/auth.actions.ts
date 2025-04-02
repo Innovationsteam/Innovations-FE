@@ -1,5 +1,5 @@
-import { LoginFormData } from "@/components/LoginForm";
-import { SignUpFormData } from "@/components/SignUpForm";
+import { LoginFormData } from "@/components/LoginForm/index_old";
+import { SignUpFormData } from "@/types/auth.types";
 import client from "@/lib/axios";
 import { OTPFormData } from "@/pages/VerifyOTP";
 import { LoginResponse, SignUpResponse, ResetPassword } from "@/types/auth.types";
@@ -48,6 +48,7 @@ export const resendVerifyEmail = async (payload: { email: string }) => {
 		throw error as AxiosError;
 	}
 };
+
 export const sendResetToken = async (payload: { email: string }) => {
 	try {
 		const res = await client.post("/auth/send-reset-token", payload);
@@ -56,6 +57,7 @@ export const sendResetToken = async (payload: { email: string }) => {
 		throw error as AxiosError;
 	}
 };
+
 export const resetPassword = async (payload: ResetPassword) => {
 	try {
 		const res = await client.post("/auth/reset-password", payload);
@@ -64,3 +66,12 @@ export const resetPassword = async (payload: ResetPassword) => {
 		throw error as AxiosError;
 	}
 };
+
+export async function connectToPushService(subscription: PushSubscription) {
+	try {
+		const res = await client.post("/push-notification/subscribe", subscription);
+		return res.data;
+	} catch (error) {
+		throw error as AxiosError;
+	}
+}

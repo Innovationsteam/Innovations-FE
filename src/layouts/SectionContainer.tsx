@@ -15,7 +15,7 @@ const SectionContainer = ({ title, showIcon = false, modal = ModalType.NONE, chi
 	return (
 		<section className="mt-6">
 			<div className="mb-5 flex items-center">
-				<h2 className="highlight relative z-[3] font-roboto text-xl font-medium text-black md:text-2xl">{title}</h2>
+				<h2 className="highlight relative z-[3] font-roboto text-xl font-medium capitalize text-black md:text-2xl">{title}</h2>
 				{showIcon && (
 					<Plus
 						onClick={() => openModal(modal)}

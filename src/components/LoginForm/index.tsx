@@ -1,8 +1,8 @@
+import { motion } from "framer-motion";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useLoginUser } from "../../hooks/useUser";
-import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Eye, EyeOff } from "lucide-react";
@@ -12,8 +12,8 @@ const schema = z.object({
 	password: z.string().min(4, { message: "Minimum of 4 characters" }),
 });
 export type LoginFormData = z.infer<typeof schema>;
-
-const LoginForm = () => {
+import { Link } from "react-router-dom";
+const LoginForm2 = () => {
 	const {
 		register,
 		handleSubmit,
@@ -31,49 +31,50 @@ const LoginForm = () => {
 	const togglePasswordVisibility = () => {
 		setShowPassword((prev) => !prev);
 	};
+
 	return (
-		<form
-			onSubmit={handleSubmit(onSubmit)}
-			className="mt-6 grid gap-3"
-		>
-			<div className="space-y-1 text-left">
+		<form onSubmit={handleSubmit(onSubmit)}>
+			<div className="mb-4">
 				<Label
 					htmlFor="username"
-					className="text-base"
+					className="mb-2 block font-roboto text-base text-sm "
 				>
-					Username
+					Email or Username
 				</Label>
 				<Input
 					{...register("username")}
 					id="username"
 					type="text"
+					className="w-full rounded border p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
 					placeholder="Enter your username"
 				/>
 				{errors.username && <p className="font-poppins mt-1 inline-block text-left text-sm text-red-500">{errors.username?.message}</p>}
 			</div>
-			<div className="space-y-1 text-left">
+
+			<div className="mb-4">
 				<Label
 					htmlFor="password"
-					className="text-base"
+					className="mb-2 block font-roboto text-base text-sm"
 				>
 					Password
 				</Label>
+
 				<div className="relative">
 					<Input
 						{...register("password")}
 						id="password"
 						type={showPassword ? "text" : "password"}
 						placeholder="Enter your password"
-						className="pr-10"
+						className="w-full rounded border p-2 pr-10 focus:outline-none focus:ring-2 focus:ring-green-500"
 					/>
 					<div className="absolute inset-y-0 right-0 flex items-center pr-3">
 						{showPassword ? (
-							<EyeOff
+							<Eye
 								className="cursor-pointer"
 								onClick={togglePasswordVisibility}
 							/>
 						) : (
-							<Eye
+							<EyeOff
 								className="cursor-pointer"
 								onClick={togglePasswordVisibility}
 							/>
@@ -82,31 +83,38 @@ const LoginForm = () => {
 				</div>
 				{errors.password && <p className="font-poppins mt-1 inline-block text-left text-sm text-red-500">{errors.password?.message}</p>}
 			</div>
-			<div className="mt-6 flex justify-between">
-				{/* <Link
+
+			<div className="mb-6 flex items-center justify-between">
+				<div />
+				<Link
 					to="/forgot-password"
 					className="group text-sm font-medium"
 				>
 					<p className="text-[#242424B2] group-hover:text-black">Forgot Password?</p>
 					<div className="h-[1.5px] w-0 bg-[#242424B2] transition-all duration-200 ease-in-out group-hover:w-full"></div>
-				</Link> */}
+				</Link>
 			</div>
-			<Button
+
+			<motion.button
 				type="submit"
+				className="bg-customGreen flex h-12 w-full cursor-pointer items-center justify-center rounded text-white transition hover:bg-green-600"
+				whileHover={{ scale: 1.02 }}
+				whileTap={{ scale: 0.98 }}
 				disabled={isPending || !isValid}
-				className="bg-primary"
+				autoFocus
 			>
 				{isPending ? (
 					<img
-						className="h-full object-cover"
+						className="h-6 w-6"
 						src="/assets/icons/loader.svg"
+						alt="Loading..."
 					/>
 				) : (
 					"Log in"
 				)}
-			</Button>
+			</motion.button>
 		</form>
 	);
 };
 
-export default LoginForm;
+export default LoginForm2;

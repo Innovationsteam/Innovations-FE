@@ -15,6 +15,7 @@ const config = {
 				raleway: ["Raleway", "sans-serif"],
 			},
 			colors: {
+				customGreen: "#00c063",
 				black: "#141414",
 				highlight: "hsl(var(--highlight))",
 				background: "hsl(var(--background))",
@@ -89,8 +90,8 @@ const config = {
 		function ({ addUtilities }) {
 			addUtilities({
 				".scrollbar-hide": {
-					"scrollbar-width": "none", 
-					"-ms-overflow-style": "none", 
+					"scrollbar-width": "none",
+					"-ms-overflow-style": "none",
 					"&::-webkit-scrollbar": {
 						display: "none",
 					},
