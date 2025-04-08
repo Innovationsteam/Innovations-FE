@@ -19,7 +19,7 @@ import Login from "./pages/Login";
 import NewStory from "./pages/NewStory";
 import Profile from "./pages/Profile";
 import ResetPassword from "./pages/ResetPassword";
-// import SignUp from "./pages/Signup";
+import SignUp from "./pages/Signup";
 import Stories from "./pages/Stories";
 import VerifyOTP from "./pages/VerifyOTP";
 import VerifyResetOTP from "./pages/VerifyResetOTP";
@@ -100,10 +100,10 @@ const createRouter = (isLoggedIn: boolean) =>
 					path: "login",
 					element: <Login />,
 				},
-				// {
-				// 	path: "signup",
-				// 	element: <SignUp />,
-				// },
+				{
+					path: "signup",
+					element: <SignUp />,
+				},
 				{
 					path: "verify",
 					element: <VerifyOTP />,
