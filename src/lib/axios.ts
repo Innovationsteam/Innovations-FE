@@ -2,7 +2,7 @@ import axios from "axios";
 import axiosThrottle from "axios-request-throttle";
 const isBrowser = typeof window !== "undefined";
 
-const API_URL = isBrowser ? import.meta.env.VITE_API_URL : "https://christianwritesbe-production.up.railway.app/api";
+const API_URL = isBrowser ? import.meta.env.VITE_API_URL : process.env.VITE_API_URL;
 
 const getAuthToken = () => {
 	if (isBrowser) {
