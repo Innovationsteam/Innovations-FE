@@ -102,7 +102,7 @@ const createRouter = (isLoggedIn: boolean) =>
 				},
 				{
 					path: "signup",
-					element: <Signup />,
+					element: <Signup />
 				},
 				{
 					path: "verify",
