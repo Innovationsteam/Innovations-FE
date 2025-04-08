@@ -4,7 +4,7 @@ import login_CW from "/assets/images/login_CW.png";
 import SignUpForm from "@/components/SignUpForm";
 import { Link } from "react-router-dom";
 // import { SignUpWithFaceBook, SignUpWithGoogle, SignUpAsGuest } from "@/components/Buttons";
-const SignUp = () => {
+const Signup = () => {
 	return (
 		<div className="flex min-h-screen flex-col md:flex-row">
 			<motion.div
@@ -59,4 +59,4 @@ const SignUp = () => {
 	);
 };
 
-export default SignUp;
+export default Signup;
