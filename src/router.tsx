@@ -19,7 +19,7 @@ import Login from "./pages/Login";
 import NewStory from "./pages/NewStory";
 import Profile from "./pages/Profile";
 import ResetPassword from "./pages/ResetPassword";
-import SignUp from "./pages/Signup";
+import Signup from "./pages/Signup";
 import Stories from "./pages/Stories";
 import VerifyOTP from "./pages/VerifyOTP";
 import VerifyResetOTP from "./pages/VerifyResetOTP";
@@ -102,7 +102,7 @@ const createRouter = (isLoggedIn: boolean) =>
 				},
 				{
 					path: "signup",
-					element: <SignUp />,
+					element: <Signup />,
 				},
 				{
 					path: "verify",
