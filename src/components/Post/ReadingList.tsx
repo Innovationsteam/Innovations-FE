@@ -1,6 +1,9 @@
 import DropDown from "../Buttons/DropDown";
+import { useAllReadingLists } from "@/hooks/readingList/useAllReadingLists";
 
 const ReadingListItem = () => {
+	const { data: readingLists } = useAllReadingLists();
+	console.log(readingLists);
 	return (
 		<div className="mx-2 w-full max-w-[400px] shrink-0">
 			<div className="relative flex h-[190px] w-full justify-start gap-x-2 overflow-hidden rounded-lg">

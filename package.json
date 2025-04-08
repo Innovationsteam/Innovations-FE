@@ -56,6 +56,8 @@
 		"react-loading-skeleton": "^3.5.0",
 		"react-query": "^3.39.3",
 		"react-router-dom": "^6.23.0",
+		"react-select": "^5.10.1",
+		"react-simple-typewriter": "^5.0.1",
 		"react-spinners": "^0.14.1",
 		"react-spring": "^9.7.5",
 		"react-tooltip": "^5.27.0",

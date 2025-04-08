@@ -22,7 +22,7 @@ export type EditProfileData = z.infer<typeof schema>;
 
 const EditProfileModal = () => {
 	const fileInputRef = useRef<HTMLInputElement>(null!);
-	const backdropInputRef = useRef<HTMLInputElement>(null!); // Ref for backdrop input
+	const backdropInputRef = useRef<HTMLInputElement>(null!); 
 
 	const isOpen = useActiveModal(ModalType.EDIT_PROFILE);
 	const { closeModal } = useModalActions();
@@ -92,8 +92,8 @@ const EditProfileModal = () => {
 
 	return (
 		<ModalContainer isOpen={isOpen}>
-			<div className="flex min-h-full items-center justify-center">
-				<div className="h-fit w-full max-w-[647px] shrink-0 rounded-[20px] bg-white p-5">
+			<div className="flex h-full  items-center justify-center">
+				<div className="h-fit min-h-[150px] w-full max-w-[647px] shrink-0 rounded-[20px] bg-white p-5">
 					<div className="flex items-center">
 						<header className="mb-5">
 							<h2 className="font-roboto text-xl font-bold">Edit Profile</h2>

@@ -50,6 +50,7 @@ const CommentsModal = () => {
 									createdAt={createdAt}
 									username={username}
 									profile={profileImg}
+									close={closeModal}
 								/>
 							))}
 							{/* {commentsResponse?.totalItems < 1 ? <p>No comments yet</p> : null} */}

@@ -36,3 +36,12 @@ export const addComment = async (payload: { content: string; postId: string }) =
 		throw error as AxiosError;
 	}
 };
+
+export const reportPost = async (postId: string, payload: { reason: string }) => {
+	try {
+		const res = await client.post(`/posts/report-post/${postId}`, payload);
+		return res.data;
+	} catch (error) {
+		throw error as AxiosError;
+	}
+};

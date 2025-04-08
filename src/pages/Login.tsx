@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import login_image from "/assets/images/login_image.png";
 import login_CW from "/assets/images/login_CW.png";
-import LoginForm2 from "@/components/LoginForm";
+import LoginForm from "@/components/LoginForm";
 import { Link } from "react-router-dom";
 // import { SignUpWithFaceBook, SignUpWithGoogle, SignUpAsGuest } from "@/components/Buttons";
 const Login = () => {
@@ -24,7 +24,7 @@ const Login = () => {
 					<h1 className="mb-4 font-roboto text-3xl font-bold">Welcome Back</h1>
 					<p className="mb-6 font-roboto text-gray-600">Share your Christian write ups with the world</p>
 					<div className="mt-[30px] flex flex-col gap-y-4">
-						<LoginForm2 />
+						<LoginForm />
 						{/* <SignUpWithGoogle />
 						<SignUpWithFaceBook />
 						<SignUpAsGuest /> */}

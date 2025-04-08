@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { motion } from "framer-motion";
 import { useSignUpUser } from "../../hooks/useUser";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
@@ -45,12 +46,12 @@ const SignUpForm = () => {
 	return (
 		<form
 			onSubmit={handleSubmit(onSubmit)}
-			className="mt-6 grid gap-4"
+			className="grid gap-4"
 		>
 			<div className="space-y-1 text-left">
 				<Label
 					htmlFor="name"
-					className="text-base"
+					className="mb-2 block font-roboto text-base text-sm"
 				>
 					Name
 				</Label>
@@ -58,6 +59,7 @@ const SignUpForm = () => {
 					{...register("name")}
 					id="name"
 					type="text"
+					className="w-full rounded border p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
 					placeholder="Enter your name"
 				/>
 
@@ -66,7 +68,7 @@ const SignUpForm = () => {
 			<div className="space-y-1 text-left">
 				<Label
 					htmlFor="email"
-					className="text-base"
+					className="mb-2 block font-roboto text-base text-sm"
 				>
 					Email
 				</Label>
@@ -74,6 +76,7 @@ const SignUpForm = () => {
 					{...register("email")}
 					id="email"
 					type="text"
+					className="w-full rounded border p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
 					placeholder="Enter your email"
 				/>
 				{errors.email && <p className="font-poppins mt-1 inline-block text-left text-sm text-red-500">{errors.email?.message}</p>}
@@ -81,7 +84,7 @@ const SignUpForm = () => {
 			<div className="space-y-1 text-left">
 				<Label
 					htmlFor="username"
-					className="text-base"
+					className="mb-2 block font-roboto text-base text-sm"
 				>
 					Username
 				</Label>
@@ -89,6 +92,7 @@ const SignUpForm = () => {
 					{...register("username")}
 					id="username"
 					type="text"
+					className="w-full rounded border p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
 					placeholder="Enter your username"
 				/>
 				{errors.username && <p className="font-poppins mt-1 inline-block text-left text-sm text-red-500">{errors.username?.message}</p>}
@@ -96,7 +100,7 @@ const SignUpForm = () => {
 			<div className="space-y-1 text-left">
 				<Label
 					htmlFor="password"
-					className="text-base"
+					className="mb-2 block font-roboto text-base text-sm"
 				>
 					Password
 				</Label>
@@ -104,6 +108,7 @@ const SignUpForm = () => {
 					<Input
 						{...register("password")}
 						id="password"
+						className="w-full rounded border p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
 						type={showPassword ? "text" : "password"}
 						placeholder="Enter your password"
 					/>
@@ -126,7 +131,7 @@ const SignUpForm = () => {
 			<div className="space-y-1 text-left">
 				<Label
 					htmlFor="confirm-password"
-					className="text-base"
+					className="mb-2 block font-roboto text-base text-sm"
 				>
 					Confirm Password
 				</Label>
@@ -136,7 +141,7 @@ const SignUpForm = () => {
 						id="confirm-password"
 						type={showPassword ? "text" : "password"}
 						placeholder="Enter your password"
-						className="pr-10"
+						className="w-full rounded border p-2 pr-10 focus:outline-none focus:ring-2 focus:ring-green-500"
 					/>
 					<div className="absolute inset-y-0 right-0 flex items-center pr-3">
 						{showPassword ? (
@@ -154,20 +159,25 @@ const SignUpForm = () => {
 				</div>
 				{errors.confirmPassword && <p className="font-poppins mt-1 inline-block text-left text-sm text-red-500 ">{errors.confirmPassword?.message}</p>}
 			</div>
-			<button
+	
+			<motion.button
 				type="submit"
+				className="flex h-12 w-full cursor-pointer items-center justify-center rounded-lg bg-customGreen text-white transition hover:bg-green-600"
+				whileHover={{ scale: 1.02 }}
+				whileTap={{ scale: 0.98 }}
 				disabled={isPending}
-				className="mt-6 flex h-[47px] w-full items-center justify-center rounded-lg bg-black py-1 text-center text-lg font-semibold text-white"
+				autoFocus
 			>
 				{isPending ? (
 					<img
-						className="h-full object-cover"
+						className="h-6 w-6"
 						src="/assets/icons/loader.svg"
+						alt="Loading..."
 					/>
 				) : (
 					"Sign Up"
 				)}
-			</button>
+			</motion.button>
 		</form>
 	);
 };

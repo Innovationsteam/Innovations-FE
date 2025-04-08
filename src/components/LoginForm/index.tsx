@@ -13,7 +13,7 @@ const schema = z.object({
 });
 export type LoginFormData = z.infer<typeof schema>;
 import { Link } from "react-router-dom";
-const LoginForm2 = () => {
+const LoginForm = () => {
 	const {
 		register,
 		handleSubmit,
@@ -97,7 +97,7 @@ const LoginForm2 = () => {
 
 			<motion.button
 				type="submit"
-				className="bg-customGreen flex h-12 w-full cursor-pointer items-center justify-center rounded text-white transition hover:bg-green-600"
+				className="bg-customGreen flex h-12 w-full rounded-5 cursor-pointer items-center justify-center rounded text-white transition hover:bg-green-600"
 				whileHover={{ scale: 1.02 }}
 				whileTap={{ scale: 0.98 }}
 				disabled={isPending || !isValid}
@@ -117,4 +117,4 @@ const LoginForm2 = () => {
 	);
 };
 
-export default LoginForm2;
+export default LoginForm;

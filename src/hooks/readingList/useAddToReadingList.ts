@@ -16,7 +16,7 @@ export const useAddToReadingList = () => {
 			const previousData = queryClient.getQueryData<ReadingList[]>(["user", "reading-lists"]);
 
 			queryClient.setQueryData<ReadingList[]>(["user", "reading-lists"], (oldData) => {
-				if (!oldData) return []; // If no data, initialize as an empty array
+				if (!oldData) return []; 
 
 				return oldData.map((list) => {
 					if (list.id === collectionId) {
@@ -28,7 +28,7 @@ export const useAddToReadingList = () => {
 							],
 						};
 					}
-					return list; // Return other lists unchanged
+					return list; 
 				});
 			});
 

@@ -11,10 +11,9 @@ const AddToReadingListModal = () => {
 	const isOpen = useActiveModal(ModalType.ADD_TO_READING_LIST);
 	const { openModal, closeModal } = useModalActions();
 	const { data: readingLists } = useAllReadingLists();
-	const postId = useModalData() as string;
+	const {postId} = useModalData() ;
 
 	const { mutate: addToReadingList } = useAddToReadingList();
-
 	const handleChange = (collectionId: string) => {
 		addToReadingList({
 			postId,
