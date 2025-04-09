@@ -4,11 +4,11 @@ import login_CW from "/assets/images/login_CW.png";
 import SignUpForm from "@/components/SignUpForm";
 import { Link } from "react-router-dom";
 // import { SignUpWithFaceBook, SignUpWithGoogle, SignUpAsGuest } from "@/components/Buttons";
-const Signup = () => {
+const SignUp = () => {
 	return (
 		<div className="flex min-h-screen flex-col md:flex-row">
 			<motion.div
-				className="mr-8 flex min-h-[600px] w-full items-center justify-center p-8 md:w-3/4" 
+				className="mr-8 flex min-h-[600px] w-full items-center justify-center p-8 md:w-3/4"
 				initial={{ opacity: 0, x: -50 }}
 				animate={{ opacity: 1, x: 0 }}
 				transition={{ duration: 0.5 }}
@@ -34,7 +34,7 @@ const Signup = () => {
 							Already have an account?{" "}
 							<Link
 								to="/login"
-								className="font-medium text-[#242424B2] "
+								className="font-medium text-[#04bf87] "
 							>
 								Log In
 							</Link>
@@ -59,4 +59,4 @@ const Signup = () => {
 	);
 };
 
-export default Signup;
+export default SignUp;
