@@ -19,7 +19,7 @@ const NotFound = () => {
 			/>
 
 			<motion.div
-				className="pointer-events-none absolute inset-0 flex items-center justify-center"
+				className="pointer-events-none absolute inset-0 flex pt-3 items-center justify-center"
 				style={{ transform: "translateY(-15%)" }}
 				initial={{ opacity: 0, y: -100 }}
 				animate={{ opacity: 1, y: "-15%" }}
