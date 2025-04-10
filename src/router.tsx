@@ -15,9 +15,7 @@ import ChangePassword from "./pages/ChangePassword";
 import CreateArticle from "./pages/CreateArticle";
 import Home from "./pages/Home";
 import Loader from "./pages/Loader";
-// import Login from "./pages/Login_old";
-import Login2 from "./pages/Login";
-// import LoginForm2 from "@/components/LoginForm";
+import Login from "./pages/Login";
 import NewStory from "./pages/NewStory";
 import Profile from "./pages/Profile";
 import ResetPassword from "./pages/ResetPassword";
@@ -25,12 +23,15 @@ import SignUp from "./pages/SignUp";
 import Stories from "./pages/Stories";
 import VerifyOTP from "./pages/VerifyOTP";
 import VerifyResetOTP from "./pages/VerifyResetOTP";
+import NotFound from "./pages/notFoundPage";
+// import ReadingList from "./components/Profile/ReadingList";
 import { useUser } from "./store/user";
 
 const PRIVATE_ROUTES = [
 	{ path: "drafts", element: <DraftsList /> },
 	{ path: "notes", element: <NotesList /> },
 	{ path: "settings", element: <Settings /> },
+	// { path: "reading-list", element: <ReadingList /> },
 ];
 
 const PUBLIC_ROUTES = [
@@ -97,8 +98,7 @@ const createRouter = (isLoggedIn: boolean) =>
 				},
 				{
 					path: "login",
-					// element: <Login />,
-					element: <Login2 />,
+					element: <Login />,
 				},
 				{
 					path: "signup",
@@ -119,6 +119,10 @@ const createRouter = (isLoggedIn: boolean) =>
 				{
 					path: "/change-password",
 					element: <ChangePassword />,
+				},
+				{
+					path: "*",
+					element: <NotFound />,
 				},
 			],
 		},

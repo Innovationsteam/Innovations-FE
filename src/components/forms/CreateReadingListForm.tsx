@@ -87,7 +87,7 @@ const CreateReadingListForm = () => {
 								defaultValue={READING_LIST_VISIBILITY[0]}
 								className="w-full"
 							>
-								<SelectValue placeholder="Select Visibiity" />
+								<SelectValue placeholder="Select Visibility" />
 							</SelectTrigger>
 							<SelectContent>
 								{READING_LIST_VISIBILITY.map((value) => (
@@ -114,7 +114,7 @@ const CreateReadingListForm = () => {
 						src="/assets/icons/loader.svg"
 					/>
 				) : (
-					"Update Profile"
+					"Create Reading List"
 				)}
 			</Button>
 		</form>

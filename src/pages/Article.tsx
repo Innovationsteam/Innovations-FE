@@ -19,7 +19,7 @@ import { Post } from "@/components/Post";
 import { useUser } from "@/store/user";
 import { generateDescription } from "@/lib/keywords";
 import { Helmet } from "react-helmet";
-
+import NotFound from "./notFoundPage";
 const Article = () => {
 	const { openModal } = useModalActions();
 	const user = useUser();
@@ -52,9 +52,7 @@ const Article = () => {
 
 	if (!post)
 		return (
-			<div className="flex h-screen items-center">
-				<p className="text-center text-lg font-semibold">No Post Found</p>
-			</div>
+		<NotFound />
 		);
 
 	return (
@@ -157,7 +155,7 @@ const Article = () => {
 									Add a personal note
 								</button>
 								<button
-									onClick={() => openModal(ModalType.REPORT_POST)}
+									onClick={() => openModal(ModalType.REPORT_POST, { postId: post.id})}
 									className="block pb-2 font-roboto text-sm text-[#BF2828] transition-colors hover:text-black"
 								>
 									Report Article
