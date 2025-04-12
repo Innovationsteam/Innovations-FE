@@ -13,3 +13,10 @@ export interface INewComment {
 	content: string;
 	date: Date;
 }
+
+export interface NotificationResponse {
+	notifications: INewComment[];
+	totalPages: 0;
+	currentPage: 1;
+	totalItems: 0;
+}

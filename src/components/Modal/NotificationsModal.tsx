@@ -1,9 +1,8 @@
+import { useNotifications } from "@/hooks/useNotifications";
 import useSize from "@/hooks/useSize";
-import { ModalType, useActiveModal, useModalActions } from "@/store/modal";
-import { INewComment } from "@/types/notifications.types";
 import { formatDate, truncateText } from "@/lib/utils";
+import { ModalType, useActiveModal, useModalActions } from "@/store/modal";
 import { motion } from "framer-motion";
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import UserProfileImage from "../UserProfileImage";
 import ModalContainer from "./ModalContainer";
@@ -13,21 +12,7 @@ const NotificationsModal = () => {
 	const isOpen = useActiveModal(ModalType.NOTIFICATIONS);
 	const [width] = useSize();
 
-	// const { socket } = useContext(SocketContext);
-
-	const [notifications] = useState<INewComment[]>([]);
-
-	// useEffect(() => {
-	// 	socket.on("new_comment", (newComment: INewComment) => {
-	// 		setNotifications((prev) => [...prev, newComment]);
-	// 	});
-
-	// 	return () => {
-	// 		socket.off("new_comment", () => {
-	// 			console.log("Disconnected from Notifications");
-	// 		});
-	// 	};
-	// }, []);
+	const { data } = useNotifications();
 
 	return (
 		<ModalContainer isOpen={isOpen}>
@@ -41,7 +26,7 @@ const NotificationsModal = () => {
 			>
 				<div className="px-5 pt-8 md:px-[40px]">
 					<header className="mb-5 flex items-center">
-						<h1 className="font-roboto text-xl font-medium">Notifications ({notifications.length})</h1>
+						<h1 className="font-roboto text-xl font-medium">Notifications ({data?.totalItems ?? "0"})</h1>
 						<button
 							className="ml-auto rotate-90 transition-transform duration-200 ease-in-out hover:rotate-90"
 							onClick={() => closeModal()}
@@ -54,9 +39,9 @@ const NotificationsModal = () => {
 						</button>
 					</header>
 				</div>
-				{notifications.length >= 1 ? (
+				{data && data.notifications.length >= 1 ? (
 					<ul className="h-full space-y-5 overflow-y-auto px-5 pb-24 sm:space-y-4 md:px-[40px]">
-						{notifications.map((notification) => (
+						{data.notifications.map((notification) => (
 							<Link
 								onClick={() => closeModal()}
 								to={notification.post.url}
