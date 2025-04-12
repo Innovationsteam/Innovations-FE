@@ -44,7 +44,7 @@ const NotificationsModal = () => {
 						{data.notifications.map((notification) => (
 							<Link
 								onClick={() => closeModal()}
-								to={notification.post.url}
+								to={notification.post?.url ?? ""}
 								key={notification.content}
 								className="flex items-center gap-2 rounded-lg border p-2 text-card-foreground shadow-sm transition-colors hover:bg-muted/50 sm:gap-4 sm:p-3"
 							>
