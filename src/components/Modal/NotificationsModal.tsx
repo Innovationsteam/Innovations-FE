@@ -39,12 +39,12 @@ const NotificationsModal = () => {
 						</button>
 					</header>
 				</div>
-				{data && data.notifications.length >= 1 ? (
+				{data && data.notifications ? (
 					<ul className="h-full space-y-5 overflow-y-auto px-5 pb-24 sm:space-y-4 md:px-[40px]">
 						{data.notifications.map((notification) => (
 							<Link
 								onClick={() => closeModal()}
-								to={notification.post.url}
+								to={notification.post?.url ?? ""}
 								key={notification.content}
 								className="flex items-center gap-2 rounded-lg border p-2 text-card-foreground shadow-sm transition-colors hover:bg-muted/50 sm:gap-4 sm:p-3"
 							>
