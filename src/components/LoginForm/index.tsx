@@ -1,18 +1,20 @@
-import { motion } from "framer-motion";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { motion } from "framer-motion";
+import { Eye, EyeOff } from "lucide-react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 import { z } from "zod";
 import { useLoginUser } from "../../hooks/useUser";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { Eye, EyeOff } from "lucide-react";
-import { useState } from "react";
+
 const schema = z.object({
 	username: z.string().min(4, { message: "Minimum of 4 characters" }).max(100, { message: "Maximum of 100 characters" }),
 	password: z.string().min(4, { message: "Minimum of 4 characters" }),
 });
 export type LoginFormData = z.infer<typeof schema>;
-import { Link } from "react-router-dom";
+
 const LoginForm = () => {
 	const {
 		register,
@@ -37,7 +39,7 @@ const LoginForm = () => {
 			<div className="mb-4">
 				<Label
 					htmlFor="username"
-					className="mb-2 block font-roboto text-base text-sm "
+					className="mb-2 block font-roboto text-base"
 				>
 					Email or Username
 				</Label>
@@ -97,7 +99,7 @@ const LoginForm = () => {
 
 			<motion.button
 				type="submit"
-				className="bg-customGreen flex h-12 w-full rounded-5 cursor-pointer items-center justify-center rounded text-white transition hover:bg-green-600"
+				className="rounded-5 flex h-12 w-full cursor-pointer items-center justify-center rounded bg-customGreen text-white transition hover:bg-green-600"
 				whileHover={{ scale: 1.02 }}
 				whileTap={{ scale: 0.98 }}
 				disabled={isPending || !isValid}
