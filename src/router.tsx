@@ -23,7 +23,7 @@ import SignUp from "./pages/SignUp";
 import Stories from "./pages/Stories";
 import VerifyOTP from "./pages/VerifyOTP";
 import VerifyResetOTP from "./pages/VerifyResetOTP";
-import NotFound from "./pages/notFoundPage";
+import NotFound from "./pages/NotFound";
 // import ReadingList from "./components/Profile/ReadingList";
 import { useUser } from "./store/user";
 

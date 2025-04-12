@@ -19,7 +19,8 @@ import { Post } from "@/components/Post";
 import { useUser } from "@/store/user";
 import { generateDescription } from "@/lib/keywords";
 import { Helmet } from "react-helmet";
-import NotFound from "./notFoundPage";
+import NotFound from "./NotFound";
+
 const Article = () => {
 	const { openModal } = useModalActions();
 	const user = useUser();
@@ -50,10 +51,7 @@ const Article = () => {
 
 	if (isPending) return <ArticleSkeleton />;
 
-	if (!post)
-		return (
-		<NotFound />
-		);
+	if (!post) return <NotFound />;
 
 	return (
 		<div>
@@ -155,7 +153,7 @@ const Article = () => {
 									Add a personal note
 								</button>
 								<button
-									onClick={() => openModal(ModalType.REPORT_POST, { postId: post.id})}
+									onClick={() => openModal(ModalType.REPORT_POST, { postId: post.id })}
 									className="block pb-2 font-roboto text-sm text-[#BF2828] transition-colors hover:text-black"
 								>
 									Report Article
