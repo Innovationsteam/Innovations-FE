@@ -2,13 +2,14 @@ import { useUserProfile } from "@/hooks/useUserProfile";
 import { cn } from "@/lib/utils";
 import { useUser } from "@/store/user";
 import { AnimatePresence, motion } from "framer-motion";
-import { PencilLine, Search } from "lucide-react";
+import { Bell, PencilLine, Search } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useOnClickOutside } from "usehooks-ts";
 import Container from "../Container";
 import UserProfileImage from "../UserProfileImage";
 import { Button } from "../ui/button";
+import { ModalType, useModalActions } from "@/store/modal";
 
 const NavBar = () => {
 	const [scrolled, setScrolled] = useState(false);
@@ -17,6 +18,8 @@ const NavBar = () => {
 
 	const [showSignUp, setShowSignUp] = useState(false);
 	const guestDropDownRef = useRef(null);
+
+	const { openModal } = useModalActions();
 
 	const hanldeClickOutside = () => setShowSignUp(false);
 
@@ -73,11 +76,11 @@ const NavBar = () => {
 							color="#04bf87"
 						/>
 					</Link>
-					{/* <Bell
+					<Bell
 						className="size-6 cursor-pointer"
 						color="#04bf87"
 						onClick={() => openModal(ModalType.NOTIFICATIONS)}
-					/> */}
+					/>
 					{isLoggedIn ? (
 						<Link to={`/cw/${user?.username}`}>
 							<UserProfileImage

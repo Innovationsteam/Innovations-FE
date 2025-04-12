@@ -1,6 +1,7 @@
 ///////Worked On
 import client from "@/lib/axios";
 import { IResponse } from "@/types/auth.types";
+import { NotificationResponse } from "@/types/notifications.types";
 import { IPost } from "@/types/post.types";
 import { ReadingList } from "@/types/readng-list.types";
 import { IUser, UserConnection } from "@/types/user.types";
@@ -65,6 +66,15 @@ export const getAvatar = async (username: string): Promise<string | undefined> =
 		const url = `https://ui-avatars.com/api/?name=${encodeURIComponent(username)}&bold=true`;
 		await axios.get(url);
 		return url;
+	} catch (error) {
+		throw error as AxiosError;
+	}
+};
+
+export const getAllNotifications = async () => {
+	try {
+		const res = await client.get<IResponse<NotificationResponse>>(`/push-notification`);
+		return res.data.data;
 	} catch (error) {
 		throw error as AxiosError;
 	}
